@@ -5,9 +5,9 @@
 
 #include "SDL/include/SDL_rect.h"
 #ifdef _DEBUG
-#pragma comment( lib, "Game/Source/External/SDL/include/SDL_rect.h")
+#pragma comment( lib, "Source/External/SDL/include/SDL_rect.h")
 #else
-#pragma comment( lib, "Game/Source/External/SDL/include/SDL_rect.h")
+#pragma comment( lib, "Source/External/SDL/include/SDL_rect.h")
 #endif
 #define MAX_FRAMES 100
 
