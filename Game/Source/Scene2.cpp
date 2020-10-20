@@ -11,12 +11,12 @@
 
 Scene2::Scene2() : Module(false)
 {
-	name.create("scene");
+	name.Create("scene");
 }
 
 Scene2::Scene2(bool b) : Module(b)
 {
-	name.create("scene");
+	name.Create("scene");
 }
 
 

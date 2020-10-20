@@ -26,7 +26,7 @@ const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
 
 ModulePlayer::ModulePlayer(bool b) : Module(b)
 {
-	name.create("player");
+	name.Create("player");
 
 	climbingIdle.PushBack({ 138, 24, 13, 16 });
 	climbingIdle.loop = true;
@@ -216,7 +216,7 @@ bool ModulePlayer::CleanUp()
 	// TODO 1: Remove ALL remaining resources. Update resource count properly
 
 	app->tex->UnLoad(texture);
-	app->audio->UnloadFx(FX_Walking);
+	
 	
 	return true;
 }

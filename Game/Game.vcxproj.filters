@@ -38,6 +38,7 @@
     </ClCompile>
     <ClCompile Include="Source\Scene2.cpp" />
     <ClCompile Include="Source\ModulePlayer.cpp" />
+    <ClCompile Include="Source\Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Source\Scene2.h" />
     <ClInclude Include="Source\ModulePlayer.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Map.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

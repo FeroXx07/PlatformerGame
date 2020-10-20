@@ -15,7 +15,7 @@
 Audio::Audio() : Module(true)
 {
 	music = NULL;
-	name.create("audio");
+	name.Create("audio");
 }
 
 // Destructor
@@ -181,10 +181,18 @@ bool Audio::UnloadFx(uint index)
 {
 	bool ret = false;
 
-	if (fx[index] != nullptr)
+	/*if (fx[index] != nullptr)
 	{
 		Mix_FreeChunk(fx[index]);
 		fx[index] = nullptr;
+		ret = true;
+	}*/
+	ListItem<Mix_Chunk*>*list;
+	list = fx.At(index);
+	if (list->data != NULL)
+	{
+		Mix_FreeChunk(list->data);
+		list->data = nullptr;
 		ret = true;
 	}
 
