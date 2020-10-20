@@ -1,14 +1,14 @@
-#include "Application.h"
+#include "App.h"
 
-#include "ModuleTextures.h"
-#include "ModuleRender.h"
+#include "Textures.h"
+#include "Render.h"
 #include "ModuleFonts.h"
 
 #include<string.h>
 
-ModuleFonts::ModuleFonts(bool isEnabled) : Module(isEnabled)
+ModuleFonts::ModuleFonts(bool isEnabled) : Module()
 {
-
+	name.create("fonts");
 }
 
 ModuleFonts::~ModuleFonts()
@@ -27,7 +27,7 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 		return id;
 	}
 
-	SDL_Texture* tex = App->textures->Load(texture_path);
+	SDL_Texture* tex = app->tex->Load(texture_path);
 
 	if(tex == nullptr || strlen(characters) >= MAX_FONT_CHARS)
 	{
@@ -64,7 +64,7 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 	font.columns = fonts[id].totalLength / rows;
 
 	uint tex_w, tex_h;
-	App->textures->GetTextureSize(tex, tex_w, tex_h);
+	app->tex->GetSize(tex, tex_w, tex_h);
 	font.char_w = tex_w / font.columns;
 	font.char_h = tex_h / font.rows;
 
@@ -79,7 +79,7 @@ void ModuleFonts::UnLoad(int font_id)
 {
 	if(font_id >= 0 && font_id < MAX_FONTS && fonts[font_id].texture != nullptr)
 	{
-		App->textures->Unload(fonts[font_id].texture);
+		app->tex->UnLoad(fonts[font_id].texture);
 		fonts[font_id].texture = nullptr;
 		LOG("Successfully Unloaded BMP font_id %d", font_id);
 	}
@@ -119,7 +119,7 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		App->render->Blit(font->texture, x, y, &spriteRect, 0.0f, false);
+		app->render->DrawTexture(font->texture, x, y, &spriteRect, 0.0f, false);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

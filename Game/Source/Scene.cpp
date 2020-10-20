@@ -5,11 +5,17 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "ModuleFadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+Scene::Scene() : Module(true) // The argument passed to the parent constructor is if it is enabled at construction
+{
+	name.create("scene");
+}
+
+Scene::Scene(bool b) : Module(b) // The argument passed to the parent constructor is if it is enabled at construction
 {
 	name.create("scene");
 }
@@ -56,7 +62,8 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x += 1;
 
-	app->render->DrawTexture(img, 380, 100);
+	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
+		app->fade->FadeToBlack(this, (Module*)app->scene2);
 
 	return true;
 }
@@ -69,6 +76,9 @@ bool Scene::PostUpdate()
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	app->render->DrawTexture(img, 380, 100);
+
+
 	return ret;
 }
 
@@ -76,6 +86,7 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	app->tex->UnLoad(img);
+	
 	return true;
 }

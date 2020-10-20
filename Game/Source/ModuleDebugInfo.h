@@ -18,19 +18,19 @@ class ModuleDebugInfo : public Module
 
 		// Called on application start.
 		// Loads the font used for debugging purposes
-		bool Start() override;
+		bool Start();
 
 		// Called on application exit.
 		// Unloads the font
-		bool CleanUp() override;
+		bool CleanUp();
 
 		// Called at the middle of the application loop
 		// Switches debug info depending on input
-		update_status Update() override;
+		bool Update();
 
 		// Called at the end of the application loop
 		// Renders all the debug text info
-		update_status PostUpdate() override;
+		bool PostUpdate();
 
 		// Displays the active and total resources from the selected module
 		void DrawModuleResources(Module* module);

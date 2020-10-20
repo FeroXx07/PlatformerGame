@@ -7,7 +7,7 @@
 
 #define VSYNC true
 
-Render::Render() : Module()
+Render::Render() : Module(true)
 {
 	name.create("renderer");
 	background.r = 0;

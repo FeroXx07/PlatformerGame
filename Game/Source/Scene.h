@@ -11,6 +11,8 @@ public:
 
 	Scene();
 
+	Scene(bool b);
+
 	// Destructor
 	virtual ~Scene();
 

@@ -39,6 +39,7 @@ public:
 
 private:
 	SString title;
+public:
 	uint width;
 	uint height;
 	uint scale;

@@ -41,15 +41,15 @@ public:
 
 	// Called at the beginning of the application loop
 	// Removes all enemies pending to delete
-	update_status PreUpdate() override;
+	bool PreUpdate();
 
 	// Called at the middle of the application loop
 	// Handles all enemies logic and spawning/despawning
-	update_status Update() override;
+	bool Update();
 
 	// Called at the end of the application loop
 	// Iterates all the enemies and draws them
-	update_status PostUpdate() override;
+	bool PostUpdate();
 
 	// Called on application exit
 	// Destroys all active enemies left in the array
@@ -57,7 +57,8 @@ public:
 
 	// Called when an enemi collider hits another collider
 	// The enemy is destroyed and an explosion particle is fired
-	void OnCollision(Collider* c1, Collider* c2) override;
+
+	/*void OnCollision(Collider* c1, Collider* c2) override;*/
 
 	// Add an enemy into the queue to be spawned later
 	bool AddEnemy(Enemy_Type type, int x, int y);

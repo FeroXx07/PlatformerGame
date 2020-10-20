@@ -12,7 +12,7 @@
 // NOTE: Library linkage is configured in Linker Options
 //#pragma comment(lib, "../Game/Source/External/SDL_mixer/libx86/SDL2_mixer.lib")
 
-Audio::Audio() : Module()
+Audio::Audio() : Module(true)
 {
 	music = NULL;
 	name.create("audio");
@@ -172,6 +172,20 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.count())
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
+	}
+
+	return ret;
+}
+
+bool Audio::UnloadFx(uint index)
+{
+	bool ret = false;
+
+	if (fx[index] != nullptr)
+	{
+		Mix_FreeChunk(fx[index]);
+		fx[index] = nullptr;
+		ret = true;
 	}
 
 	return ret;

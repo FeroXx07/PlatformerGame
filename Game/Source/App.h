@@ -13,6 +13,11 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
+class ModuleFonts;
+class ModuleDebugInfo;
+class ModuleFadeToBlack;
+class Scene2;
+class ModulePlayer;
 
 class App
 {
@@ -73,8 +78,15 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
-	Scene* scene;
 
+	Scene* scene;
+	Scene2* scene2;
+
+	ModulePlayer* player;
+
+	ModuleFonts* fonts;
+	ModuleDebugInfo* debug;
+	ModuleFadeToBlack* fade;
 private:
 
 	int argc;

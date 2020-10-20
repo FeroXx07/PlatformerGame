@@ -2,7 +2,8 @@
 #define __MODULE_FONTS_H__
 
 #include "Module.h"
-#include "Game/SDL/include/SDL_pixels.h"
+#include "SDL/include/SDL_pixels.h"
+#include "Log.h"
 
 #define MAX_FONTS 10
 #define MAX_FONT_CHARS 256

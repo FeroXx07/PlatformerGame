@@ -9,7 +9,7 @@
 
 #define MAX_KEYS 300
 
-Input::Input() : Module()
+Input::Input() : Module(true)
 {
 	name.create("input");
 

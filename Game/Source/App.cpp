@@ -5,6 +5,9 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "ModuleFadeToBlack.h"
+#include "Scene2.h"
+#include "ModulePlayer.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -22,7 +25,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	scene = new Scene();
+	scene = new Scene(true);
+	scene2 = new Scene2(false);
+	player = new ModulePlayer(true);
+
+	fade = new ModuleFadeToBlack();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -31,6 +38,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
+	AddModule(scene2);
+	AddModule(player);
+	AddModule(fade);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -95,7 +105,7 @@ bool App::Start()
 	ListItem<Module*>* item;
 	item = modules.start;
 
-	while(item != NULL && ret == true)
+	while(item != NULL && ret == true && item->data->IsEnabled() == true)
 	{
 		ret = item->data->Start();
 		item = item->next;
@@ -170,7 +180,7 @@ bool App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->active == false || (pModule->IsEnabled()==false)) {
 			continue;
 		}
 
@@ -192,7 +202,7 @@ bool App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->active == false || (pModule->IsEnabled() == false)) {
 			continue;
 		}
 
@@ -213,7 +223,7 @@ bool App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if((pModule->active == false || (pModule->IsEnabled() == false))) {
 			continue;
 		}
 
