@@ -15,7 +15,7 @@
 
 ModuleDebugInfo::ModuleDebugInfo(bool startEnabled) : Module()
 {
-	name.create("debug");
+	name.Create("debug");
 }
 
 ModuleDebugInfo::~ModuleDebugInfo()

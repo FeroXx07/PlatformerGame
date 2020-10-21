@@ -8,7 +8,7 @@
 
 ModuleFonts::ModuleFonts(bool isEnabled) : Module()
 {
-	name.create("fonts");
+	name.Create("fonts");
 }
 
 ModuleFonts::~ModuleFonts()

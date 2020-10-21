@@ -26,9 +26,7 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 {
 	name.Create("player");
 
-	climbingIdle.PushBack({ 138, 24, 13, 16 });
-	climbingIdle.loop = true;
-	climbingIdle.speed = 0.1f;
+	
 
 	// left idle animation
 	leftIdleAnim.PushBack({ 66, 24, 12, 16 });
@@ -130,7 +128,7 @@ bool ModulePlayer::Update(float dt)
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT)  && (isGround == true))
 	{
-		position.x -= 0.3f;
+		velocity.x -= 0.3f;
 
 		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
 		if (frameCountWalking == 11) 
@@ -143,7 +141,7 @@ bool ModulePlayer::Update(float dt)
 
 	if ((app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) && (isGround == true))
 	{
-		position.x += 0.3f;
+		velocity.x += 0.3f;
 
 		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
 		if (frameCountWalking == 11) 
@@ -183,8 +181,8 @@ bool ModulePlayer::Update(float dt)
 		
 	}
 
-	position.x = position.x - velocity.x * dt;
-	position.y = position.y - velocity.y * dt;
+	position.x = position.x + velocity.x * dt;
+	position.y = position.y + velocity.y * dt;
 
 	if (currentAnimation != NULL)
 	{
