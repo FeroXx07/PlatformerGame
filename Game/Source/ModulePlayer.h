@@ -20,7 +20,7 @@ public:
 
 	// Called when the module is activated
 	// Loads the necessary textures for the player
-	bool Start() override;
+	bool Start();
 
 	// Called at the middle of the application loop
 	// Processes new input and handles player movement
@@ -38,10 +38,10 @@ public:
 
 public:
 	// Position of the player in the map
-	iPoint position;
+	fPoint position;
 
 	// The speed in which we move the player (pixels per frame)
-	iPoint velocity = { 0,0 };
+	fPoint velocity = { 0,0 };
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
@@ -56,23 +56,18 @@ public:
 	// A set of animations
 	Animation leftIdleAnim;
 	Animation rightIdleAnim;
-	Animation hammerLeftIdleAnim;
-	Animation hammerRightIdleAnim;
 
-	Animation leftAnim;
-	Animation rightAnim;
+	Animation leftRunAnim;
+	Animation rightRunAnim;
 	Animation jumpAnim;
 
-	Animation hammerLeftAnim;
-	Animation hammerRightAnim;
+	//Animation climbingAnim;
+	//Animation climbedAnim;
+	//Animation idleClimbedAnim;
+	//Animation climbingIdle;
 
-	Animation climbingAnim;
-	Animation climbedAnim;
-	Animation idleClimbedAnim;
-	Animation climbingIdle;
-
-	Animation sprite1Climbed;
-	Animation sprite2Climbed;
+	//Animation sprite1Climbed;
+	//Animation sprite2Climbed;
 	
 
 	// A flag to detect when the player has been destroyed

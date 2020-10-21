@@ -22,8 +22,6 @@
 const float gravity = 1;         // pixels / second^2
 const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
 
-
-
 ModulePlayer::ModulePlayer(bool b) : Module(b)
 {
 	name.Create("player");
@@ -38,28 +36,33 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	leftIdleAnim.speed = 0.1f;
 
 	// right idle animation
-	rightIdleAnim.PushBack({ 66, 41, 12, 16 });
+	rightIdleAnim.PushBack({ 0, 0, 94, 160 });
+	rightIdleAnim.PushBack({ 94, 0, 94, 160 });
+	rightIdleAnim.PushBack({ 189, 0, 95, 160 });
+	rightIdleAnim.PushBack({ 284, 0, 95, 160 });
+	rightIdleAnim.PushBack({ 379, 0, 95, 160 });
+	rightIdleAnim.PushBack({ 474, 0, 95, 160 });
 	rightIdleAnim.loop = true;
-	rightIdleAnim.speed = 0.1f;
+	rightIdleAnim.speed = 0.3f;
 
 
-	leftAnim.PushBack({ 89, 24, 15, 16 }); // movement left 1
-	leftAnim.PushBack({ 66, 24, 12, 16 }); // idle left
-	leftAnim.PushBack({ 113, 24, 15, 15 }); // movement left 2
-	leftAnim.PushBack({ 66, 24, 12, 16 }); // idle left
-	leftAnim.loop = true;
-	leftAnim.speed = 0.3f;
+	leftRunAnim.PushBack({ 89, 24, 15, 16 }); // movement left 1
+	leftRunAnim.PushBack({ 66, 24, 12, 16 }); // idle left
+	leftRunAnim.PushBack({ 113, 24, 15, 15 }); // movement left 2
+	leftRunAnim.PushBack({ 66, 24, 12, 16 }); // idle left
+	leftRunAnim.loop = true;
+	leftRunAnim.speed = 0.3f;
 
-	rightAnim.PushBack({ 113, 41, 15, 15 });
-	rightAnim.PushBack({ 66, 41, 12, 16 });
-	rightAnim.PushBack({ 89, 41, 15, 16 });
-	rightAnim.PushBack({ 66, 41, 12, 16 });
-	rightAnim.loop = true;
-	rightAnim.speed = 0.3f;
+	rightRunAnim.PushBack({ 113, 41, 15, 15 });
+	rightRunAnim.PushBack({ 66, 41, 12, 16 });
+	rightRunAnim.PushBack({ 89, 41, 15, 16 });
+	rightRunAnim.PushBack({ 66, 41, 12, 16 });
+	rightRunAnim.loop = true;
+	rightRunAnim.speed = 0.3f;
 
-	jumpAnim.PushBack({ 113, 24, 15, 15 });
+	/*jumpAnim.PushBack({ 113, 24, 15, 15 });
 	jumpAnim.loop = true;
-	jumpAnim.speed = 0.1f;
+	jumpAnim.speed = 0.1f;*/
 
 	//climbingAnim.PushBack({ 138, 24, 13, 16 }); // climb movement 1
 	//climbingAnim.PushBack({ 138, 40, 13, 16 }); // climb movement 2
@@ -98,11 +101,11 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = app->tex->Load("Assets/Background3.png"); // arcade version
+	texture = app->tex->Load("Assets/textures/AnimIdle.png"); // arcade version
 	
 
 	//Starting position of the Mario
-	position = { 0,0 };
+	position = { 10,10 };
 
 	/*playerCollider = app->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
 	++activeColliders; ++totalColliders;*/
@@ -127,7 +130,7 @@ bool ModulePlayer::Update(float dt)
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT)  && (isGround == true))
 	{
-		velocity.x = -SPEED;
+		position.x -= 0.3f;
 
 		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
 		if (frameCountWalking == 11) 
@@ -140,7 +143,7 @@ bool ModulePlayer::Update(float dt)
 
 	if ((app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) && (isGround == true))
 	{
-		velocity.x = SPEED;
+		position.x += 0.3f;
 
 		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
 		if (frameCountWalking == 11) 
@@ -151,22 +154,22 @@ bool ModulePlayer::Update(float dt)
 		++frameCountWalking;
 	}
 
-	if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KeyState::KEY_DOWN && isGround == true))
-	{
-		// Jump here
-	}
+	//if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KeyState::KEY_DOWN && isGround == true))
+	//{
+	//	// Jump here
+	//}
 
-	// If last movement was left, set the current animation back to left idle
-	if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_UP)
-	{
-		currentAnimation = &leftIdleAnim;
-	}
-	
-	// If last movement was right, set the current animation back to left idle
-	if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_UP)
-	{
-		currentAnimation = &rightIdleAnim;
-	}
+	//// If last movement was left, set the current animation back to left idle
+	//if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_UP)
+	//{
+	//	currentAnimation = &leftIdleAnim;
+	//}
+	//
+	//// If last movement was right, set the current animation back to left idle
+	//if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_UP)
+	//{
+	//	currentAnimation = &rightIdleAnim;
+	//}
 	
 	// Debug Keys
 

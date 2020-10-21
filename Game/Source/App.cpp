@@ -117,9 +117,12 @@ bool App::Start()
 	ListItem<Module*>* item;
 	item = modules.start;
 
-	while(item != NULL && ret == true && item->data->IsEnabled() == true)
+	while(item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if (item->data->IsEnabled() == true)
+		{
+			ret = item->data->Start();
+		}
 		item = item->next;
 	}
 

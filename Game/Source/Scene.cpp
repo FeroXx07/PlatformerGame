@@ -39,7 +39,10 @@ bool Scene::Start()
 {
 	img = app->tex->Load("Assets/textures/test.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->map->Load("hello2.tmx");
+	//app->map->Load("hello2.tmx");
+	// Layers gets gid correctly
+
+	// 	app->map->Load("firstLevel.tmx"); there is a problem with first level check xml with notepad++
 	return true;
 }
 
@@ -60,24 +63,25 @@ bool Scene::Update(float dt)
 		app->SaveGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 1;
+		app->render->camera.y -= 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += 1;
+		app->render->camera.y += 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
+		app->render->camera.x -= 2;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 1;
+		app->render->camera.x += 2;
 		
 	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
 		app->fade->FadeToBlack(this, (Module*)app->scene2);
 
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	printf("Camera X: %d, \n Camera Y: %d\n\n", app->render->camera.x, app->render->camera.y);
+	app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	// Draw map
-	app->map->Draw();
+	//app->map->Draw();
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
