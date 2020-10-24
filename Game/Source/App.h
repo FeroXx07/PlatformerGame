@@ -22,6 +22,7 @@ class ModuleFadeToBlack;
 class Scene2;
 class ModulePlayer;
 class Map;
+class ModuleInitialScreen;
 
 class App
 {
@@ -94,6 +95,7 @@ public:
 
 	Scene* scene;
 	Scene2* scene2;
+	ModuleInitialScreen* initialScreen;
 	Map* map;
 	ModulePlayer* player;
 

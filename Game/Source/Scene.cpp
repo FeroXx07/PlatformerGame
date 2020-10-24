@@ -10,6 +10,7 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "ModulePlayer.h"
 
 Scene::Scene() : Module(true) // The argument passed to the parent constructor is if it is enabled at construction
 {

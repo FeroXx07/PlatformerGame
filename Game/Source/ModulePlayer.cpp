@@ -29,9 +29,9 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	
 
 	// left idle animation
-	leftIdleAnim.PushBack({ 66, 24, 12, 16 });
+	/*leftIdleAnim.PushBack({ 66, 24, 12, 16 });
 	leftIdleAnim.loop = true;
-	leftIdleAnim.speed = 0.1f;
+	leftIdleAnim.speed = 0.1f;*/
 
 	// right idle animation
 	rightIdleAnim.PushBack({ 0, 0, 94, 160 });
@@ -41,22 +41,38 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	rightIdleAnim.PushBack({ 379, 0, 95, 160 });
 	rightIdleAnim.PushBack({ 474, 0, 95, 160 });
 	rightIdleAnim.loop = true;
-	rightIdleAnim.speed = 0.3f;
+	rightIdleAnim.speed = 0.01f;
 
+	leftIdleAnim.PushBack({ 0, 163, 92, 157 });
+	leftIdleAnim.PushBack({ 95, 164, 92, 157 });
+	leftIdleAnim.PushBack({ 190, 165, 92, 157 });
+	leftIdleAnim.PushBack({ 284, 165, 92, 157 });
+	leftIdleAnim.PushBack({ 380, 162, 92, 157 });
+	leftIdleAnim.PushBack({ 475, 161, 92, 157 });
+	leftIdleAnim.loop = false;
+	leftIdleAnim.speed = 0.01f;
 
-	leftRunAnim.PushBack({ 89, 24, 15, 16 }); // movement left 1
-	leftRunAnim.PushBack({ 66, 24, 12, 16 }); // idle left
-	leftRunAnim.PushBack({ 113, 24, 15, 15 }); // movement left 2
-	leftRunAnim.PushBack({ 66, 24, 12, 16 }); // idle left
-	leftRunAnim.loop = true;
-	leftRunAnim.speed = 0.3f;
+	rightRunAnim.PushBack({ 0, 322, 122, 159 });
+	rightRunAnim.PushBack({ 126, 329, 108, 146 });
+	rightRunAnim.PushBack({ 231, 330, 106, 154 });
+	rightRunAnim.PushBack({ 341, 327, 140, 149 });
+	rightRunAnim.PushBack({ 482, 326, 131, 152 });
+	rightRunAnim.PushBack({ 615, 328, 107, 146 });
+	rightRunAnim.PushBack({ 724, 325, 118, 157 });
+	rightRunAnim.PushBack({ 843, 331, 132, 156 });
+	rightRunAnim.loop = false;
+	rightRunAnim.speed = 0.01f;
 
-	rightRunAnim.PushBack({ 113, 41, 15, 15 });
-	rightRunAnim.PushBack({ 66, 41, 12, 16 });
-	rightRunAnim.PushBack({ 89, 41, 15, 16 });
-	rightRunAnim.PushBack({ 66, 41, 12, 16 });
-	rightRunAnim.loop = true;
-	rightRunAnim.speed = 0.3f;
+	leftRunAnim.PushBack({ 0, 502, 122, 154 }); // movement left 1
+	leftRunAnim.PushBack({ 125, 496, 118, 158 }); // idle left
+	leftRunAnim.PushBack({ 252, 506, 108, 148 }); // movement left 2
+	leftRunAnim.PushBack({ 369, 500, 132, 150 }); // idle left
+	leftRunAnim.PushBack({ 512, 505, 138, 150 });
+	leftRunAnim.PushBack({ 666, 505, 108, 155 });
+	leftRunAnim.PushBack({ 790, 505, 106, 147 });
+	leftRunAnim.PushBack({ 913, 495, 122, 154 });
+	leftRunAnim.loop = false;
+	leftRunAnim.speed = 0.01f;
 
 	/*jumpAnim.PushBack({ 113, 24, 15, 15 });
 	jumpAnim.loop = true;
@@ -126,30 +142,42 @@ bool ModulePlayer::Update(float dt)
 	velocity.x = 0;
 	velocity.y = 0;
 
-	if ((app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT)  && (isGround == true))
-	{
-		velocity.x -= 0.3f;
-
-		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
-		if (frameCountWalking == 11) 
-		{
-			walkingFX = false;
-			frameCountWalking = 0;
-		}
-		++frameCountWalking;
-	}
-
-	if ((app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT) && (isGround == true))
+	if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_DOWN)
 	{
 		velocity.x += 0.3f;
 
-		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
+		leftIdleAnim.loop = true;
+		currentAnimation = &leftIdleAnim;
+		if (currentAnimation == &leftIdleAnim && (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT))
+		{
+			leftIdleAnim.loop = false;
+			leftRunAnim.loop = true;
+			currentAnimation = &leftRunAnim;
+		}
+
+		/*if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
+		if (frameCountWalking == 11)
+		{
+			walkingFX = false;
+			frameCountWalking = 0;
+		}
+		++frameCountWalking;*/
+	}
+
+	if ((app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT))
+	{
+		/*velocity.x += 0.3f;*/
+
+		rightIdleAnim.loop = true;
+		currentAnimation = &rightIdleAnim;
+
+		/*if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
 		if (frameCountWalking == 11) 
 		{
 			walkingFX = false;
 			frameCountWalking = 0;
 		}
-		++frameCountWalking;
+		++frameCountWalking;*/
 	}
 
 	//if ((app->input->GetKey(SDL_SCANCODE_SPACE) == KeyState::KEY_DOWN && isGround == true))
