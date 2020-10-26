@@ -21,6 +21,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 
+	dt = 1.0f / 60.0f;
+
 	input = new Input();
 	win = new Window();
 	render = new Render();

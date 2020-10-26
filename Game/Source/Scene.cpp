@@ -78,7 +78,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
 		app->fade->FadeToBlack(this, (Module*)app->scene2);
 
-	printf("Camera X: %d, \n Camera Y: %d\n\n", app->render->camera.x, app->render->camera.y);
+	//printf("Camera X: %d, \n Camera Y: %d\n\n", app->render->camera.x, app->render->camera.y);
 	app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	// Draw map

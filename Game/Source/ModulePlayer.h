@@ -5,6 +5,12 @@
 #include "Animation.h"
 #include "Point.h"
 
+#define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
+#define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
+
+#define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
+#define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
+
 
 struct SDL_Texture;
 struct Collider;
@@ -39,6 +45,7 @@ public:
 public:
 	// Position of the player in the map
 	fPoint position;
+	fPoint playerWH;
 
 	// The speed in which we move the player (pixels per frame)
 	fPoint velocity = { 0,0 };
