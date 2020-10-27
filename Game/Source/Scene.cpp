@@ -40,7 +40,8 @@ bool Scene::Start()
 {
 	img = app->tex->Load("Assets/textures/test.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	//app->map->Load("hello2.tmx");
+	app->map->Load("sewers2.tmx");
+	app->render->SetBackgroundColor(app->map->data.backgroundColor);
 	// Layers gets gid correctly
 
 	// 	app->map->Load("firstLevel.tmx"); there is a problem with first level check xml with notepad++
@@ -79,10 +80,8 @@ bool Scene::Update(float dt)
 		app->fade->FadeToBlack(this, (Module*)app->scene2);
 
 	//printf("Camera X: %d, \n Camera Y: %d\n\n", app->render->camera.x, app->render->camera.y);
-	app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
-	// Draw map
-	//app->map->Draw();
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -103,6 +102,10 @@ bool Scene::PostUpdate()
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+
+	// Draw map
+	//app->map->Draw();
 
 	//app->render->DrawTexture(img, 380, 100);
 

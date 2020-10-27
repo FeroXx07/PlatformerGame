@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.2" name="tilesheet_complete" tilewidth="32" tileheight="32" tilecount="1056" columns="44">
- <image source="Tilesheet/tilesheet_complete.png" width="1408" height="768"/>
+ <image source="tilesheet_complete.png" width="1408" height="768"/>
  <terraintypes>
   <terrain name="floorRed" tile="-1"/>
   <terrain name="ground" tile="-1"/>

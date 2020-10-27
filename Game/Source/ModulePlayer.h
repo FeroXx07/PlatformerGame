@@ -68,6 +68,8 @@ public:
 	Animation rightRunAnim;
 	Animation jumpAnim;
 
+	SDL_Texture** currentTexture = nullptr;
+	SDL_Texture* jumpTexture = nullptr;
 	//Animation climbingAnim;
 	//Animation climbedAnim;
 	//Animation idleClimbedAnim;

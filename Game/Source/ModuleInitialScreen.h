@@ -25,8 +25,8 @@ public:
 	~ModuleInitialScreen();
 
 	bool Start();
-	update_status Update();
-	update_status postUpdate();
+	bool Update(float dt);
+	bool PostUpdate();
 	bool CleanUp();
 
 private:

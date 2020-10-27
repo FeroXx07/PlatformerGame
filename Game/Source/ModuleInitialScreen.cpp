@@ -8,7 +8,7 @@
 #include "Render.h"
 #include "Audio.h"
 
-ModuleInitialScreen::ModuleInitialScreen(bool startEnabled) : Module(startEnabled)
+ModuleInitialScreen::ModuleInitialScreen(bool b) : Module(b)
 {
 	name = "Initial S";
 
@@ -30,7 +30,7 @@ bool ModuleInitialScreen::Start()
 
 	logoTex = app->tex->Load("Assets/textures/LogoScreen.png");
 
-	if (tex == nullptr)
+	if (logoTex == nullptr)
 	{
 		ret = false;
 	}
@@ -38,11 +38,15 @@ bool ModuleInitialScreen::Start()
 	return ret;
 }
 
-update_status ModuleInitialScreen::Update()
+bool ModuleInitialScreen::Update(float dt)
 {
-	update_status ret = update_status::UPDATE_CONTINUE;
+	bool ret = true;
+
 
 	/*if (app->input->GetKey[SDL_SCANCODE_SPACE] == KEY_DOWN)
+=======
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+>>>>>>> Stashed changes
 	{
 		app->fade->FadeToBlack(this, (Module*)app->scene);
 	}*/
@@ -50,9 +54,11 @@ update_status ModuleInitialScreen::Update()
 	return ret;
 }
 
-update_status ModuleInitialScreen::postUpdate()
+bool ModuleInitialScreen::PostUpdate()
 {
-	update_status ret = update_status::UPDATE_CONTINUE;
+	bool ret = true;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
 
 	actualTime = SDL_GetTicks() - startTime;
 
@@ -60,7 +66,7 @@ update_status ModuleInitialScreen::postUpdate()
 	{
 		
 	}
-
+	app->render->DrawTexture(logoTex, 0, 0);
 	return ret;
 }
 
@@ -72,13 +78,7 @@ bool ModuleInitialScreen::CleanUp()
 	endTime = 0;
 	actualTime = 0;
 
-	if (!app->tex->UnLoad(tex))
-	{
-		LOG("Start Screen -> Error unloading the texture.");
-		ret = false;
-	}
-
-	if (!app->tex->UnLoad(tex))
+	if (!app->tex->UnLoad(logoTex))
 	{
 		LOG("Start Screen -> Error unloading the texture.");
 		ret = false;

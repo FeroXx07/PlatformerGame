@@ -9,6 +9,7 @@
 #include "Scene2.h"
 #include "ModulePlayer.h"
 #include "Map.h"
+#include "ModuleInitialScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -28,11 +29,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	scene = new Scene(true);
+	scene = new Scene(false);
 	scene2 = new Scene2(false);
 	player = new ModulePlayer(true);
 	map = new Map();
 	fade = new ModuleFadeToBlack();
+	initialScreen = new ModuleInitialScreen(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,6 +42,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+
+	AddModule(initialScreen);
 	AddModule(scene);
 	AddModule(scene2);
 	AddModule(map);
