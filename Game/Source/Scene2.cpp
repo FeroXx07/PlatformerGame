@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene2.h"
+#include "ModuleFadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -38,7 +39,7 @@ bool Scene2::Awake()
 // Called before the first frame
 bool Scene2::Start()
 {
-	img = app->tex->Load("Assets/textures/potato.png");
+	img = app->tex->Load("Assets/textures/LogoScreen.png");
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	return true;
 }
@@ -64,7 +65,10 @@ bool Scene2::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x += 1;
 
-	
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		app->fade->FadeToBlack(this, (Module*)app->scene);
+	}
 
 	return true;
 }
@@ -74,10 +78,7 @@ bool Scene2::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
-	app->render->DrawTexture(img, 380, 100);
+	app->render->DrawTexture(img, 962, 720);
 
 	return ret;
 }

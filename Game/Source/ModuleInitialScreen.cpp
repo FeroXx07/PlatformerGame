@@ -3,7 +3,7 @@
 #include "Textures.h"
 #include "ModuleFadeToBlack.h"
 #include "Input.h"
-#include "Scene.h"
+#include "Scene2.h"
 #include "ModuleFonts.h"
 #include "Render.h"
 #include "Audio.h"
@@ -12,7 +12,7 @@ ModuleInitialScreen::ModuleInitialScreen(bool startEnabled) : Module(startEnable
 {
 	name = "Initial S";
 
-	logo = { 0, 0,256,224 };
+	logo = { 185, 0, 962, 720 };
 	screen = { 0,0,SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE };
 }
 
@@ -28,6 +28,8 @@ bool ModuleInitialScreen::Start()
 
 	// Include logo
 
+	logoTex = app->tex->Load("Assets/textures/LogoScreen.png");
+
 	if (tex == nullptr)
 	{
 		ret = false;
@@ -40,10 +42,10 @@ update_status ModuleInitialScreen::Update()
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
-	if (app->input->GetKey[SDL_SCANCODE_RETURN] == KEY_DOWN)
+	/*if (app->input->GetKey[SDL_SCANCODE_SPACE] == KEY_DOWN)
 	{
-		app->fade->FadeToBlack(this, (Module*)app->initialScreen);
-	}
+		app->fade->FadeToBlack(this, (Module*)app->scene);
+	}*/
 
 	return ret;
 }
@@ -53,6 +55,11 @@ update_status ModuleInitialScreen::postUpdate()
 	update_status ret = update_status::UPDATE_CONTINUE;
 
 	actualTime = SDL_GetTicks() - startTime;
+
+	if (actualTime < endTime)
+	{
+		
+	}
 
 	return ret;
 }
