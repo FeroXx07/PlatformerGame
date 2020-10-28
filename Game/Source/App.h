@@ -16,6 +16,7 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
+class DeathScene;
 class ModuleFonts;
 class ModuleDebugInfo;
 class ModuleFadeToBlack;
@@ -96,6 +97,7 @@ public:
 	Scene* scene;
 	Scene2* scene2;
 	ModuleInitialScreen* initialScreen;
+	DeathScene* deathScene;
 	Map* map;
 	ModulePlayer* player;
 

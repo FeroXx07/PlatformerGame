@@ -40,6 +40,7 @@
     <ClCompile Include="Source\ModulePlayer.cpp" />
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\ModuleInitialScreen.cpp" />
+    <ClCompile Include="Source\DeathScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleInitialScreen.h" />
+    <ClInclude Include="Source\DeathScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

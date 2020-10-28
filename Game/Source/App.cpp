@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "DeathScene.h"
 #include "ModuleFadeToBlack.h"
 #include "Scene2.h"
 #include "ModulePlayer.h"
@@ -29,8 +30,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	scene = new Scene(false);
+	scene = new Scene(true);
 	scene2 = new Scene2(false);
+	deathScene = new DeathScene(false);
 	player = new ModulePlayer(true);
 	map = new Map();
 	fade = new ModuleFadeToBlack();

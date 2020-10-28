@@ -91,6 +91,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\DeathScene.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
@@ -109,6 +110,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\DeathScene.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleDebugInfo.h" />

@@ -9,6 +9,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
 //#include "ModuleHud.h"
+#include "DeathScene.h"
 
 #include <stdio.h>
 #include "SDL/include/SDL_scancode.h"
@@ -225,6 +226,12 @@ bool ModulePlayer::Update(float dt)
 			velocity.x += -1.0f * velocity.x * dt;
 		}
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		app->fade->FadeToBlack(this, (Module*)app->deathScene);
+	}
+
 	if (isGround) // Stopping the player gradually while at ground
 	{
 		currentTexture = &texture;
