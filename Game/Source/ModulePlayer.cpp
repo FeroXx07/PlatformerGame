@@ -48,14 +48,14 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	leftIdleAnim.loop = true;
 	leftIdleAnim.speed = 0.1f;
 
-	rightRunAnim.PushBack({ 0, 322, 122, 159 });
-	rightRunAnim.PushBack({ 126, 329, 108, 146 }); // Correct this one, part of next sprite enters this one
-	rightRunAnim.PushBack({ 231, 330, 106, 154 }); // Correct this one, part of previous sprite enters this one
-	rightRunAnim.PushBack({ 341, 327, 140, 149 }); 
-	rightRunAnim.PushBack({ 482, 326, 131, 152 });
-	rightRunAnim.PushBack({ 615, 328, 107, 146 });
-	rightRunAnim.PushBack({ 724, 325, 118, 157 });
+	rightRunAnim.PushBack({ 126, 329, 106, 146 });
 	rightRunAnim.PushBack({ 843, 331, 132, 156 });
+	rightRunAnim.PushBack({ 724, 325, 118, 157 });
+	rightRunAnim.PushBack({ 615, 328, 107, 146 });
+	rightRunAnim.PushBack({ 482, 326, 131, 152 });
+	rightRunAnim.PushBack({ 341, 327, 140, 149 });
+	rightRunAnim.PushBack({ 233, 330, 106, 154 });
+	rightRunAnim.PushBack({ 0, 322, 122, 159 }); 
 	rightRunAnim.loop = true;
 	rightRunAnim.speed = 0.1f;
 
