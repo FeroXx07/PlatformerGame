@@ -30,7 +30,7 @@ bool DeathScene::Start()
 
 	// Include logo
 
-	logoTex = app->tex->Load("Assets/textures/TitleScreen.png");
+	logoTex = app->tex->Load("Assets/textures/DeathScreen.png");
 
 	if (logoTex == nullptr)
 	{
