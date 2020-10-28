@@ -30,7 +30,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	scene = new Scene(true);
+	scene = new Scene(false);
 	scene2 = new Scene2(false);
 	deathScene = new DeathScene(false);
 	player = new ModulePlayer(true);
@@ -45,6 +45,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 
+	AddModule(deathScene);
 	AddModule(initialScreen);
 	AddModule(scene);
 	AddModule(scene2);

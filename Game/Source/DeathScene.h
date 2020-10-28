@@ -42,6 +42,6 @@ private:
 
 };
 
-};
+
 
 #endif __DEATH_SCENE_H__

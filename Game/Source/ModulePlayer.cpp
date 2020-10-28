@@ -16,7 +16,7 @@
 
 
 //Now temporally is this
-#define VELOCITY 100.0f
+#define VELOCITY 10.0f
 #define MAXVELOCITY_X 100.0f
 #define MAXVELOCITY_Y 1000.0f
 
@@ -121,7 +121,7 @@ bool ModulePlayer::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		// Controlling player movement based on if they are on the ground or air.
-		velocity.x += (isGround ? -VELOCITY : -VELOCITY) * dt;
+		velocity.x += -VELOCITY;
 
 		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
 		if (frameCountWalking == 11)
@@ -141,7 +141,8 @@ bool ModulePlayer::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		// Controlling player movement based on if they are on the ground or air.
-		velocity.x += (isGround ? VELOCITY : VELOCITY) * dt;
+		//velocity.x += (isGround ? VELOCITY : VELOCITY) * dt;
+		velocity.x += VELOCITY;
 
 		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
 		if (frameCountWalking == 11)
@@ -157,6 +158,7 @@ bool ModulePlayer::Update(float dt)
 			currentAnimation = &rightRunAnim;
 		}
 	}
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
@@ -173,7 +175,7 @@ bool ModulePlayer::Update(float dt)
 		velocity.x = velocity.x/2;
 		if (velocity.y == 0)
 		{
-			velocity.y = -100.0f;
+			velocity.y = -160.0f*2;
 		}
 		jumpAnim.Reset();
 	}
@@ -210,27 +212,23 @@ bool ModulePlayer::Update(float dt)
 		// Controll gravity at start of the jump
 		if (velocity.y < 0)
 		{ 
-			/*velocity.y += 4.0f * dt;*/
-			
+			//velocity.y += 100.0f/2 * dt;
+			velocity.y += 100.0f * 2.0f * dt;
 		}
 		else // Controll gravity while falling after the jump
 		{
 			/*if ((velocity.y < 6.0f))
 				velocity.y += 15.0f * dt;*/
-			
+			//velocity.y += 100.0f * dt;
+			velocity.y += 100.0f * 3.0f * dt;
 		}
-		velocity.y += 40.0f * dt;
-
+		
 		if (velocity.x) // Make player lose some velocity while is in air
 		{
-			velocity.x += -1.0f * velocity.x * dt;
+			velocity.x += -5.0f * velocity.x * dt;
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	{
-		app->fade->FadeToBlack(this, (Module*)app->deathScene);
-	}
 
 	if (isGround) // Stopping the player gradually while at ground
 	{

@@ -79,6 +79,9 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
 		app->fade->FadeToBlack(this, (Module*)app->scene2);
 
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+		app->fade->FadeToBlack(this, (Module*)app->deathScene);
+
 	//printf("Camera X: %d, \n Camera Y: %d\n\n", app->render->camera.x, app->render->camera.y);
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 

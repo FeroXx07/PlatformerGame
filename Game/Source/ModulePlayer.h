@@ -49,6 +49,7 @@ public:
 
 	// The speed in which we move the player (pixels per frame)
 	fPoint velocity = { 0,0 };
+	
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
