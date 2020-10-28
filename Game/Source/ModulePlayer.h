@@ -57,9 +57,6 @@ public:
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
 
-	// Player's collider
-	Collider* playerCollider = nullptr;
-
 	// A set of animations
 	Animation leftIdleAnim;
 	Animation rightIdleAnim;
@@ -85,6 +82,7 @@ public:
 private:
 	// A flag to detect when the player is in the ladder
 	bool isGround = true;
+	bool isDebug = false;
 
 	// The scene fx sounds
 	int FX_Walking = 0;

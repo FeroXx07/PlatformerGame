@@ -38,9 +38,9 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	img = app->tex->Load("Assets/textures/test.png");
+	img = app->tex->Load("Assets/textures/01.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->map->Load("sewers2.tmx");
+	app->map->Load("01Resize.tmx");
 	app->render->SetBackgroundColor(app->map->data.backgroundColor);
 	// Layers gets gid correctly
 
@@ -105,9 +105,9 @@ bool Scene::PostUpdate()
 
 
 	// Draw map
-	//app->map->Draw();
+	app->map->Draw();
 
-	//app->render->DrawTexture(img, 380, 100);
+	app->render->DrawTexture(img, 0, 0);
 
 
 	return ret;

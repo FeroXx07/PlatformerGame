@@ -151,7 +151,7 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 
 	while (item != NULL)
 	{
-		LOG("%u", id);
+		//LOG("%u", id);
 		if (item->next == nullptr)
 		{
 			break;
@@ -272,9 +272,6 @@ bool Map::Load(const char* filename)
     if(ret == true)
     {
         // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
-
-
-
 		// L04: TODO 4: LOG the info for each loaded layer
 		LogInfo();
     }

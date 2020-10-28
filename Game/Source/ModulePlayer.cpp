@@ -48,15 +48,15 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	leftIdleAnim.speed = 0.1f;
 
 	rightRunAnim.PushBack({ 0, 322, 122, 159 });
-	rightRunAnim.PushBack({ 126, 329, 108, 146 });
-	rightRunAnim.PushBack({ 231, 330, 106, 154 });
-	rightRunAnim.PushBack({ 341, 327, 140, 149 });
+	rightRunAnim.PushBack({ 126, 329, 108, 146 }); // Correct this one, part of next sprite enters this one
+	rightRunAnim.PushBack({ 231, 330, 106, 154 }); // Correct this one, part of previous sprite enters this one
+	rightRunAnim.PushBack({ 341, 327, 140, 149 }); 
 	rightRunAnim.PushBack({ 482, 326, 131, 152 });
 	rightRunAnim.PushBack({ 615, 328, 107, 146 });
 	rightRunAnim.PushBack({ 724, 325, 118, 157 });
 	rightRunAnim.PushBack({ 843, 331, 132, 156 });
 	rightRunAnim.loop = true;
-	rightRunAnim.speed = 0.02f;
+	rightRunAnim.speed = 0.1f;
 
 	leftRunAnim.PushBack({ 0, 502, 122, 154 }); // movement left 1
 	leftRunAnim.PushBack({ 125, 496, 118, 158 }); // idle left
@@ -191,9 +191,9 @@ bool ModulePlayer::Update(float dt)
 
 	// Debug Keys
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
-		currentAnimation = &rightIdleAnim;
+		isDebug = !isDebug;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -237,7 +237,8 @@ bool ModulePlayer::Update(float dt)
 			velocity.x = 0;
 	}
 
-	printf("Velocity in X = %f\n Velocity in Y = %f\n\n", velocity.x, velocity.y);
+	printf("Velocity in X = %f\nVelocity in Y = %f\n\n", velocity.x, velocity.y);
+	printf("Position in X = %f\nPosition in Y = %f\n\n", position.x, position.y);
 
 	// Integrators
 	position.x = position.x + velocity.x * dt;
@@ -287,6 +288,12 @@ bool ModulePlayer::PostUpdate()
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(*currentTexture, position.x, position.y, &rect);
+	}
+
+	if (isDebug)
+	{
+		SDL_Rect hitbox = { position.x,position.y,playerWH.x,playerWH.y };
+		app->render->DrawRectangle(hitbox, 0, 255, 0,75);
 	}
 
 

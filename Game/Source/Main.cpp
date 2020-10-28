@@ -120,6 +120,7 @@ int main(int argc, char* args[])
 
 	while(state != EXIT)
 	{
+		Uint32 start = SDL_GetTicks();
 		switch(state)
 		{
 
@@ -191,8 +192,15 @@ int main(int argc, char* args[])
 			state = EXIT;
 			break;
 		}
+		Uint32 end = SDL_GetTicks();
+		float secondsElapsed = (end - start) / 1000.0f;
 		fpsthink();
 		printf("%f\n", framespersecond);
+
+		if ((1.0f / 60.0f) - secondsElapsed > 0.0f)
+		{
+			SDL_Delay(secondsElapsed);
+		}
 	}
 
 	LOG("... Bye! :)\n");

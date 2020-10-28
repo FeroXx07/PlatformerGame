@@ -43,13 +43,11 @@ bool ModuleInitialScreen::Update(float dt)
 	bool ret = true;
 
 
-	/*if (app->input->GetKey[SDL_SCANCODE_SPACE] == KEY_DOWN)
-=======
+	
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
->>>>>>> Stashed changes
 	{
 		app->fade->FadeToBlack(this, (Module*)app->scene);
-	}*/
+	}
 
 	return ret;
 }
