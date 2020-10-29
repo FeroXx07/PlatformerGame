@@ -24,6 +24,6 @@ bool Collider::Intersects(const SDL_Rect& r) const
 	{
 		return false;
 	}
-	LOG("A collision is happening!\n");
+
 	return true;
 }

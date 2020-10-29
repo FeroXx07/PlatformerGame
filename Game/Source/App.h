@@ -24,6 +24,7 @@ class Scene2;
 class ModulePlayer;
 class Map;
 class ModuleInitialScreen;
+class ModuleCollisions;
 
 class App
 {
@@ -101,6 +102,7 @@ public:
 	Map* map;
 	ModulePlayer* player;
 
+	ModuleCollisions* collisions;
 	ModuleFonts* fonts;
 	ModuleDebugInfo* debug;
 	ModuleFadeToBlack* fade;

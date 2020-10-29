@@ -44,43 +44,36 @@ public:
 
 public:
 	// Position of the player in the map
-	fPoint position;
-	fPoint playerWH;
+	fPoint playerPos;
+	fPoint playerWH; // Data that contains width and height of player
+	fPoint colliderPos;
 
 	// The speed in which we move the player (pixels per frame)
 	fPoint velocity = { 0,0 };
-	
 
-	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
-	
+	Collider* playerCollider = nullptr;
+
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
-
-	// A set of animations
 	Animation leftIdleAnim;
 	Animation rightIdleAnim;
-
 	Animation leftRunAnim;
 	Animation rightRunAnim;
 	Animation jumpAnim;
 
 	SDL_Texture** currentTexture = nullptr;
 	SDL_Texture* jumpTexture = nullptr;
-	//Animation climbingAnim;
-	//Animation climbedAnim;
-	//Animation idleClimbedAnim;
-	//Animation climbingIdle;
-
-	//Animation sprite1Climbed;
-	//Animation sprite2Climbed;
-	
 
 	// A flag to detect when the player has been destroyed
 	bool destroyed = false;
 
+	// Collision callback, called when the player intersects with another collider
+	void OnCollision(Collider* c1, Collider* c2);
+
 private:
+
 	// A flag to detect when the player is in the ladder
 	bool isGround = true;
 	bool isDebug = false;

@@ -4,7 +4,7 @@
 #include "Textures.h"
 #include "Input.h"
 #include "Render.h"
-//#include "ModuleCollisions.h"
+#include "ModuleCollisions.h"
 #include "Audio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
@@ -16,8 +16,8 @@
 
 
 //Now temporally is this
-#define VELOCITY 10.0f
-#define MAXVELOCITY_X 100.0f
+#define VELOCITY 20.0f
+#define MAXVELOCITY_X 200.0f
 #define MAXVELOCITY_Y 1000.0f
 
 ModulePlayer::ModulePlayer(bool b) : Module(b)
@@ -95,10 +95,10 @@ bool ModulePlayer::Start()
 	jumpTexture = app->tex->Load("Assets/textures/AnimJump.png");;
 
 	//Starting position of the Mario
-	position = { 10.0f,10.0f };
+	playerPos = { 10.0f,10.0f };
 	playerWH = { 95.0f,160.0f };
-	/*playerCollider = app->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
-	++activeColliders; ++totalColliders;*/
+	playerCollider = app->collisions->AddCollider({(int)playerPos.x,(int)playerPos.y,(int)playerWH.x,(int)playerWH.y}, Collider::Type::PLAYER, app->player);
+	
 
 	currentAnimation = &rightIdleAnim;
 	currentTexture = &texture;
@@ -243,11 +243,16 @@ bool ModulePlayer::Update(float dt)
 	}
 
 	printf("Velocity in X = %f\nVelocity in Y = %f\n\n", velocity.x, velocity.y);
-	printf("Position in X = %f\nPosition in Y = %f\n\n", position.x, position.y);
-
+	printf("Position in X = %f\nPosition in Y = %f\n\n", playerPos.x, playerPos.y);
+	
 	// Integrators
-	position.x = position.x + velocity.x * dt;
-	position.y = position.y + velocity.y * dt;
+	playerPos.x = playerPos.x + velocity.x * dt;
+	playerPos.y = playerPos.y + velocity.y * dt;
+
+	playerCollider->SetPos(playerPos.x, playerPos.y);
+
+	app->render->camera.x = app->render->camera.w / 2 - playerPos.x - playerWH.x;
+	app->render->camera.y = app->render->camera.h / 2  - playerPos.y;
 
 	// Limit max velocities
 	if (velocity.x > MAXVELOCITY_X)
@@ -261,9 +266,9 @@ bool ModulePlayer::Update(float dt)
 		velocity.y = -MAXVELOCITY_Y;
 
 	// False camera ground
-	if (position.y + playerWH.y >= app->render->camera.y + app->render->camera.h)
+	if (playerPos.y + playerWH.y >= app->render->camera.y + app->render->camera.h)
 	{
-		position.y = app->render->camera.y + app->render->camera.h - playerWH.y;
+		playerPos.y = app->render->camera.y + app->render->camera.h - playerWH.y;
 		velocity.y = 0;
 		isGround = true;
 	}
@@ -292,24 +297,19 @@ bool ModulePlayer::PostUpdate()
 	if (currentAnimation != NULL)
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(*currentTexture, position.x, position.y, &rect);
+		app->render->DrawTexture(*currentTexture, playerPos.x, playerPos.y, &rect);
 	}
-
-	if (isDebug)
-	{
-		SDL_Rect hitbox = { position.x,position.y,playerWH.x,playerWH.y };
-		app->render->DrawRectangle(hitbox, 0, 255, 0,75);
-	}
-
-
 
 	return ret;
 }
 
-//void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
-//{
-//	
-//}
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c2->type == Collider::Type::GROUND)
+	{
+		LOG("Player collided with ground");
+	}
+}
 
 bool ModulePlayer::CleanUp()
 {

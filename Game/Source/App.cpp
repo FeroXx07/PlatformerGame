@@ -11,6 +11,7 @@
 #include "ModulePlayer.h"
 #include "Map.h"
 #include "ModuleInitialScreen.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -37,6 +38,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	fade = new ModuleFadeToBlack();
 	initialScreen = new ModuleInitialScreen(true);
+	collisions = new ModuleCollisions(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -47,10 +49,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(deathScene);
 	AddModule(initialScreen);
+	AddModule(map);
+
 	AddModule(scene);
 	AddModule(scene2);
-	AddModule(map);
 	AddModule(player);
+
+	AddModule(collisions);
 	AddModule(fade);
 
 	// render last to swap buffer

@@ -28,6 +28,7 @@ struct TileSet
 
 	// L04: TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
+	int GetTileRelativeId(int id)const;
 };
 
 // L03: DONE 1: We create an enum for map type, just for convenience,
@@ -39,6 +40,7 @@ enum MapTypes
 	MAPTYPE_ISOMETRIC,
 	MAPTYPE_STAGGERED
 };
+
 
 struct Property
 {
@@ -136,6 +138,7 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	int LoadColliders();
 private:
 
 	// L03: Methods to load all required map data

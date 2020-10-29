@@ -6,8 +6,6 @@
 
 class Module;
 
-
-
 struct Collider
 {
 	enum Items
@@ -23,19 +21,12 @@ struct Collider
 	enum Type
 	{
 		NONE = -1,
-		GROUND,
 		PLAYER,
+		GROUND,
 		ENEMY,
-		WALL,
-		LADDER,
-		HAMMER,
-		Item_Type,
-		FIREBARREL,
-		LOWERGROUND,
-		ENEMYWALL,
-		CONVEYORGROUND,
 		
-		MAX=11
+		
+		MAX=3
 	};
 
 	//Methods

@@ -2,6 +2,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -62,7 +63,7 @@ void Map::Draw()
 	TileSet* tileset = NULL;
 	while (layer != NULL)
 	{
-		if (layer->data->properties.GetProperty("Nodraw") == 1) // Layer draw property is false
+		if (layer->data->properties.GetProperty("Nodraw") == 0) // Layer draw property is false
 		{
 			layer = layer->next;
 			continue;
@@ -181,6 +182,11 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	rect.y = margin + ((rect.h + spacing) * (relativeId / numTilesWidth));
 	
 	return rect;
+}
+
+int TileSet::GetTileRelativeId(int id)const
+{
+	return (id - firstgid);
 }
 
 // Called before quitting
@@ -498,4 +504,51 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	
 	//...
 	return ret;
+}
+
+int Map::LoadColliders()
+{
+	int count = 0;
+
+	ListItem<MapLayer*>* layers;
+	layers = data.layers.start;
+	SString collLayerStr("Meta");
+	while (layers != NULL)
+	{
+		SString name = layers->data->name;
+		if (name == collLayerStr)
+		{
+
+			break;
+		}
+		layers = layers->next;
+	}
+
+
+	// Add collider
+	TileSet* tileset = NULL;
+	for (int y = 0; y < data.height; ++y)
+	{
+		for (int x = 0; x < data.width; ++x)
+		{
+			int tileId = layers->data->Get(x, y);
+			if (tileId > 0)
+			{
+				iPoint pos = MapToWorld(x, y);
+				SDL_Rect rect = { pos.x,pos.y,32,32 };
+				tileset = GetTilesetFromTileId(tileId);
+				int id = tileset->GetTileRelativeId(tileId);
+
+				Collider::Type type = static_cast<Collider::Type>(id);
+				switch (type)
+				{
+				case Collider::Type::GROUND: // blue
+					app->collisions->AddCollider(rect, Collider::Type::GROUND);
+					break;
+				}
+			}
+		}
+	}
+	count = app->collisions->GetColliderCount();
+	return count;
 }

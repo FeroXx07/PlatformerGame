@@ -44,7 +44,8 @@ bool Scene::Start()
 	app->render->SetBackgroundColor(app->map->data.backgroundColor);
 	// Layers gets gid correctly
 
-	// 	app->map->Load("firstLevel.tmx"); there is a problem with first level check xml with notepad++
+	app->map->LoadColliders();
+
 	return true;
 }
 
@@ -93,8 +94,10 @@ bool Scene::Update(float dt)
 				   app->map->data.tilesets.count());
 
 	app->win->SetTitle(title.GetString());
+	iPoint mapPos = app->map->WorldToMap(app->player->playerPos.x, app->player->playerPos.y);
+	printf("Position in MAP X = %d\nPosition in MAP Y = %d\n\n", mapPos.x,mapPos.y);
 	
-	
+
 	return true;
 }
 
@@ -110,7 +113,7 @@ bool Scene::PostUpdate()
 	// Draw map
 	app->map->Draw();
 
-	app->render->DrawTexture(img, 0, 0);
+	//app->render->DrawTexture(img, 0, 0);
 
 
 	return ret;
