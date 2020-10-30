@@ -535,7 +535,7 @@ int Map::LoadColliders()
 			if (tileId > 0)
 			{
 				iPoint pos = MapToWorld(x, y);
-				SDL_Rect rect = { pos.x,pos.y,32,32 };
+				SDL_Rect rect = { pos.x,pos.y,data.tileWidth,data.tileHeight };
 				tileset = GetTilesetFromTileId(tileId);
 				int id = tileset->GetTileRelativeId(tileId);
 

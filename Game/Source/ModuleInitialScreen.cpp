@@ -7,6 +7,7 @@
 #include "ModuleFonts.h"
 #include "Render.h"
 #include "Audio.h"
+#include "ModulePlayer.h"
 
 ModuleInitialScreen::ModuleInitialScreen(bool b) : Module(b)
 {
@@ -35,6 +36,8 @@ bool ModuleInitialScreen::Start()
 		ret = false;
 	}
 
+	app->player->playerPos = { -1000,-1000 };
+	app->player->cameraFollow = false;
 	return ret;
 }
 

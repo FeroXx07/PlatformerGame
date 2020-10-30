@@ -43,9 +43,14 @@ bool Scene::Start()
 	app->map->Load("01Resize.tmx");
 	app->render->SetBackgroundColor(app->map->data.backgroundColor);
 	// Layers gets gid correctly
-
 	app->map->LoadColliders();
 
+	if (app->player->IsEnabled() == false)
+		app->player->Enable();
+
+	app->player->playerPos = { 10, 50 };
+	app->player->velocity.y = 0;
+	app->player->cameraFollow = true;
 	return true;
 }
 
@@ -124,6 +129,6 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(img);
-	
+	app->player->Disable();
 	return true;
 }

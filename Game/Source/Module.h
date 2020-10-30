@@ -94,9 +94,9 @@ public:
 		return true;
 	}
 
-	virtual void OnCollision(Collider* c1, Collider* c2)
+	virtual bool OnCollision(Collider* c1, Collider* c2)
 	{
-
+		return true;
 	}
 
 public:

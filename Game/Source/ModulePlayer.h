@@ -61,7 +61,8 @@ public:
 	Animation rightIdleAnim;
 	Animation leftRunAnim;
 	Animation rightRunAnim;
-	Animation jumpAnim;
+	Animation jumpRightAnim;
+	Animation jumpLeftAnim;
 
 	SDL_Texture** currentTexture = nullptr;
 	SDL_Texture* jumpTexture = nullptr;
@@ -70,19 +71,26 @@ public:
 	bool destroyed = false;
 
 	// Collision callback, called when the player intersects with another collider
-	void OnCollision(Collider* c1, Collider* c2);
+	bool OnCollision(Collider* c1, Collider* c2);
 
+	bool cameraFollow = false;
+	bool collisionExist = false;
 private:
-
 	// A flag to detect when the player is in the ladder
-	bool isGround = true;
+	bool isGround = false;
+	bool isAir = true;
 	bool isDebug = false;
-
+	bool collisionFromBelow = false;
+	
+	
 	// The scene fx sounds
 	int FX_Walking = 0;
 
 	int frameCountWalking = 0;
 	bool walkingFX = false;
+
+	void Input();
+	void Logic(float dt);
 };
 
 #endif //!__MODULE_PLAYER_H__
