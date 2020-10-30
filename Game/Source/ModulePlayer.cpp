@@ -78,6 +78,13 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	jumpRightAnim.pingpong = false;
 	jumpRightAnim.speed = 0.1f;
 
+	jumpLeftAnim.PushBack({ 368,169,112,145 });
+	jumpLeftAnim.PushBack({ 274,169,93,169 });
+	jumpLeftAnim.PushBack({ 138,169,136,149 });
+	jumpLeftAnim.PushBack({ 0,169,138,164 });
+	jumpLeftAnim.loop = false;
+	jumpLeftAnim.pingpong = false;
+	jumpLeftAnim.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -191,7 +198,7 @@ void ModulePlayer::Input()
 		velocity.y = -160.0f * 2;
 		isAir = true;
 		jumpRightAnim.Reset();
-		//jumpLeftAnim.Reset();
+		jumpLeftAnim.Reset();
 	}
 
 	// If last movement was left, set the current animation back to left idle
@@ -235,7 +242,7 @@ void ModulePlayer::Logic(float dt)
 		}
 		else
 		{
-			//  currentAnimation = &jumpLeftAnim;
+			currentAnimation = &jumpLeftAnim;
 		}
 
 		if (velocity.y <= -200)
