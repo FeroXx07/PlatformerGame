@@ -34,7 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene(false);
 	scene2 = new Scene2(false);
 	deathScene = new DeathScene(false);
-	player = new ModulePlayer(true);
+	player = new ModulePlayer(false);
 	map = new Map();
 	fade = new ModuleFadeToBlack();
 	initialScreen = new ModuleInitialScreen(true);
@@ -319,7 +319,7 @@ void App::SaveGameRequest() const
 // then call all the modules to load themselves
 bool App::LoadGame()
 {
-	bool ret = false;
+	bool ret = true;
 
 	//...
 	SString newName("save_game");
@@ -337,7 +337,7 @@ bool App::LoadGame()
 	else
 	{
 		LOG("Starting to LoadState of each Module");
-		docNode = docData.child("save_state");
+		docNode = docData.child("game_state");
 
 		ListItem<Module*>* item;
 		item = modules.start;
@@ -378,7 +378,7 @@ bool App::SaveGame() const
 	else
 	{
 		LOG("Starting to SaveState of each Module");
-		docNode = docData.child("save_state");
+		docNode = docData.child("game_state");
 
 		ListItem<Module*>* item;
 		item = modules.start;

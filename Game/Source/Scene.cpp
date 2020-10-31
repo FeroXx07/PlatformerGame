@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "ModuleFadeToBlack.h"
 #include "Map.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -39,16 +40,21 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	img = app->tex->Load("Assets/textures/01.png");
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->map->Load("01Resize.tmx");
-	app->render->SetBackgroundColor(app->map->data.backgroundColor);
+	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	app->map->Load("01.tmx");
+
+	//app->render->SetBackgroundColor(app->map->data.backgroundColor);
 	// Layers gets gid correctly
-	app->map->LoadColliders();
+	
+	if (app->collisions->IsEnabled() == false)
+		app->collisions->Enable();
 
 	if (app->player->IsEnabled() == false)
 		app->player->Enable();
 
-	app->player->playerPos = { 10, 50 };
+	app->map->LoadColliders();
+
+	app->player->playerPos = { 2*32, 11*32 };
 	app->player->velocity.y = 0;
 	app->player->cameraFollow = true;
 	return true;
@@ -64,10 +70,10 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
     // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -82,8 +88,8 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x += 2;
 		
-	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
-		app->fade->FadeToBlack(this, (Module*)app->scene2);
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_UP || app->input->GetKey(SDL_SCANCODE_F3) == KEY_UP)
+		app->fade->FadeToBlack(this, (Module*)app->scene);
 
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 		app->fade->FadeToBlack(this, (Module*)app->deathScene);
@@ -130,5 +136,7 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 	app->tex->UnLoad(img);
 	app->player->Disable();
+	app->collisions->Disable();
+	app->map->CleanUp();
 	return true;
 }

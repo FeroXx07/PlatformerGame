@@ -5,7 +5,10 @@
 	<textures />
 	<audio />
 	<scene />
+	<player>
+		<position x="602.922791" y="352" />
+	</player>
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-57" y="8" />
 	</renderer>
 </game_state>

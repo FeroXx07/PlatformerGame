@@ -6,8 +6,7 @@
 #include "Input.h"
 
 #include "SDL/include/SDL.h"
-//#pragma comment( lib, "SDL/libx86/SDL2.lib")
-//#pragma comment( lib, "SDL/libx86/SDL2main.lib")
+
 #include "SDL/include/SDL_Scancode.h"
 #include "ModulePlayer.h"
 
@@ -15,9 +14,6 @@ ModuleCollisions::ModuleCollisions(bool b) : Module(b)
 {
 	ListItem<Collider*>* colliders2;
 	colliders2 = colliders.start;
-
-	//for(uint i = 0; i < MAX_COLLIDERS; ++i)
-	//	colliders[i] = nullptr;
 
 	matrix[Collider::Type::GROUND][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::PLAYER] = true;
@@ -117,7 +113,7 @@ bool ModuleCollisions::PreUpdate()
 bool ModuleCollisions::Update(float dt)
 {
 	bool ret = true;
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
 	return ret;
@@ -169,16 +165,6 @@ bool ModuleCollisions::CleanUp()
 {
 	LOG("Freeing all colliders");
 
-	/*for(uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if(colliders[i] != nullptr)
-		{
-			delete colliders[i];
-			colliders[i] = nullptr;
-			--colliderCount;
-		}
-	}*/
-
 	ListItem<Collider*>* listColl;
 	listColl = colliders.start;
 	for (int i = 0; i < colliders.count(); ++i)
@@ -189,25 +175,12 @@ bool ModuleCollisions::CleanUp()
 		}
 		listColl = listColl->next;
 	}
-
-
+	colliders.clear();
 	return true;
 }
 
 Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener, Collider::Items Item )
 {
-	/*Collider* ret = nullptr;
-
-	for(uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if(colliders[i] == nullptr)
-		{
-			ret = colliders[i] = new Collider(rect, type, listener, Item);
-			++colliderCount;
-			break;
-		}
-	}*/
-
 	Collider* ret = new Collider(rect, type, listener, Item);
 	colliders.add(ret);
 	return ret;
@@ -215,15 +188,6 @@ Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Modu
 
 void ModuleCollisions::RemoveCollider(Collider* collider)
 {
-	/*for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (colliders[i] == collider)
-		{
-			delete colliders[i];
-			colliders[i] = nullptr;
-			--colliderCount;
-		}
-	}*/
 	ListItem<Collider*>* listColl;
 	listColl = colliders.start;
 	for (int i = 0; i < colliders.count(); ++i)

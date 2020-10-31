@@ -73,21 +73,19 @@ public:
 	// Collision callback, called when the player intersects with another collider
 	bool OnCollision(Collider* c1, Collider* c2);
 
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	bool cameraFollow = false;
 	bool collisionExist = false;
 private:
 	// A flag to detect when the player is in the ladder
 	bool isGround = false;
 	bool isAir = true;
-	bool isDebug = false;
 	bool collisionFromBelow = false;
 	
-	
-	// The scene fx sounds
-	int FX_Walking = 0;
-
-	int frameCountWalking = 0;
-	bool walkingFX = false;
+	bool godMode = false;
 
 	void Input();
 	void Logic(float dt);

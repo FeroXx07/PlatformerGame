@@ -104,16 +104,15 @@ bool ModulePlayer::Start()
 	//Starting position of the Mario
 	playerPos = { -1000.0f,-1000.0f };
 	playerWH = { 95.0f,160.0f };
-	playerCollider = app->collisions->AddCollider({(int)playerPos.x + (int)playerWH.x / 2,(int)playerPos.y,(int)playerWH.x/2,(int)playerWH.y}, Collider::Type::PLAYER, app->player);
+	playerCollider = app->collisions->AddCollider({(int)playerPos.x + (int)playerWH.x / 2,(int)playerPos.y,(int)playerWH.x/2,(int)playerWH.y}, Collider::Type::PLAYER, (Module*)app->player);
 	
 
 	currentAnimation = &rightIdleAnim;
 	currentTexture = &texture;
-	/*FX_Walking =*/ /*app->audio->LoadFx("Assets/Music/SFX_Walking.wav");*/
-	/*++activeFx; ++totalFx;
-
-	frameCountWalking = 0;
-	conveyorCounter = 0;*/
+	collisionExist = false;
+	isGround = false;
+	isAir = true;
+	collisionFromBelow = false;
 
 	return ret;
 }
@@ -141,14 +140,6 @@ void ModulePlayer::Input()
 		// Controlling player movement based on if they are on the ground or air.
 		velocity.x += -VELOCITY;
 
-		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
-		if (frameCountWalking == 11)
-		{
-			walkingFX = false;
-			frameCountWalking = 0;
-		}
-		++frameCountWalking;
-
 		if (currentAnimation != &leftRunAnim)
 		{
 			leftRunAnim.Reset();
@@ -161,14 +152,6 @@ void ModulePlayer::Input()
 		// Controlling player movement based on if they are on the ground or air.
 		//velocity.x += (isGround ? VELOCITY : VELOCITY) * dt;
 		velocity.x += VELOCITY;
-
-		if (walkingFX == false) walkingFX = app->audio->PlayFx(FX_Walking);
-		if (frameCountWalking == 11)
-		{
-			walkingFX = false;
-			frameCountWalking = 0;
-		}
-		++frameCountWalking;
 
 		if (currentAnimation != &rightRunAnim)
 		{
@@ -214,22 +197,16 @@ void ModulePlayer::Input()
 	}
 
 	// Debug Keys
-
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
-		isDebug = !isDebug;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-
+		godMode = !godMode;
 	}
 }
 
 void ModulePlayer::Logic(float dt)
 {
 	// Gravity
-	if (isAir || collisionExist == false)
+	if ( (isAir || collisionExist == false) && godMode == false)
 	{
 		isGround = false;
 
@@ -268,7 +245,11 @@ void ModulePlayer::Logic(float dt)
 		{
 			currentAnimation = &rightIdleAnim;
 		}
-		if (isAir == false)
+		else if (currentAnimation == &jumpLeftAnim)
+		{
+			currentAnimation = &leftIdleAnim;
+		}
+		if (isAir == false && godMode == false)
 		{
 			velocity.y = 0;
 		}
@@ -358,6 +339,31 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	}
 
 	return ret;
+}
+
+bool ModulePlayer::LoadState(pugi::xml_node& data)
+{
+	//...
+	LOG("Loading Player state...");
+	playerPos.x = data.child("position").attribute("x").as_int();
+	playerPos.y = data.child("position").attribute("y").as_int();
+	LOG("Player state succesfully loaded.\n Pos.x = %d Pos.y = %d", playerPos.x, playerPos.y);
+	return true;
+}
+
+
+bool ModulePlayer::SaveState(pugi::xml_node& data) const
+{
+	//...
+	// Delete old data
+	data.remove_child("position");
+	// Add new data
+	LOG("Saving Player state...");
+	pugi::xml_node pos = data.append_child("position");
+	pos.append_attribute("x").set_value(playerPos.x);
+	pos.append_attribute("y").set_value(playerPos.y);
+	LOG("Player state succesfully saved. \n Pos.x = %d Pos.y = %d", playerPos.x, playerPos.y);
+	return true;
 }
 
 bool ModulePlayer::CleanUp()
