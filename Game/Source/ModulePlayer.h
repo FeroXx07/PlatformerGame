@@ -45,7 +45,7 @@ public:
 public:
 	// Position of the player in the map
 	fPoint playerPos;
-	fPoint playerWH; // Data that contains width and height of player
+	fPoint playerWh; // Data that contains width and height of player
 	fPoint colliderPos;
 
 	// The speed in which we move the player (pixels per frame)

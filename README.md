@@ -30,6 +30,7 @@ A platformer game made for the subject of video game development of the grade of
  - "F7" to die instantly.
  - "F9" to view colliders and logic.
  - "F10" to enter the God mode (fly around and cannot be killed).
+ - "F11" to win the level.
 
 ## Developers
 

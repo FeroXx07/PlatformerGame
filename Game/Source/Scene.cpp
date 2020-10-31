@@ -40,7 +40,6 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	bg = app->tex->Load("Assets/textures/Bglong.png");
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	app->map->Load("Level1.tmx");
 
@@ -57,7 +56,7 @@ bool Scene::Start()
 
 	app->player->destroyed = false;
 	app->player->win = false;
-	app->player->playerPos = { 2*32, 11*32 };
+	app->player->playerPos = { 30*32, 11*32 };
 	
 	app->player->velocity.y = 0;
 	app->player->cameraFollow = true;
@@ -109,7 +108,7 @@ bool Scene::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_UP || app->player->win == true)
-		app->fade->FadeToBlack(this, (Module*)app->winscreen);
+		app->fade->FadeToBlack(this, (Module*)app->winScreen);
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->data.width, app->map->data.height,
@@ -131,8 +130,6 @@ bool Scene::PostUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
-
-	//app->render->DrawTexture(bg, -1000, -1440);
 
 	app->map->Draw();
 	return ret;

@@ -112,8 +112,8 @@ bool ModulePlayer::Start()
 	dieTexture = app->tex->Load("Assets/textures/AnimDie.png");
 	
 	//Starting position of the Mario
-	playerWH = { 95.0f,160.0f };
-	playerCollider = app->collisions->AddCollider({(int)playerPos.x + (int)playerWH.x / 2,(int)playerPos.y,(int)playerWH.x/2,(int)playerWH.y}, Collider::Type::PLAYER, (Module*)app->player);
+	playerWh = { 95.0f,160.0f };
+	playerCollider = app->collisions->AddCollider({(int)playerPos.x + (int)playerWh.x / 2,(int)playerPos.y,(int)playerWh.x/2,(int)playerWh.y}, Collider::Type::PLAYER, (Module*)app->player);
 	
 
 	currentAnimation = &rightIdleAnim;
@@ -213,7 +213,7 @@ void ModulePlayer::Input()
 
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
-		destroyed = false;
+		destroyed = true;
 	}
 }
 
@@ -285,12 +285,12 @@ void ModulePlayer::Logic(float dt)
 	playerPos.x = playerPos.x + velocity.x * dt;
 	playerPos.y = playerPos.y + velocity.y * dt;
 
-	playerCollider->SetPos(playerPos.x + (int)playerWH.x / 4, playerPos.y);
+	playerCollider->SetPos(playerPos.x + (int)playerWh.x / 4, playerPos.y);
 
 	//The camera follows player(at the center)
-	if (cameraFollow)
+	if (destroyed == false)
 	{
-		app->render->camera.x = app->render->camera.w / 2 - playerPos.x - playerWH.x;
+		app->render->camera.x = app->render->camera.w / 2 - playerPos.x - playerWh.x;
 		app->render->camera.y = app->render->camera.h / 2 - playerPos.y;
 	}
 
@@ -358,7 +358,7 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		isAir = true;
 	}
 
-	if (c2->type == Collider::Type::ENEMY)
+	if (c2->type == Collider::Type::ENEMY && godMode == false)
 		destroyed = true;
 
 	if (c2->type == Collider::Type::WIN)

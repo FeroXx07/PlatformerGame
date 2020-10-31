@@ -35,8 +35,6 @@ class ModuleDebugInfo : public Module
 		// Displays the active and total resources from the selected module
 		void DrawModuleResources(Module* module);
 
-	
-
 	private:
 		bool debugMemLeaks = false;
 		Module* inspectedModule = nullptr;

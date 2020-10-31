@@ -31,7 +31,7 @@ bool DeathScene::Start()
 
 	app->render->background = { 0,0,0,0 };
 	// Include logo
-	
+	app->render->camera = { 0,0,1280,720 };
 	logoTex = app->tex->Load("Assets/textures/DeathScreen.png");
 
 	if (logoTex == nullptr)
@@ -69,7 +69,7 @@ bool DeathScene::PostUpdate()
 	{
 
 	}
-	app->render->DrawTexture(logoTex, 0, 0);
+	app->render->DrawTexture(logoTex, 0,0);
 	return ret;
 }
 

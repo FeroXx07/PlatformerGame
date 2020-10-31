@@ -36,7 +36,7 @@ bool WinScreen::Start()
 		ret = false;
 	}
 
-	app->player->playerPos = { -1000,-1000 };
+	app->render->camera = { 0,0,1280,720 };
 	app->player->cameraFollow = false;
 	return ret;
 }

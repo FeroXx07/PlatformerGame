@@ -149,6 +149,8 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+	printf("Camera in X = %d\nCamera in Y = %d\n\n", app->render->camera.x, app->render->camera.y);
+
 	bool ret = true;
 	PrepareUpdate();
 
