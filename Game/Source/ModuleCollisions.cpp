@@ -18,15 +18,22 @@ ModuleCollisions::ModuleCollisions(bool b) : Module(b)
 	matrix[Collider::Type::GROUND][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::GROUND][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::WIN] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::WIN] = true;
 
 	matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
-	
+	matrix[Collider::Type::ENEMY][Collider::Type::WIN] = false;
+
+	matrix[Collider::Type::WIN][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::WIN][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::WIN][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::WIN][Collider::Type::WIN] = false;
 }
 
 // Destructor
@@ -153,7 +160,10 @@ void ModuleCollisions::DebugDraw()
 			app->render->DrawRectangle(list1->data->rect, 0, 255, 0, alpha);
 			break;
 			case Collider::Type::ENEMY: // red
-			app->render->DrawRectangle(list1->data->rect, 0, 0, 255, alpha);
+			app->render->DrawRectangle(list1->data->rect, 255, 0, 0, alpha);
+			break;
+			case Collider::Type::WIN: // pink
+			app->render->DrawRectangle(list1->data->rect, 255, 192, 203, alpha);
 			break;
 		}
 		list1 = list1->next;

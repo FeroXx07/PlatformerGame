@@ -28,8 +28,9 @@ bool DeathScene::Start()
 	actualTime = 0;
 	endTime = 3000;
 
+	app->render->background = { 0,0,0,0 };
 	// Include logo
-
+	
 	logoTex = app->tex->Load("Assets/textures/DeathScreen.png");
 
 	if (logoTex == nullptr)

@@ -45,13 +45,13 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
-
+	SDL_Color background;
 public:
 
 	SDL_Renderer* renderer;
 	SDL_Rect camera;
 	SDL_Rect viewport;
-	SDL_Color background;
+	
 };
 
 #endif // __RENDER_H__

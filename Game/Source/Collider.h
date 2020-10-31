@@ -24,9 +24,9 @@ struct Collider
 		PLAYER,
 		GROUND,
 		ENEMY,
+		WIN,
 		
-		
-		MAX=3
+		MAX=4
 	};
 
 	//Methods

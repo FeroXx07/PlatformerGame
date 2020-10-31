@@ -39,11 +39,11 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	img = app->tex->Load("Assets/textures/01.png");
+	bg = app->tex->Load("Assets/textures/Bglong.png");
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->map->Load("01.tmx");
+	app->map->Load("Level1.tmx");
 
-	//app->render->SetBackgroundColor(app->map->data.backgroundColor);
+	app->render->background = { 99,210,222,0 };
 	// Layers gets gid correctly
 	
 	if (app->collisions->IsEnabled() == false)
@@ -54,7 +54,10 @@ bool Scene::Start()
 
 	app->map->LoadColliders();
 
+	app->player->destroyed = false;
+	app->player->win = false;
 	app->player->playerPos = { 2*32, 11*32 };
+	
 	app->player->velocity.y = 0;
 	app->player->cameraFollow = true;
 	return true;
@@ -91,14 +94,12 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_UP || app->input->GetKey(SDL_SCANCODE_F3) == KEY_UP)
 		app->fade->FadeToBlack(this, (Module*)app->scene);
 
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->destroyed == true)
 		app->fade->FadeToBlack(this, (Module*)app->deathScene);
 
-	//printf("Camera X: %d, \n Camera Y: %d\n\n", app->render->camera.x, app->render->camera.y);
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_UP || app->player->win == true)
+		app->fade->FadeToBlack(this, (Module*)app->deathScene);
 
-
-	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->data.width, app->map->data.height,
 				   app->map->data.tileWidth, app->map->data.tileHeight,
@@ -117,16 +118,12 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	//app->render->DrawTexture(bg, -1000, -1440);
 
-	// Draw map
 	app->map->Draw();
-
-	//app->render->DrawTexture(img, 0, 0);
-
-
 	return ret;
 }
 
@@ -134,7 +131,7 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	app->tex->UnLoad(img);
+	app->tex->UnLoad(bg);
 	app->player->Disable();
 	app->collisions->Disable();
 	app->map->CleanUp();

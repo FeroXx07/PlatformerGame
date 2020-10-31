@@ -100,9 +100,8 @@ bool ModulePlayer::Start()
 
 	texture = app->tex->Load("Assets/textures/AnimIdle.png"); 
 	jumpTexture = app->tex->Load("Assets/textures/AnimJump.png");;
-
+	
 	//Starting position of the Mario
-	playerPos = { -1000.0f,-1000.0f };
 	playerWH = { 95.0f,160.0f };
 	playerCollider = app->collisions->AddCollider({(int)playerPos.x + (int)playerWH.x / 2,(int)playerPos.y,(int)playerWH.x/2,(int)playerWH.y}, Collider::Type::PLAYER, (Module*)app->player);
 	
@@ -113,7 +112,7 @@ bool ModulePlayer::Start()
 	isGround = false;
 	isAir = true;
 	collisionFromBelow = false;
-
+	godMode = false;
 	return ret;
 }
 
@@ -337,6 +336,12 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		isGround = false;
 		isAir = true;
 	}
+
+	if (c2->type == Collider::Type::ENEMY)
+		destroyed = true;
+
+	if (c2->type == Collider::Type::WIN)
+		win = true;
 
 	return ret;
 }

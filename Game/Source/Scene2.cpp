@@ -40,6 +40,7 @@ bool Scene2::Awake()
 bool Scene2::Start()
 {
 	img = app->tex->Load("Assets/textures/LogoScreen.png");
+	app->render->background = { 0,0,0,0 };
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	return true;
 }
@@ -87,6 +88,6 @@ bool Scene2::PostUpdate()
 bool Scene2::CleanUp()
 {
 	LOG("Freeing scene");
-
+	app->tex->UnLoad(img);
 	return true;
 }

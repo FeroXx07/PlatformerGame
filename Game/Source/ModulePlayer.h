@@ -67,9 +67,6 @@ public:
 	SDL_Texture** currentTexture = nullptr;
 	SDL_Texture* jumpTexture = nullptr;
 
-	// A flag to detect when the player has been destroyed
-	bool destroyed = false;
-
 	// Collision callback, called when the player intersects with another collider
 	bool OnCollision(Collider* c1, Collider* c2);
 
@@ -79,12 +76,12 @@ public:
 
 	bool cameraFollow = false;
 	bool collisionExist = false;
+	bool destroyed = false;
+	bool win = false;
 private:
-	// A flag to detect when the player is in the ladder
 	bool isGround = false;
 	bool isAir = true;
 	bool collisionFromBelow = false;
-	
 	bool godMode = false;
 
 	void Input();

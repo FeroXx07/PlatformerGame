@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="280" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="280" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="1">
  <editorsettings>
   <export target="01.tmx" format="tmx"/>
  </editorsettings>
@@ -58,8 +58,8 @@
   <tile id="956" terrain="3,3,,3"/>
   <tile id="957" terrain="3,3,3,"/>
  </tileset>
- <tileset firstgid="1057" name="meta" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="meta.png" width="64" height="32"/>
+ <tileset firstgid="1057" name="meta" tilewidth="32" tileheight="32" tilecount="4" columns="4">
+  <image source="meta.png" width="128" height="32"/>
  </tileset>
  <layer id="1" name="Scenario" width="280" height="24">
   <properties>
@@ -9309,9 +9309,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="1060"/>
+   <tile gid="1060"/>
+   <tile gid="1060"/>
    <tile/>
    <tile/>
    <tile/>
@@ -9589,9 +9589,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="1060"/>
+   <tile gid="1060"/>
+   <tile gid="1060"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11135,6 +11135,22 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="1059"/>
+   <tile gid="1059"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="1059"/>
+   <tile gid="1059"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11158,24 +11174,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="1059"/>
+   <tile gid="1059"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11220,6 +11220,8 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="1059"/>
+   <tile gid="1059"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11257,10 +11259,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="1059"/>
+   <tile gid="1059"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11485,8 +11485,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="1059"/>
+   <tile gid="1059"/>
    <tile/>
    <tile/>
    <tile/>
@@ -12072,8 +12072,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="1059"/>
+   <tile gid="1059"/>
    <tile/>
    <tile/>
    <tile/>
