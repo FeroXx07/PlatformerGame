@@ -49,7 +49,7 @@ bool ModuleInitialScreen::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		app->fade->FadeToBlack(this, (Module*)app->scene);
+		app->fade->FadeToBlack(this, (Module*)app->titleScreen);
 	}
 
 	return ret;

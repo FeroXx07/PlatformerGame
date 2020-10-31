@@ -34,6 +34,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	int resetCounter = 0;
+
 private:
 	SDL_Texture* img;
 	SDL_Texture* bg;

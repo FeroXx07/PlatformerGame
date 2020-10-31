@@ -17,10 +17,11 @@ class Textures;
 class Audio;
 class Scene;
 class DeathScene;
+class WinScreen;
 class ModuleFonts;
 class ModuleDebugInfo;
 class ModuleFadeToBlack;
-class Scene2;
+class TitleScreen;
 class ModulePlayer;
 class Map;
 class ModuleInitialScreen;
@@ -96,9 +97,10 @@ public:
 	Audio* audio;
 
 	Scene* scene;
-	Scene2* scene2;
+	TitleScreen* titleScreen;
 	ModuleInitialScreen* initialScreen;
 	DeathScene* deathScene;
+	WinScreen* winScreen;
 	Map* map;
 	ModulePlayer* player;
 

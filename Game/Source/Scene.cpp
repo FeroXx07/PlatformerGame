@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "Map.h"
 #include "ModuleCollisions.h"
+#include "ModulePlayer.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -60,6 +61,9 @@ bool Scene::Start()
 	
 	app->player->velocity.y = 0;
 	app->player->cameraFollow = true;
+
+	resetCounter = 0;
+
 	return true;
 }
 
@@ -95,10 +99,17 @@ bool Scene::Update(float dt)
 		app->fade->FadeToBlack(this, (Module*)app->scene);
 
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->destroyed == true)
-		app->fade->FadeToBlack(this, (Module*)app->deathScene);
+	{
+		if (resetCounter == 3 * 60)
+		{
+			app->fade->FadeToBlack(this, (Module*)app->deathScene);
+			resetCounter = 0;
+		}
+		++resetCounter;
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_UP || app->player->win == true)
-		app->fade->FadeToBlack(this, (Module*)app->deathScene);
+		app->fade->FadeToBlack(this, (Module*)app->winscreen);
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->data.width, app->map->data.height,

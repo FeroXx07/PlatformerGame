@@ -1,6 +1,4 @@
-#include "DeathScene.h"
-
-
+#include "winScreen.h"
 #include "App.h"
 #include "Textures.h"
 #include "ModuleFadeToBlack.h"
@@ -11,17 +9,17 @@
 #include "Audio.h"
 #include "ModulePlayer.h"
 
-DeathScene::DeathScene(bool b) : Module(b)
+WinScreen::WinScreen(bool b) : Module(b)
 {
-	name = "Death S";
+	name = "Initial S";
 
 	logo = { 185, 0, 962, 720 };
 	screen = { 0,0,SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE };
 }
 
-DeathScene::~DeathScene() {}
+WinScreen::~WinScreen() {}
 
-bool DeathScene::Start()
+bool WinScreen::Start()
 {
 	bool ret = true;
 
@@ -29,25 +27,25 @@ bool DeathScene::Start()
 	actualTime = 0;
 	endTime = 3000;
 
-	app->render->background = { 0,0,0,0 };
 	// Include logo
-	
-	logoTex = app->tex->Load("Assets/textures/DeathScreen.png");
 
+	logoTex = app->tex->Load("Assets/textures/winScreen.png");
+	app->render->background = { 0,0,0,0 };
 	if (logoTex == nullptr)
 	{
 		ret = false;
 	}
 
-	app->render->camera = { 0,0,1280,720 };
+	app->player->playerPos = { -1000,-1000 };
 	app->player->cameraFollow = false;
-
 	return ret;
 }
 
-bool DeathScene::Update(float dt)
+bool WinScreen::Update(float dt)
 {
 	bool ret = true;
+
+
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
@@ -57,7 +55,7 @@ bool DeathScene::Update(float dt)
 	return ret;
 }
 
-bool DeathScene::PostUpdate()
+bool WinScreen::PostUpdate()
 {
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -73,7 +71,7 @@ bool DeathScene::PostUpdate()
 	return ret;
 }
 
-bool DeathScene::CleanUp()
+bool WinScreen::CleanUp()
 {
 	bool ret = true;
 

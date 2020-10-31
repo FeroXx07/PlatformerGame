@@ -63,9 +63,11 @@ public:
 	Animation rightRunAnim;
 	Animation jumpRightAnim;
 	Animation jumpLeftAnim;
+	Animation dieAnimation;
 
 	SDL_Texture** currentTexture = nullptr;
 	SDL_Texture* jumpTexture = nullptr;
+	SDL_Texture* dieTexture = nullptr;
 
 	// Collision callback, called when the player intersects with another collider
 	bool OnCollision(Collider* c1, Collider* c2);

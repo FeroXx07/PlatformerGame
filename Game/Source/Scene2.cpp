@@ -6,88 +6,88 @@
 #include "Window.h"
 #include "Scene2.h"
 #include "ModuleFadeToBlack.h"
+#include "Scene.h"
+#include "ModulePlayer.h"
 
 #include "Defs.h"
 #include "Log.h"
+#include "Globals.h"
 
-Scene2::Scene2() : Module(false)
+TitleScreen::TitleScreen(bool b) : Module(b)
 {
-	name.Create("scene");
+	name = "Title S";
+
+	title = { 185,0,962,720 };
+	screen = { 0,0,SCREEN_WIDTH * SCREEN_SIZE,SCREEN_HEIGHT * SCREEN_SIZE };
 }
 
-Scene2::Scene2(bool b) : Module(b)
+TitleScreen::~TitleScreen() {}
+
+bool TitleScreen::Start()
 {
-	name.Create("scene");
-}
-
-
-// Destructor
-Scene2::~Scene2()
-{
-
-}
-
-// Called before render is available
-bool Scene2::Awake()
-{
-	LOG("Loading Scene");
 	bool ret = true;
 
+	startTime = SDL_GetTicks();
+	actualTime = 0;
+	endTime = 3000;
+
+	// Include title
+
+	titleTex = app->tex->Load("Assets/textures/TitleScreen.png");
+	app->render->background = { 0,0,0,0 };
+	if (titleTex == nullptr)
+	{
+		ret = false;
+	}
+
+	app->player->playerPos = { -1000,-1000 };
+	app->player->cameraFollow = false;
 	return ret;
 }
 
-// Called before the first frame
-bool Scene2::Start()
+bool TitleScreen::Update(float dt)
 {
-	img = app->tex->Load("Assets/textures/LogoScreen.png");
-	app->render->background = { 0,0,0,0 };
-	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	return true;
-}
+	bool ret = true;
 
-// Called each loop iteration
-bool Scene2::PreUpdate()
-{
-	return true;
-}
 
-// Called each loop iteration
-bool Scene2::Update(float dt)
-{
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 1;
 
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += 1;
-
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
-
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 1;
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		app->fade->FadeToBlack(this, (Module*)app->scene);
 	}
 
-	return true;
-}
-
-// Called each loop iteration
-bool Scene2::PostUpdate()
-{
-	bool ret = true;
-
-	app->render->DrawTexture(img, 962, 720);
-
 	return ret;
 }
 
-// Called before quitting
-bool Scene2::CleanUp()
+bool TitleScreen::PostUpdate()
 {
-	LOG("Freeing scene");
-	app->tex->UnLoad(img);
-	return true;
+	bool ret = true;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
+
+	actualTime = SDL_GetTicks() - startTime;
+
+	if (actualTime < endTime)
+	{
+
+	}
+	app->render->DrawTexture(titleTex, 0, 0);
+	return ret;
+}
+
+bool TitleScreen::CleanUp()
+{
+	bool ret = true;
+
+	startTime = 0;
+	endTime = 0;
+	actualTime = 0;
+
+	if (!app->tex->UnLoad(titleTex))
+	{
+		LOG("Start Screen -> Error unloading the texture.");
+		ret = false;
+	}
+
+	return ret;
 }

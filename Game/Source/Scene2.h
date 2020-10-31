@@ -3,39 +3,30 @@
 
 #include "Module.h"
 
-struct SDL_Texture;
+struct SDL_Rect;
 
-class Scene2 : public Module
+class TitleScreen : public Module
 {
 public:
 
-	Scene2(bool b);
+	TitleScreen(bool startEnabled);
+	~TitleScreen();
 
-	Scene2();
-
-	// Destructor
-	virtual ~Scene2();
-
-	// Called before render is available
-	bool Awake();
-
-	// Called before the first frame
 	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
-
-	// Called each loop iteration
 	bool Update(float dt);
-
-	// Called before all Updates
 	bool PostUpdate();
-
-	// Called before quitting
 	bool CleanUp();
 
 private:
-	SDL_Texture* img;
+
+	SDL_Texture* titleTex = nullptr;
+	SDL_Texture* tex = nullptr;
+	SDL_Rect title;
+	SDL_Rect screen;
+
+	Uint32 startTime = 0;
+	Uint32 endTime = 0;
+	Uint32 actualTime = 0;
 };
 
 #endif // __SCENE_H__

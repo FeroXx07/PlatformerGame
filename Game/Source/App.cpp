@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "ModuleInitialScreen.h"
 #include "ModuleCollisions.h"
+#include "winScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,8 +33,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	scene = new Scene(false);
-	scene2 = new Scene2(false);
+	titleScreen = new TitleScreen(false);
 	deathScene = new DeathScene(false);
+	winScreen = new WinScreen(false);
 	player = new ModulePlayer(false);
 	map = new Map();
 	fade = new ModuleFadeToBlack();
@@ -52,7 +54,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 
 	AddModule(scene);
-	AddModule(scene2);
+	AddModule(titleScreen);
+	AddModule(winScreen);
 	AddModule(player);
 
 	AddModule(collisions);

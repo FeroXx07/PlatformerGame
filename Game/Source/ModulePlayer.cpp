@@ -85,6 +85,15 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	jumpLeftAnim.loop = false;
 	jumpLeftAnim.pingpong = false;
 	jumpLeftAnim.speed = 0.1f;
+
+	dieAnimation.PushBack({ 0,38,156,119 });
+	dieAnimation.PushBack({ 156,42,168,105 });
+	dieAnimation.PushBack({ 324,23,115,134 });
+	dieAnimation.PushBack({ 439,39,148,98 });
+	dieAnimation.PushBack({ 587,49,168,68 });
+	dieAnimation.PushBack({ 755,87,178,52 });
+	dieAnimation.loop = false;
+	dieAnimation.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -99,7 +108,8 @@ bool ModulePlayer::Start()
 	bool ret = true;
 
 	texture = app->tex->Load("Assets/textures/AnimIdle.png"); 
-	jumpTexture = app->tex->Load("Assets/textures/AnimJump.png");;
+	jumpTexture = app->tex->Load("Assets/textures/AnimJump.png");
+	dieTexture = app->tex->Load("Assets/textures/AnimDie.png");
 	
 	//Starting position of the Mario
 	playerWH = { 95.0f,160.0f };
@@ -200,12 +210,17 @@ void ModulePlayer::Input()
 	{
 		godMode = !godMode;
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		destroyed = false;
+	}
 }
 
 void ModulePlayer::Logic(float dt)
 {
 	// Gravity
-	if ( (isAir || collisionExist == false) && godMode == false)
+	if ( (isAir || collisionExist == false) && godMode == false && destroyed == false)
 	{
 		isGround = false;
 
@@ -255,6 +270,12 @@ void ModulePlayer::Logic(float dt)
 		velocity.x += -1.0f * velocity.x * dt; // Resistence/Friction in the ground
 		if (fabs(velocity.x) < 0.01f) // Stop the player once velocity is too small
 			velocity.x = 0;
+	}
+
+	if (destroyed)
+	{
+		currentAnimation = &dieAnimation;
+		currentTexture = &dieTexture;
 	}
 
 	printf("Velocity in X = %f\nVelocity in Y = %f\n\n", velocity.x, velocity.y);
