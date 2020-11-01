@@ -41,7 +41,14 @@ A platformer game made for the subject of video game development of the grade of
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
-SDL license
-SDL_Image license
-SDL_Mixer license
-Assets license
+[SDL license](https://github.com/FeroXx07/PlatformerGame/blob/master/Output/SDL%20License.txt)
+
+[SDL_Image license](https://github.com/FeroXx07/PlatformerGame/blob/master/Output/SDL%20Image%20License.txt)
+
+[SDL_Mixer license](https://github.com/FeroXx07/PlatformerGame/blob/master/Output/SDL%20Mixer%20License.txt)
+
+[Pugi license](https://github.com/FeroXx07/PlatformerGame/blob/master/Output/Pugi%20License.txt)
+
+Assets licenses:
+(https://github.com/FeroXx07/PlatformerGame/blob/master/Output/Assets/textures/Creative%20Common%20License.txt
+(https://github.com/FeroXx07/PlatformerGame/blob/master/Output/Assets/textures/License.txt) (https://github.com/FeroXx07/PlatformerGame/blob/master/Output/Assets/textures/Readme.txt)
