@@ -57,17 +57,17 @@ public:
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
-	Animation leftIdleAnim;
-	Animation rightIdleAnim;
+	Animation idleAnim;
 	Animation leftRunAnim;
 	Animation rightRunAnim;
-	Animation jumpRightAnim;
-	Animation jumpLeftAnim;
+	Animation jumpAnim;
 	Animation dieAnimation;
+	Animation fallAnim;
 
 	SDL_Texture** currentTexture = nullptr;
 	SDL_Texture* jumpTexture = nullptr;
 	SDL_Texture* dieTexture = nullptr;
+	SDL_Texture* fallTexture = nullptr;
 
 	// Collision callback, called when the player intersects with another collider
 	bool OnCollision(Collider* c1, Collider* c2);

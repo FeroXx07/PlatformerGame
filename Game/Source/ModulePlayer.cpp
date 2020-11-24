@@ -30,70 +30,41 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	leftIdleAnim.speed = 0.1f;*/
 
 	// right idle animation
-	rightIdleAnim.PushBack({ 0, 0, 94, 160 });
-	rightIdleAnim.PushBack({ 94, 0, 94, 160 });
-	rightIdleAnim.PushBack({ 189, 0, 95, 160 });
-	rightIdleAnim.PushBack({ 284, 0, 95, 160 });
-	rightIdleAnim.PushBack({ 379, 0, 95, 160 });
-	rightIdleAnim.PushBack({ 474, 0, 95, 160 });
-	rightIdleAnim.loop = true;
-	rightIdleAnim.speed = 0.1f;
+	idleAnim.PushBack({ 0, 298, 66, 80 });
+	idleAnim.loop = true;
+	idleAnim.speed = 0.1f;
 
-	leftIdleAnim.PushBack({ 0, 163, 92, 157 });
-	leftIdleAnim.PushBack({ 95, 164, 92, 157 });
-	leftIdleAnim.PushBack({ 190, 165, 92, 157 });
-	leftIdleAnim.PushBack({ 284, 165, 92, 157 });
-	leftIdleAnim.PushBack({ 380, 162, 92, 157 });
-	leftIdleAnim.PushBack({ 475, 161, 92, 157 });
-	leftIdleAnim.loop = true;
-	leftIdleAnim.speed = 0.1f;
-
-	rightRunAnim.PushBack({ 126, 329, 106, 146 });
-	rightRunAnim.PushBack({ 843, 331, 132, 156 });
-	rightRunAnim.PushBack({ 724, 325, 118, 157 });
-	rightRunAnim.PushBack({ 615, 328, 107, 146 });
-	rightRunAnim.PushBack({ 482, 326, 131, 152 });
-	rightRunAnim.PushBack({ 341, 327, 140, 149 });
-	rightRunAnim.PushBack({ 233, 330, 106, 154 });
-	rightRunAnim.PushBack({ 0, 322, 122, 159 }); 
+	rightRunAnim.PushBack({ 0, 0, 66, 79 });
+	rightRunAnim.PushBack({ 73, 0, 66, 78 });
+	rightRunAnim.PushBack({ 145, 0, 66, 75 });
+	rightRunAnim.PushBack({ 219, 0, 94, 59 });
+	rightRunAnim.PushBack({ 319, 0, 73, 66 });
 	rightRunAnim.loop = true;
 	rightRunAnim.speed = 0.1f;
 
-	leftRunAnim.PushBack({ 0, 502, 122, 154 }); // movement left 1
-	leftRunAnim.PushBack({ 125, 496, 118, 158 }); // idle left
-	leftRunAnim.PushBack({ 252, 506, 108, 148 }); // movement left 2
-	leftRunAnim.PushBack({ 369, 500, 132, 150 }); // idle left
-	leftRunAnim.PushBack({ 512, 505, 138, 150 });
-	leftRunAnim.PushBack({ 666, 505, 108, 155 });
-	leftRunAnim.PushBack({ 790, 505, 106, 147 });
-	leftRunAnim.PushBack({ 913, 495, 122, 154 });
+	leftRunAnim.PushBack({ 327, 96, 66, 79 }); // movement left 1
+	leftRunAnim.PushBack({ 255, 96, 66, 78 }); // idle left
+	leftRunAnim.PushBack({ 181, 96, 66, 75 }); // movement left 2
+	leftRunAnim.PushBack({ 79, 96, 94, 59 }); // idle left
+	leftRunAnim.PushBack({ 0, 96, 73, 66 });
 	leftRunAnim.loop = true;
 	leftRunAnim.speed = 0.1f;
 
-	jumpRightAnim.PushBack({ 0,0,112,145 });
-	jumpRightAnim.PushBack({ 112,0,93,169 });
-	jumpRightAnim.PushBack({ 205,0,136,149 });
-	jumpRightAnim.PushBack({ 341,0,138,165 });
-	jumpRightAnim.loop = false;
-	jumpRightAnim.pingpong = false;
-	jumpRightAnim.speed = 0.1f;
+	jumpAnim.PushBack({ 0, 298, 66, 80 });
+	jumpAnim.PushBack({ 81, 300, 67, 74 });
+	jumpAnim.PushBack({ 165, 310, 64, 56 });
+	jumpAnim.loop = false;
+	jumpAnim.pingpong = false;
+	jumpAnim.speed = 0.1f;
 
-	jumpLeftAnim.PushBack({ 368,169,112,145 });
-	jumpLeftAnim.PushBack({ 274,169,93,169 });
-	jumpLeftAnim.PushBack({ 138,169,136,149 });
-	jumpLeftAnim.PushBack({ 0,169,138,164 });
-	jumpLeftAnim.loop = false;
-	jumpLeftAnim.pingpong = false;
-	jumpLeftAnim.speed = 0.1f;
-
-	dieAnimation.PushBack({ 0,38,156,119 });
-	dieAnimation.PushBack({ 156,42,168,105 });
-	dieAnimation.PushBack({ 324,23,115,134 });
-	dieAnimation.PushBack({ 439,39,148,98 });
-	dieAnimation.PushBack({ 587,49,168,68 });
-	dieAnimation.PushBack({ 755,87,178,52 });
+	dieAnimation.PushBack({ 264, 205, 63, 66 });
 	dieAnimation.loop = false;
 	dieAnimation.speed = 0.1f;
+
+	fallAnim.PushBack({ 0,188,66,79 });
+	fallAnim.loop = false;
+	fallAnim.speed = 0.1f;
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -107,16 +78,17 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = app->tex->Load("Assets/textures/AnimIdle.png"); 
-	jumpTexture = app->tex->Load("Assets/textures/AnimJump.png");
-	dieTexture = app->tex->Load("Assets/textures/AnimDie.png");
+	texture = app->tex->Load("Assets/textures/blue_player_animations.png"); 
+	jumpTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
+	dieTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
+	fallTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
 	
 	//Starting position of the Mario
-	playerWh = { 95.0f,160.0f };
+	playerWh = { 66.0f,79.0f };
 	playerCollider = app->collisions->AddCollider({(int)playerPos.x + (int)playerWh.x / 2,(int)playerPos.y,(int)playerWh.x/2,(int)playerWh.y}, Collider::Type::PLAYER, (Module*)app->player);
 	
 
-	currentAnimation = &rightIdleAnim;
+	currentAnimation = &idleAnim;
 	currentTexture = &texture;
 	collisionExist = false;
 	isGround = false;
@@ -189,20 +161,19 @@ void ModulePlayer::Input()
 		}
 		velocity.y = -160.0f * 2;
 		isAir = true;
-		jumpRightAnim.Reset();
-		jumpLeftAnim.Reset();
+		jumpAnim.Reset();
 	}
 
 	// If last movement was left, set the current animation back to left idle
 	if (app->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_UP)
 	{
-		currentAnimation = &leftIdleAnim;
+		currentAnimation = &idleAnim;
 	}
 
 	// If last movement was right, set the current animation back to left idle
 	if (app->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_UP)
 	{
-		currentAnimation = &rightIdleAnim;
+		currentAnimation = &idleAnim;
 	}
 
 	// Debug Keys
@@ -229,11 +200,11 @@ void ModulePlayer::Logic(float dt)
 
 		if (velocity.x >= 0)
 		{
-			currentAnimation = &jumpRightAnim;
+			currentAnimation = &jumpAnim;
 		}
 		else
 		{
-			currentAnimation = &jumpLeftAnim;
+			currentAnimation = &jumpAnim;
 		}
 
 		if (velocity.y <= -200)
@@ -244,6 +215,7 @@ void ModulePlayer::Logic(float dt)
 		else 
 		{
 			velocity.y += 100.0f * 3.0f * dt;
+			currentAnimation = &fallAnim;
 		}
 
 		if (velocity.x) // Make player lose some velocity in x while is in air
@@ -255,13 +227,13 @@ void ModulePlayer::Logic(float dt)
 	if (isGround) // Stopping the player gradually while at ground
 	{
 		currentTexture = &texture;
-		if (currentAnimation == &jumpRightAnim)
+		if (currentAnimation == &jumpAnim)
 		{
-			currentAnimation = &rightIdleAnim;
+			currentAnimation = &idleAnim;
 		}
-		else if (currentAnimation == &jumpLeftAnim)
+		else if (currentAnimation == &jumpAnim)
 		{
-			currentAnimation = &leftIdleAnim;
+			currentAnimation = &idleAnim;
 		}
 		if (isAir == false && godMode == false)
 		{
