@@ -40,7 +40,7 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	rightRunAnim.PushBack({ 219, 0, 94, 59 });
 	rightRunAnim.PushBack({ 319, 0, 73, 66 });
 	rightRunAnim.loop = true;
-	rightRunAnim.speed = 0.1f;
+	rightRunAnim.speed = 0.15f;
 
 	leftRunAnim.PushBack({ 327, 96, 66, 79 }); // movement left 1
 	leftRunAnim.PushBack({ 255, 96, 66, 78 }); // idle left
@@ -48,22 +48,22 @@ ModulePlayer::ModulePlayer(bool b) : Module(b)
 	leftRunAnim.PushBack({ 79, 96, 94, 59 }); // idle left
 	leftRunAnim.PushBack({ 0, 96, 73, 66 });
 	leftRunAnim.loop = true;
-	leftRunAnim.speed = 0.1f;
+	leftRunAnim.speed = 0.15f;
 
 	jumpAnim.PushBack({ 0, 298, 66, 80 });
 	jumpAnim.PushBack({ 81, 300, 67, 74 });
 	jumpAnim.PushBack({ 165, 310, 64, 56 });
 	jumpAnim.loop = false;
 	jumpAnim.pingpong = false;
-	jumpAnim.speed = 0.1f;
+	jumpAnim.speed = 0.15f;
 
 	dieAnimation.PushBack({ 264, 205, 63, 66 });
 	dieAnimation.loop = false;
-	dieAnimation.speed = 0.1f;
+	dieAnimation.speed = 0.15f;
 
 	fallAnim.PushBack({ 0,188,66,79 });
 	fallAnim.loop = false;
-	fallAnim.speed = 0.1f;
+	fallAnim.speed = 0.15f;
 
 }
 
@@ -141,11 +141,11 @@ void ModulePlayer::Input()
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode)
 	{
 		velocity.y += VELOCITY;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode)
 	{
 		velocity.y -= VELOCITY;
 	}
@@ -158,9 +158,10 @@ void ModulePlayer::Input()
 		{
 			velocity.y = -160.0f * 2;
 			isAir = true;
+			isJump = true;
 		}
-		velocity.y = -160.0f * 2;
-		isAir = true;
+	/*	velocity.y = -160.0f * 2;
+		isAir = true;*/
 		jumpAnim.Reset();
 	}
 
@@ -193,19 +194,13 @@ void ModulePlayer::Logic(float dt)
 	// Gravity
 	if ( (isAir || collisionExist == false) && godMode == false && destroyed == false)
 	{
+		if (collisionExist == false)
+			isAir = true;
+
 		isGround = false;
 
 		currentTexture = &jumpTexture;
 		/*currentAnimation = &jumpRightAnim;*/
-
-		if (velocity.x >= 0)
-		{
-			currentAnimation = &jumpAnim;
-		}
-		else
-		{
-			currentAnimation = &jumpAnim;
-		}
 
 		if (velocity.y <= -200)
 		{
@@ -215,6 +210,14 @@ void ModulePlayer::Logic(float dt)
 		else 
 		{
 			velocity.y += 100.0f * 3.0f * dt;
+		}
+
+		if (velocity.y < 0)
+		{
+			currentAnimation = &jumpAnim;
+		}
+		else if (velocity.y >= 0)
+		{
 			currentAnimation = &fallAnim;
 		}
 
@@ -279,6 +282,7 @@ void ModulePlayer::Logic(float dt)
 
 	printf("Ground = %s\n", isGround ? "true" : "false");
 	printf("Air = %s\n", isAir ? "true" : "false");
+	printf("Jump = %s\n", isJump ? "true" : "false");
 }
 
 bool ModulePlayer::PostUpdate()
@@ -318,7 +322,12 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			{
 				playerPos.y = c2->rect.y - playerCollider->rect.h;
 				isGround = true;
-				isAir = false;
+				if (isAir)
+				{
+					isAir = false;
+					currentAnimation = &idleAnim;
+				}
+				isJump = false;
 				LOG("Player feet on ground");
 				ret = true;
 			}

@@ -83,6 +83,7 @@ public:
 private:
 	bool isGround = false;
 	bool isAir = true;
+	bool isJump = false;
 	bool collisionFromBelow = false;
 	bool godMode = false;
 

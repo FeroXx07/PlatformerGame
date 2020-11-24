@@ -17,11 +17,14 @@
 Scene::Scene() : Module(true) // The argument passed to the parent constructor is if it is enabled at construction
 {
 	name.Create("scene");
+	img = bg = NULL;
 }
 
 Scene::Scene(bool b) : Module(b) // The argument passed to the parent constructor is if it is enabled at construction
 {
 	name.Create("scene");
+	img = bg = NULL;
+
 }
 
 // Destructor
@@ -56,7 +59,7 @@ bool Scene::Start()
 
 	app->player->destroyed = false;
 	app->player->win = false;
-	app->player->playerPos = { 30*32, 11*32 };
+	app->player->playerPos = { 30*32, 9*32 };
 	
 	app->player->velocity.y = 0;
 	app->player->cameraFollow = true;
@@ -115,7 +118,7 @@ bool Scene::Update(float dt)
 				   app->map->data.tileWidth, app->map->data.tileHeight,
 				   app->map->data.tilesets.Count());
 
-	app->win->SetTitle(title.GetString());
+	//app->win->SetTitle(title.GetString());
 	iPoint mapPos = app->map->WorldToMap(app->player->playerPos.x, app->player->playerPos.y);
 	printf("Position in MAP X = %d\nPosition in MAP Y = %d\n\n", mapPos.x,mapPos.y);
 	
