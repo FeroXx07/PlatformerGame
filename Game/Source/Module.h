@@ -12,7 +12,7 @@ class Module
 {
 public:
 
-	Module(bool startEnabled = false) : active(false) 
+	Module(bool startEnabled = true) : active(false) 
 	{
 		isEnabled = startEnabled;
 	}

@@ -50,11 +50,11 @@ bool ModuleCollisions::PreUpdate()
 	// Remove all colliders scheduled for deletion
 	ListItem<Collider*>* listColl;
 	listColl = colliders.start;
-	for (int i = 0 ; i < colliders.count(); ++i)
+	for (int i = 0 ; i < colliders.Count(); ++i)
 	{
 		while (listColl != NULL && listColl->data->pendingToDelete == true)
 		{
-			colliders.del(listColl);
+			colliders.Del(listColl);
 		}
 		listColl = listColl->next;
 	}
@@ -66,7 +66,7 @@ bool ModuleCollisions::PreUpdate()
 	
 	ListItem<Collider*>* list1;
 	list1 = colliders.start;
-	for(int i = 0; i < colliders.count(); ++i)
+	for(int i = 0; i < colliders.Count(); ++i)
 	{
 		// skip empty colliders
 		if (list1 == NULL)
@@ -80,7 +80,7 @@ bool ModuleCollisions::PreUpdate()
 		ListItem<Collider*>* list2;
 		list2 = colliders.start;
 		// avoid checking collisions already checked
-		for(int k = i+1; k < colliders.count(); ++k)
+		for(int k = i+1; k < colliders.Count(); ++k)
 		{
 			// skip empty colliders
 			if (list2 == NULL)
@@ -141,7 +141,7 @@ void ModuleCollisions::DebugDraw()
 	ListItem<Collider*>* list1;
 	list1 = colliders.start;
 	Uint8 alpha = 80;
-	for(int i = 0; i < colliders.count(); ++i)
+	for(int i = 0; i < colliders.Count(); ++i)
 	{
 		if (list1 == NULL)
 		{
@@ -178,22 +178,22 @@ bool ModuleCollisions::CleanUp()
 
 	ListItem<Collider*>* listColl;
 	listColl = colliders.start;
-	for (int i = 0; i < colliders.count(); ++i)
+	for (int i = 0; i < colliders.Count(); ++i)
 	{
 		if (listColl != NULL)
 		{
-			colliders.del(listColl);
+			colliders.Del(listColl);
 		}
 		listColl = listColl->next;
 	}
-	colliders.clear();
+	colliders.Clear();
 	return true;
 }
 
 Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener, Collider::Items Item )
 {
 	Collider* ret = new Collider(rect, type, listener, Item);
-	colliders.add(ret);
+	colliders.Add(ret);
 	return ret;
 }
 
@@ -201,11 +201,11 @@ void ModuleCollisions::RemoveCollider(Collider* collider)
 {
 	ListItem<Collider*>* listColl;
 	listColl = colliders.start;
-	for (int i = 0; i < colliders.count(); ++i)
+	for (int i = 0; i < colliders.Count(); ++i)
 	{
 		if (listColl != NULL && listColl->data == collider)
 		{
-			colliders.del(listColl);
+			colliders.Del(listColl);
 		}
 		listColl = listColl->next;
 	}

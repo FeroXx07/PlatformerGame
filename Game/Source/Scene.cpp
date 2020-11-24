@@ -113,7 +113,7 @@ bool Scene::Update(float dt)
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->data.width, app->map->data.height,
 				   app->map->data.tileWidth, app->map->data.tileHeight,
-				   app->map->data.tilesets.count());
+				   app->map->data.tilesets.Count());
 
 	app->win->SetTitle(title.GetString());
 	iPoint mapPos = app->map->WorldToMap(app->player->playerPos.x, app->player->playerPos.y);

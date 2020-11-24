@@ -40,7 +40,7 @@ public:
 	// Draws all existing colliders with some transparency
 	void DebugDraw();
 
-	inline uint GetColliderCount() const { return colliders.count(); };
+	inline uint GetColliderCount() const { return colliders.Count(); };
 
 private:
 	// All existing colliders in the scene

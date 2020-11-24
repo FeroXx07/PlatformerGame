@@ -204,7 +204,7 @@ bool Map::CleanUp()
 		RELEASE(item->data);
 		item = item->next;
 	}
-	data.tilesets.clear();
+	data.tilesets.Clear();
 
 	// L04: DONE 2: clean up all layer data
 	// Remove all layers
@@ -216,7 +216,7 @@ bool Map::CleanUp()
 		RELEASE(item2->data);
 		item2 = item2->next;
 	}
-	data.layers.clear();
+	data.layers.Clear();
 
 	// Clean up the pugui tree
 	mapFile.reset();
@@ -256,7 +256,7 @@ bool Map::Load(const char* filename)
 
 		if (ret == true) ret = LoadTilesetImage(tileset, set);
 
-		data.tilesets.add(set);
+		data.tilesets.Add(set);
 	}
 
 	// L04: DONE 4: Iterate all layers and load each of them
@@ -272,7 +272,7 @@ bool Map::Load(const char* filename)
 		LoadProperties(layer, lay->properties);
 
 		if (ret == true)
-			data.layers.add(lay);
+			data.layers.Add(lay);
 	}
     
     if(ret == true)
@@ -498,7 +498,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 			prop->value = to_bool(propertyNode.attribute("value").as_string());
 		}
 
-		properties.list.add(prop);
+		properties.list.Add(prop);
 		propertyNode = propertyNode.next_sibling("property");
 	}
 	

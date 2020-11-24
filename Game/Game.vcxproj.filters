@@ -1,46 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\Window.cpp" />
+    <ClCompile Include="Source\Textures.cpp" />
+    <ClCompile Include="Source\Render.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
-      <Filter>External\PuguiXml</Filter>
+      <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
-    <ClCompile Include="Source\App.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Textures.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Render.cpp">
-      <Filter>Modules\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene2.cpp" />
-    <ClCompile Include="Source\ModulePlayer.cpp" />
-    <ClCompile Include="Source\Map.cpp" />
-    <ClCompile Include="Source\ModuleInitialScreen.cpp" />
     <ClCompile Include="Source\DeathScene.cpp" />
+    <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
+    <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
+    <ClCompile Include="Source\ModuleInitialScreen.cpp" />
+    <ClCompile Include="Source\ModulePlayer.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\Scene2.cpp" />
     <ClCompile Include="Source\winScreen.cpp" />
+    <ClCompile Include="Source\App.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\Window.h" />
+    <ClInclude Include="Source\Textures.h" />
+    <ClInclude Include="Source\Render.h" />
+    <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Defs.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -60,42 +50,29 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
-      <Filter>External\PuguiXml</Filter>
+      <Filter>External\PugiXml</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
-      <Filter>External\PuguiXml</Filter>
+      <Filter>External\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleFadeToBlack.h" />
+    <ClInclude Include="Source\Queue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\App.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Window.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Textures.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Render.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Module.h">
-      <Filter>Modules\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene2.h" />
-    <ClInclude Include="Source\ModulePlayer.h" />
-    <ClInclude Include="Source\Animation.h" />
-    <ClInclude Include="Source\Map.h" />
-    <ClInclude Include="Source\ModuleInitialScreen.h" />
     <ClInclude Include="Source\DeathScene.h" />
+    <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
+    <ClInclude Include="Source\ModuleFadeToBlack.h" />
+    <ClInclude Include="Source\ModuleInitialScreen.h" />
+    <ClInclude Include="Source\ModulePlayer.h" />
+    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\Scene2.h" />
     <ClInclude Include="Source\winScreen.h" />
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App.h" />
+    <ClInclude Include="Source\Module.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -104,17 +81,8 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External\PuguiXml">
+    <Filter Include="External\PugiXml">
       <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application">
-      <UniqueIdentifier>{463463f9-5906-41c2-b034-1bac1333e97f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules">
-      <UniqueIdentifier>{3c634f7a-c493-4b0a-bd5b-f518df6b22e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\Core">
-      <UniqueIdentifier>{ae50eb32-d4a0-46af-902e-1bf3c4cb718d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

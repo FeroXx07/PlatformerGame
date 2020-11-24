@@ -9,7 +9,9 @@
 
 ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled) : Module()
 {
-	screenRect = {0, 0, (int)app->win->width * 1, (int)app->win->height * 1};
+	uint width, height;
+	app->win->GetWindowSize(width, height);
+	screenRect = {0, 0, (int)(width * app->win->GetScale()), (int)(height * app->win->GetScale()) };
 	name = "fade";
 }
 
@@ -22,8 +24,9 @@ ModuleFadeToBlack::ModuleFadeToBlack() :Module(true)
 bool ModuleFadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
-	screenRect = { 0, 0, (int)app->win->width * 1, (int)app->win->height * 1 };
-	// Enable blending mode for transparency
+	uint width, height;
+	app->win->GetWindowSize(width, height);
+	screenRect = { 0, 0, (int)(width * app->win->GetScale()), (int)(height * app->win->GetScale()) };	// Enable blending mode for transparency
 	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 	return true;
 }

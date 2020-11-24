@@ -60,14 +60,16 @@
       <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ShowIncludes>false</ShowIncludes>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\External</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib; SDL2_mixer.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\SDL_mixer\libx86</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)Build\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)Output\$(ProjectName).exe"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -84,16 +86,19 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib; SDL2_mixer.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\SDL_mixer\libx86</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)Build\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)Output\$(ProjectName).exe"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\DeathScene.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Map.cpp" />
@@ -101,26 +106,27 @@
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
     <ClCompile Include="Source\ModuleInitialScreen.cpp" />
     <ClCompile Include="Source\ModulePlayer.cpp" />
-    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Scene2.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\winScreen.cpp" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\DeathScene.h" />
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
     <ClInclude Include="Source\ModuleInitialScreen.h" />
     <ClInclude Include="Source\ModulePlayer.h" />
-    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Input.h" />
-    <ClInclude Include="Source\App.h" />
-    <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Render.h" />
+    <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Scene2.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Window.h" />
