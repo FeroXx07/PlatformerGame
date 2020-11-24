@@ -2,7 +2,6 @@
 #define __COLLIDER_H__
 
 #include "SDL/include/SDL_Rect.h"
-#include "Globals.h"
 
 class Module;
 
@@ -10,17 +9,12 @@ struct Collider
 {
 	enum Items
 	{
-		None = -1,
-		SCOREITEMS,
-		IMPORTANTITEMS,
-		POWERITEMS,
-		MINECART,
-		ELEVATINGLADDER
+		ITEM_NONE = -1,
 	};
 
 	enum Type
 	{
-		NONE = -1,
+		TYPE_NONE = -1,
 		PLAYER,
 		GROUND,
 		ENEMY,
@@ -30,7 +24,7 @@ struct Collider
 	};
 
 	//Methods
-	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr, Items item = Items::None);
+	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr, Items item = Items::ITEM_NONE);
 
 	void SetPos(int x, int y);
 

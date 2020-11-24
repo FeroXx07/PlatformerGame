@@ -11,14 +11,12 @@
 
 #include "Defs.h"
 #include "Log.h"
-#include "Globals.h"
 
 TitleScreen::TitleScreen(bool b) : Module(b)
 {
 	name = "Title S";
 
 	title = { 185,0,962,720 };
-	screen = { 0,0,SCREEN_WIDTH * SCREEN_SIZE,SCREEN_HEIGHT * SCREEN_SIZE };
 }
 
 TitleScreen::~TitleScreen() {}

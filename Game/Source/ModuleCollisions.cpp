@@ -4,6 +4,7 @@
 
 #include "Render.h"
 #include "Input.h"
+#include "Log.h"
 
 #include "SDL/include/SDL.h"
 
@@ -150,7 +151,7 @@ void ModuleCollisions::DebugDraw()
 		
 		switch(list1->data->type)
 		{
-			case Collider::Type::NONE: // white
+			case Collider::Type::TYPE_NONE: // white
 			app->render->DrawRectangle(list1->data->rect, 255, 255, 255, alpha);
 			break;
 			case Collider::Type::GROUND: // blue

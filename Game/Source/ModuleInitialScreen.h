@@ -11,7 +11,6 @@
 #endif
 
 #include "Module.h"
-#include "Globals.h"
 #include "Textures.h"
 
 struct SDL_Rect;
@@ -34,7 +33,6 @@ private:
 	SDL_Texture* logoTex = nullptr;
 	SDL_Texture* tex = nullptr;
 	SDL_Rect logo;
-	SDL_Rect screen;
 
 	Uint32 startTime = 0;
 	Uint32 endTime = 0;

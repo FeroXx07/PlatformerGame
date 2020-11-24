@@ -92,16 +92,13 @@
   <ItemGroup>
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\DeathScene.cpp" />
-    <ClCompile Include="Source\Globals.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
-    <ClCompile Include="Source\ModuleDebugInfo.cpp" />
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
-    <ClCompile Include="Source\ModuleFonts.cpp" />
     <ClCompile Include="Source\ModuleInitialScreen.cpp" />
     <ClCompile Include="Source\ModulePlayer.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -113,12 +110,9 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\DeathScene.h" />
-    <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
-    <ClInclude Include="Source\ModuleDebugInfo.h" />
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
-    <ClInclude Include="Source\ModuleFonts.h" />
     <ClInclude Include="Source\ModuleInitialScreen.h" />
     <ClInclude Include="Source\ModulePlayer.h" />
     <ClInclude Include="Source\Scene.h" />

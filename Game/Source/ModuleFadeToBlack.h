@@ -34,12 +34,12 @@ public:
 
 private:
 
-	enum Fade_Step
+	enum FadeStep
 	{
 		NONE,
 		TO_BLACK,
 		FROM_BLACK
-	} currentStep = Fade_Step::NONE;
+	} currentStep = FadeStep::NONE;
 
 	// A frame count system to handle the fade time and ratio
 	Uint32 frameCount = 0;

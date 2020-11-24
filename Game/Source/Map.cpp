@@ -128,10 +128,10 @@ iPoint Map::WorldToMap(int x, int y) const
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
 
-		float half_width = data.tileWidth * 0.5f;
-		float half_height = data.tileHeight * 0.5f;
-		ret.x = int((x / half_width + y / half_height) / 2);
-		ret.y = int((y / half_height - (x / half_width)) / 2);
+		float halfWidth = data.tileWidth * 0.5f;
+		float halfHeight = data.tileHeight * 0.5f;
+		ret.x = int((x / halfWidth + y / halfHeight) / 2);
+		ret.y = int((y / halfHeight - (x / halfWidth)) / 2);
 	}
 	else
 	{
@@ -319,29 +319,29 @@ bool Map::LoadMap()
 }
 
 // L03: TODO: Load Tileset attributes
-bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
+bool Map::LoadTilesetDetails(pugi::xml_node& tilesetNode, TileSet* set)
 {
 	bool ret = true;
 	
 	// L03: TODO: Load Tileset attributes
 	LOG("Filling TilesetDetails");
-	set->firstgid = tileset_node.attribute("firstgid").as_int();
-	set->name = tileset_node.attribute("name").as_string();
-	set->tileWidth = tileset_node.attribute("tilewidth").as_int();
-	set->tileHeight = tileset_node.attribute("tileheight").as_int();
-	set->spacing = tileset_node.attribute("spacing").as_int();
-	set->margin = tileset_node.attribute("margin").as_int();
+	set->firstgid = tilesetNode.attribute("firstgid").as_int();
+	set->name = tilesetNode.attribute("name").as_string();
+	set->tileWidth = tilesetNode.attribute("tilewidth").as_int();
+	set->tileHeight = tilesetNode.attribute("tileheight").as_int();
+	set->spacing = tilesetNode.attribute("spacing").as_int();
+	set->margin = tilesetNode.attribute("margin").as_int();
 
-	set->offsetX = tileset_node.child("tileoffset").attribute("x").as_int();
-	set->offsetY = tileset_node.child("tileoffset").attribute("y").as_int();
+	set->offsetX = tilesetNode.child("tileoffset").attribute("x").as_int();
+	set->offsetY = tilesetNode.child("tileoffset").attribute("y").as_int();
 	return ret;
 }
 
 // L03: TODO: Load Tileset image
-bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
+bool Map::LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* set)
 {
 	bool ret = true;
-	pugi::xml_node image = tileset_node.child("image");
+	pugi::xml_node image = tilesetNode.child("image");
 
 	if (image == NULL)
 	{

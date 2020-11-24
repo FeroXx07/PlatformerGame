@@ -7,9 +7,9 @@
 #include "ModuleCollisions.h"
 #include "Audio.h"
 #include "ModuleFadeToBlack.h"
-#include "ModuleFonts.h"
 //#include "ModuleHud.h"
 #include "DeathScene.h"
+#include "Log.h"
 
 #include <stdio.h>
 #include "SDL/include/SDL_scancode.h"

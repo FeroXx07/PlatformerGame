@@ -12,19 +12,19 @@
 struct TileSet
 {
 	SString	name;
-	int	firstgid;
+	int firstgid;
 	int margin;
-	int	spacing;
-	int	tileWidth;
-	int	tileHeight;
+	int spacing;
+	int tileWidth;
+	int tileHeight;
 
 	SDL_Texture* texture;
-	int	texWidth;
-	int	texHeight;
-	int	numTilesWidth;
-	int	numTilesHeight;
-	int	offsetX;
-	int	offsetY;
+	int texWidth;
+	int texHeight;
+	int numTilesWidth;
+	int numTilesHeight;
+	int offsetX;
+	int offsetY;
 
 	// L04: TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
@@ -100,9 +100,9 @@ struct MapLayer
 struct MapData
 {
 	int width;
-	int	height;
-	int	tileWidth;
-	int	tileHeight;
+	int height;
+	int tileWidth;
+	int tileHeight;
 	SDL_Color backgroundColor;
 	MapTypes type;
 	List<TileSet*> tilesets;
@@ -143,8 +143,8 @@ private:
 
 	// L03: Methods to load all required map data
 	bool LoadMap();
-	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
+	bool LoadTilesetDetails(pugi::xml_node& tilesetNode, TileSet* set);
+	bool LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool StoreId(pugi::xml_node& node, MapLayer* layer, int index);
 	void LogInfo();

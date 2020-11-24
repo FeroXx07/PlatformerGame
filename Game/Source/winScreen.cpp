@@ -4,17 +4,17 @@
 #include "ModuleFadeToBlack.h"
 #include "Input.h"
 #include "Scene2.h"
-#include "ModuleFonts.h"
 #include "Render.h"
 #include "Audio.h"
+#include "Window.h"
 #include "ModulePlayer.h"
+#include "Log.h"
 
 WinScreen::WinScreen(bool b) : Module(b)
 {
 	name = "Initial S";
 
 	logo = { 185, 0, 962, 720 };
-	screen = { 0,0,SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE };
 }
 
 WinScreen::~WinScreen() {}

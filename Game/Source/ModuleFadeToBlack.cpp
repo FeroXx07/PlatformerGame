@@ -32,9 +32,9 @@ bool ModuleFadeToBlack::Update(float dt)
 {
 	bool ret = true;
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return ret;
+	if (currentStep == FadeStep::NONE) return ret;
 
-	if (currentStep == Fade_Step::TO_BLACK)
+	if (currentStep == FadeStep::TO_BLACK)
 	{
 		++frameCount;
 		if (frameCount >= maxFadeFrames)
@@ -43,7 +43,7 @@ bool ModuleFadeToBlack::Update(float dt)
 			moduleToDisable->Disable();
 			moduleToEnable->Enable();
 
-			currentStep = Fade_Step::FROM_BLACK;
+			currentStep = FadeStep::FROM_BLACK;
 		}
 	}
 	else
@@ -51,7 +51,7 @@ bool ModuleFadeToBlack::Update(float dt)
 		--frameCount;
 		if (frameCount <= 0)
 		{
-			currentStep = Fade_Step::NONE;
+			currentStep = FadeStep::NONE;
 		}
 	}
 
@@ -62,7 +62,7 @@ bool ModuleFadeToBlack::PostUpdate()
 {
 	bool ret = true;
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return ret;
+	if (currentStep == FadeStep::NONE) return ret;
 
 	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
@@ -78,9 +78,9 @@ bool ModuleFadeToBlack::FadeToBlack(Module* moduleToDisable, Module* moduleToEna
 	bool ret = true;
 
 	// If we are already in a fade process, ignore this call
-	if(currentStep == Fade_Step::NONE)
+	if(currentStep == FadeStep::NONE)
 	{
-		currentStep = Fade_Step::TO_BLACK;
+		currentStep = FadeStep::TO_BLACK;
 		frameCount = 0;
 		maxFadeFrames = frames;
 

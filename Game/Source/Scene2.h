@@ -22,7 +22,6 @@ private:
 	SDL_Texture* titleTex = nullptr;
 	SDL_Texture* tex = nullptr;
 	SDL_Rect title;
-	SDL_Rect screen;
 
 	Uint32 startTime = 0;
 	Uint32 endTime = 0;

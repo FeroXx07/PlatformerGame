@@ -105,7 +105,7 @@ public:
 	ModulePlayer* player;
 
 	ModuleCollisions* collisions;
-	ModuleFonts* fonts;
+	
 	ModuleDebugInfo* debug;
 	ModuleFadeToBlack* fade;
 private:
