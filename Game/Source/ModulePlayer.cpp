@@ -16,8 +16,8 @@
 
 
 //Now temporally is this
-#define VELOCITY 20.0f
-#define MAXVELOCITY_X 200.0f
+#define VELOCITY 200.0f
+#define MAXVELOCITY_X 300.0f
 #define MAXVELOCITY_Y 300.0f // Before it was 1000.0f
 
 ModulePlayer::ModulePlayer(bool b) : Module(b)
@@ -91,8 +91,7 @@ bool ModulePlayer::Start()
 	currentAnimation = &idleAnim;
 	currentTexture = &texture;
 	collisionExist = false;
-	isGround = false;
-	isAir = true;
+	playerState = onAir;
 	collisionFromBelow = false;
 	godMode = false;
 	return ret;
@@ -102,9 +101,21 @@ bool ModulePlayer::Update(float dt)
 {
 	bool ret = true;
 
-	Input();
+	Input(dt);
 
 	Logic(dt);
+	Collisions(dt);
+
+	if (velocity.y>=250.f/*dt*1000.0f > app->cappedMs*/)
+	{
+		float newDt = dt/25.0f;
+		for (int i = 0; i < 5; ++i)
+		{
+			Logic(newDt);
+			Collisions(newDt);
+		}
+		LOG("---------SUBSTEPPING---------");
+	}
 
 	if (currentAnimation != NULL)
 	{
@@ -114,12 +125,12 @@ bool ModulePlayer::Update(float dt)
 	return ret;
 }
 
-void ModulePlayer::Input()
+void ModulePlayer::Input(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		// Controlling player movement based on if they are on the ground or air.
-		velocity.x += -VELOCITY;
+		velocity.x += -VELOCITY*1.5f*dt;
 
 		if (currentAnimation != &leftRunAnim)
 		{
@@ -132,7 +143,7 @@ void ModulePlayer::Input()
 	{
 		// Controlling player movement based on if they are on the ground or air.
 		//velocity.x += (isGround ? VELOCITY : VELOCITY) * dt;
-		velocity.x += VELOCITY;
+		velocity.x += VELOCITY *1.5f*dt;
 
 		if (currentAnimation != &rightRunAnim)
 		{
@@ -143,21 +154,21 @@ void ModulePlayer::Input()
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode)
 	{
-		velocity.y += VELOCITY;
+		velocity.y += VELOCITY*dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode)
 	{
-		velocity.y -= VELOCITY;
+		velocity.y -= VELOCITY*dt;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isGround == true)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerState == onGround)
 	{
 		// Stop moving just before jumping
 		velocity.x = velocity.x / 2;
 		if (velocity.y == 0)
 		{
 			velocity.y = -160.0f * 2;
-			isAir = true;
+			playerState = onAir;
 			isJump = true;
 		}
 	/*	velocity.y = -160.0f * 2;
@@ -192,12 +203,10 @@ void ModulePlayer::Input()
 void ModulePlayer::Logic(float dt)
 {
 	// Gravity
-	if ( (isAir || collisionExist == false) && godMode == false && destroyed == false)
+	if ( (playerState==onAir || collisionExist == false) && godMode == false && destroyed == false)
 	{
 		if (collisionExist == false)
-			isAir = true;
-
-		isGround = false;
+			playerState = onAir;
 
 		currentTexture = &jumpTexture;
 		/*currentAnimation = &jumpRightAnim;*/
@@ -223,11 +232,11 @@ void ModulePlayer::Logic(float dt)
 
 		if (velocity.x) // Make player lose some velocity in x while is in air
 		{
-			velocity.x += -5.0f * velocity.x * dt; // Resistence/Friction in the air
+			velocity.x += -0.5f * velocity.x * dt; // Resistence/Friction in the air
 		}
 	}
 
-	if (isGround) // Stopping the player gradually while at ground
+	if (playerState == onGround) // Stopping the player gradually while at ground
 	{
 		currentTexture = &texture;
 		if (currentAnimation == &jumpAnim)
@@ -238,7 +247,7 @@ void ModulePlayer::Logic(float dt)
 		{
 			currentAnimation = &idleAnim;
 		}
-		if (isAir == false && godMode == false)
+		if (playerState != onAir && godMode == false)
 		{
 			velocity.y = 0;
 		}
@@ -280,8 +289,8 @@ void ModulePlayer::Logic(float dt)
 	if (velocity.y < -MAXVELOCITY_Y)
 		velocity.y = -MAXVELOCITY_Y;
 
-	printf("Ground = %s\n", isGround ? "true" : "false");
-	printf("Air = %s\n", isAir ? "true" : "false");
+	/*printf("Ground = %s\n", isGround ? "true" : "false");
+	printf("Air = %s\n", isAir ? "true" : "false");*/
 	printf("Jump = %s\n", isJump ? "true" : "false");
 }
 
@@ -293,6 +302,23 @@ bool ModulePlayer::PostUpdate()
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(*currentTexture, playerPos.x, playerPos.y, &rect);
+	}
+
+	return ret;
+}
+
+bool ModulePlayer::Collisions(float dt)
+{
+	bool ret = true;
+	collisionExist = false;
+	//Check manually all collisions with player
+	//
+	ListItem<Collider*>* listColliders;
+	
+	for (listColliders = app->collisions->colliders.start; listColliders != NULL; listColliders = listColliders->next)
+	{
+		if (playerCollider->Intersects(listColliders->data->rect))
+			collisionExist = this->OnCollision(playerCollider, listColliders->data);
 	}
 
 	return ret;
@@ -318,13 +344,17 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		if (collisionFromBelow == false)
 		{
 			// Maintain the feet to the ground
-			if ((playerCollider->rect.y + playerCollider->rect.h >= c2->rect.y) && (playerCollider->rect.y + playerCollider->rect.h <= c2->rect.y + 4))
+			if ((playerCollider->rect.y + playerCollider->rect.h >= c2->rect.y) && (playerCollider->rect.y + playerCollider->rect.h <= c2->rect.y + c2->rect.h/2))
 			{
-				playerPos.y = c2->rect.y - playerCollider->rect.h;
-				isGround = true;
-				if (isAir)
+				if (!(playerCollider->rect.y + playerCollider->rect.h <= c2->rect.y + 4))
+					playerPos.y += -0.5f;
+				else
+					playerPos.y = c2->rect.y - playerCollider->rect.h;
+				/*isGround = true;*/
+				playerState = onGround;
+				if (playerState == onAir)
 				{
-					isAir = false;
+					//isAir = false;
 					currentAnimation = &idleAnim;
 				}
 				isJump = false;
@@ -335,8 +365,7 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	}
 	else
 	{
-		isGround = false;
-		isAir = true;
+		playerState = onAir;
 	}
 
 	if (c2->type == Collider::Type::ENEMY && godMode == false)

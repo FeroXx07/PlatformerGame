@@ -19,8 +19,9 @@ struct Collider
 		GROUND,
 		ENEMY,
 		WIN,
-		
-		MAX=4
+		CHECKPOINT,
+
+		MAX=5
 	};
 
 	//Methods

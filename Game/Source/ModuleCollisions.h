@@ -42,10 +42,12 @@ public:
 
 	inline uint GetColliderCount() const { return colliders.Count(); };
 
+	List<Collider*> colliders;
+
 private:
 	// All existing colliders in the scene
 	//Collider* colliders[MAX_COLLIDERS] = { nullptr };
-	List<Collider*> colliders;
+
 	// The collision matrix. Defines the interaction for two collider types
 	// If set two false, collider 1 will ignore collider 
 	bool matrix[Collider::Type::MAX][Collider::Type::MAX];

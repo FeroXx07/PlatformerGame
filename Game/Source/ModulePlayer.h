@@ -81,14 +81,16 @@ public:
 	bool destroyed = false;
 	bool win = false;
 private:
-	bool isGround = false;
-	bool isAir = true;
+	enum PlayerState {onGround, onAir};
+	PlayerState playerState = onAir;
+	
 	bool isJump = false;
 	bool collisionFromBelow = false;
 	bool godMode = false;
 
-	void Input();
+	void Input(float dt);
 	void Logic(float dt);
+	bool Collisions(float dt);
 };
 
 #endif //!__MODULE_PLAYER_H__

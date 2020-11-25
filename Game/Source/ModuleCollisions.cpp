@@ -47,73 +47,73 @@ bool ModuleCollisions::PreUpdate()
 {
 	bool ret = true;
 
-	// Remove all colliders scheduled for deletion
-	ListItem<Collider*>* listColl;
-	listColl = colliders.start;
-	for (int i = 0 ; i < colliders.Count(); ++i)
-	{
-		while (listColl != NULL && listColl->data->pendingToDelete == true)
-		{
-			colliders.Del(listColl);
-		}
-		listColl = listColl->next;
-	}
+	//// Remove all colliders scheduled for deletion
+	//ListItem<Collider*>* listColl;
+	//listColl = colliders.start;
+	//for (int i = 0 ; i < colliders.Count(); ++i)
+	//{
+	//	while (listColl != NULL && listColl->data->pendingToDelete == true)
+	//	{
+	//		colliders.Del(listColl);
+	//	}
+	//	listColl = listColl->next;
+	//}
 
-	Collider* c1;
-	Collider* c2;
+	//Collider* c1;
+	//Collider* c2;
 
-	app->player->collisionExist = false;
-	
-	ListItem<Collider*>* list1;
-	list1 = colliders.start;
-	for(int i = 0; i < colliders.Count(); ++i)
-	{
-		// skip empty colliders
-		if (list1 == NULL)
-		{
-			list1 = list1->next;
-			continue;
-		}
+	//app->player->collisionExist = false;
+	//
+	//ListItem<Collider*>* list1;
+	//list1 = colliders.start;
+	//for(int i = 0; i < colliders.Count(); ++i)
+	//{
+	//	// skip empty colliders
+	//	if (list1 == NULL)
+	//	{
+	//		list1 = list1->next;
+	//		continue;
+	//	}
 
-		c1 = list1->data;
+	//	c1 = list1->data;
 
-		ListItem<Collider*>* list2;
-		list2 = colliders.start;
-		// avoid checking collisions already checked
-		for(int k = i+1; k < colliders.Count(); ++k)
-		{
-			// skip empty colliders
-			if (list2 == NULL)
-			{
-				if (list2->next == NULL)
-					break;
-				list2 = list2->next;
-				continue;
-			}
+	//	ListItem<Collider*>* list2;
+	//	list2 = colliders.start;
+	//	// avoid checking collisions already checked
+	//	for(int k = i+1; k < colliders.Count(); ++k)
+	//	{
+	//		// skip empty colliders
+	//		if (list2 == NULL)
+	//		{
+	//			if (list2->next == NULL)
+	//				break;
+	//			list2 = list2->next;
+	//			continue;
+	//		}
 
-			c2 = list2->data;
+	//		c2 = list2->data;
 
-			if(c1->Intersects(c2->rect))
-			{
-				if (matrix[c1->type][c2->type] && c1->listener)
-				{
-					if (c1->type == Collider::Type::PLAYER)
-					{
-						app->player->collisionExist = c1->listener->OnCollision(c1, c2);
-					}
-					else
-						c1->listener->OnCollision(c1, c2); //efecto de la colisión
-				}
-					
-			
-				if(matrix[c2->type][c1->type] && c2->listener) 
-					c2->listener->OnCollision(c2, c1);
-			}
+	//		if(c1->Intersects(c2->rect))
+	//		{
+	//			if (matrix[c1->type][c2->type] && c1->listener)
+	//			{
+	//				if (c1->type == Collider::Type::PLAYER)
+	//				{
+	//					app->player->collisionExist = c1->listener->OnCollision(c1, c2);
+	//				}
+	//				else
+	//					c1->listener->OnCollision(c1, c2); //efecto de la colisión
+	//			}
+	//				
+	//		
+	//			if(matrix[c2->type][c1->type] && c2->listener) 
+	//				c2->listener->OnCollision(c2, c1);
+	//		}
 
-			list2 = list2->next;
-		}
-		list1 = list1->next;
-	}
+	//		list2 = list2->next;
+	//	}
+	//	list1 = list1->next;
+	//}
 
 	return ret;
 }
