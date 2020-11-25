@@ -368,6 +368,11 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		playerState = onAir;
 	}
 
+	if (c2->type == Collider::Type::CHECKPOINT)
+	{
+		app->SaveGameRequest();
+	}
+
 	if (c2->type == Collider::Type::ENEMY && godMode == false)
 		destroyed = true;
 
