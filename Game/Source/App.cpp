@@ -7,12 +7,14 @@
 #include "Scene.h"
 #include "DeathScene.h"
 #include "ModuleFadeToBlack.h"
-#include "Scene2.h"
+#include "TitleScreen.h"
 #include "ModulePlayer.h"
 #include "Map.h"
 #include "ModuleInitialScreen.h"
 #include "ModuleCollisions.h"
-#include "winScreen.h"
+#include "WinScreen.h"
+
+#include "ModuleEntities.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -41,7 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new ModuleFadeToBlack();
 	initialScreen = new ModuleInitialScreen(true);
 	collisions = new ModuleCollisions(true);
-
+	entities = new Entities(false);
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
@@ -58,6 +60,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(winScreen);
 	AddModule(player);
 
+	AddModule(entities);
 	AddModule(collisions);
 	AddModule(fade);
 

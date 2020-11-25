@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "ModuleCollisions.h"
 #include "ModulePlayer.h"
+#include "ModuleEntities.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -55,6 +56,9 @@ bool Scene::Start()
 	if (app->player->IsEnabled() == false)
 		app->player->Enable();
 
+	if (app->entities->IsEnabled() == false)
+		app->entities->Enable();
+
 	app->map->LoadColliders();
 
 	app->player->destroyed = false;
@@ -64,6 +68,8 @@ bool Scene::Start()
 	app->player->velocity.y = 0;
 	app->player->cameraFollow = true;
 
+
+	app->entities->AddEnemy(EntityType::ENEMY_FIREMINION, 38 * 32, 9 * 32);
 	resetCounter = 0;
 
 	return true;
@@ -120,7 +126,7 @@ bool Scene::Update(float dt)
 
 	//app->win->SetTitle(title.GetString());
 	iPoint mapPos = app->map->WorldToMap(app->player->playerPos.x, app->player->playerPos.y);
-	printf("Position in MAP X = %d\nPosition in MAP Y = %d\n\n", mapPos.x,mapPos.y);
+	//printf("Position in MAP X = %d\nPosition in MAP Y = %d\n\n", mapPos.x,mapPos.y);
 	
 
 	return true;
@@ -145,6 +151,7 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(bg);
 	app->player->Disable();
 	app->collisions->Disable();
+	app->entities->Disable();
 	app->map->CleanUp();
 	return true;
 }

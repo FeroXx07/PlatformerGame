@@ -1,11 +1,12 @@
-#ifndef __MODULE_ENEMIES_H__
-#define __MODULE_ENEMIES_H__
+#ifndef __MODULE_ENTITIES_H__
+#define __MODULE_ENTITIES_H__
 
 #include "Module.h"
+#include "List.h"
 
 #define MAX_ENEMIES 100
 
-enum class Enemy_Type
+enum class EntityType
 {
 	NO_TYPE,
 	ITEM_NUT,
@@ -17,23 +18,23 @@ enum class Enemy_Type
 	ENEMY_MINECART
 };
 
-struct EnemySpawnpoint
+struct EntitySpawnpoint
 {
-	Enemy_Type type = Enemy_Type::NO_TYPE;
+	EntityType type = EntityType::NO_TYPE;
 	int x, y;
 };
 
-class Enemy;
+class Entity;
 struct SDL_Texture;
 
-class ModuleEnemies : public Module
+class Entities : public Module
 {
 public:
 	// Constructor
-	ModuleEnemies(bool startEnabled);
+	Entities(bool startEnabled);
 
 	// Destructor
-	~ModuleEnemies();
+	~Entities();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the enemies
@@ -41,15 +42,15 @@ public:
 
 	// Called at the beginning of the application loop
 	// Removes all enemies pending to delete
-	bool PreUpdate();
+	bool PreUpdate() override;
 
 	// Called at the middle of the application loop
 	// Handles all enemies logic and spawning/despawning
-	bool Update();
+	bool Update(float dt) override;
 
 	// Called at the end of the application loop
 	// Iterates all the enemies and draws them
-	bool PostUpdate();
+	bool PostUpdate() override;
 
 	// Called on application exit
 	// Destroys all active enemies left in the array
@@ -57,11 +58,10 @@ public:
 
 	// Called when an enemi collider hits another collider
 	// The enemy is destroyed and an explosion particle is fired
-
-	/*void OnCollision(Collider* c1, Collider* c2) override;*/
+	bool OnCollision(Collider* c1, Collider* c2);
 
 	// Add an enemy into the queue to be spawned later
-	bool AddEnemy(Enemy_Type type, int x, int y);
+	bool AddEnemy(EntityType type, int x, int y);
 
 	// Iterates the queue and checks for camera position
 	void HandleEnemiesSpawn();
@@ -71,14 +71,16 @@ public:
 
 private:
 	// Spawns a new enemy using the data from the queue
-	void SpawnEnemy(const EnemySpawnpoint& info);
+	void SpawnEnemy(const EntitySpawnpoint& info);
 
 private:
 	// A queue with all spawn points information
-	EnemySpawnpoint spawnQueue[MAX_ENEMIES];
+	/*EntitySpawnpoint spawnQueue[MAX_ENEMIES];*/
+	List<EntitySpawnpoint>spawnQueue;
 
 	// All spawned enemies in the scene
-	Enemy* enemies[MAX_ENEMIES] = { nullptr };
+	/*Entity* enemies[MAX_ENEMIES] = { nullptr };*/
+	List<Entity*>entities;
 
 	// The enemies sprite sheet
 	SDL_Texture* texture = nullptr;
@@ -90,4 +92,4 @@ private:
 	int itemPickedFx = 0;
 };
 
-#endif // __MODULE_ENEMIES_H__
+#endif // __MODULE_ENTITIES_H__

@@ -29,6 +29,7 @@ class ModulePlayer;
 class Map;
 class ModuleInitialScreen;
 class ModuleCollisions;
+class Entities;
 
 class App
 {
@@ -111,6 +112,7 @@ public:
 	
 	ModuleDebugInfo* debug;
 	ModuleFadeToBlack* fade;
+	Entities* entities;
 
 	float cappedMs = -1;
 private:

@@ -4,7 +4,7 @@
 #include "Textures.h"
 #include "ModuleFadeToBlack.h"
 #include "Input.h"
-#include "Scene2.h"
+#include "TitleScreen.h"
 #include "Window.h"
 #include "Render.h"
 #include "Audio.h"

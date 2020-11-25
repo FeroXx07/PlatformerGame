@@ -4,11 +4,6 @@
 #define __MODULEINITIALSCREEN_H__
 
 #include "SDL/include/SDL_rect.h"
-#ifdef _DEBUG
-#pragma comment( lib, "Source/External/SDL/include/SDL_rect.h")
-#else
-#pragma comment( lib, "Source/External/SDL/include/SDL_rect.h")
-#endif
 
 #include "Module.h"
 #include "Textures.h"

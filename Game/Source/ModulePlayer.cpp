@@ -266,14 +266,14 @@ void ModulePlayer::Logic(float dt)
 	printf("Position in X = %f\nPosition in Y = %f\n\n", playerPos.x, playerPos.y);
 
 	// Integrators
-	playerPos.x = playerPos.x + velocity.x * dt;
-	playerPos.y = playerPos.y + velocity.y * dt;
-
-	playerCollider->SetPos(playerPos.x + (int)playerWh.x / 4, playerPos.y);
-
-	//The camera follows player(at the center)
 	if (destroyed == false)
 	{
+		playerPos.x = playerPos.x + velocity.x * dt;
+		playerPos.y = playerPos.y + velocity.y * dt;
+
+		playerCollider->SetPos(playerPos.x + (int)playerWh.x / 4, playerPos.y);
+
+		//The camera follows player(at the center)
 		app->render->camera.x = app->render->camera.w / 2 - playerPos.x - playerWh.x;
 		app->render->camera.y = app->render->camera.h / 2 - playerPos.y;
 	}
