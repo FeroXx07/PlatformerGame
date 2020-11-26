@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "List.h"
 
-#define MAX_ENEMIES 100
+
 
 enum class EntityType
 {
@@ -61,7 +61,7 @@ public:
 	bool OnCollision(Collider* c1, Collider* c2);
 
 	// Add an enemy into the queue to be spawned later
-	bool AddEnemy(EntityType type, int x, int y);
+	bool AddEntity(EntityType type, int x, int y);
 
 	// Iterates the queue and checks for camera position
 	void HandleEnemiesSpawn();

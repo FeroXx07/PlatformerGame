@@ -39,6 +39,9 @@ public:
 private:
 	SDL_Texture* img;
 	SDL_Texture* bg;
+
+public:
+	
 };
 
 #endif // __SCENE_H__

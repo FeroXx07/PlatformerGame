@@ -18,22 +18,22 @@ ModuleCollisions::ModuleCollisions(bool b) : Module(b)
 
 	matrix[Collider::Type::GROUND][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::GROUND][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::ENEMY_HITBOX] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::WIN] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
-	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HITBOX] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::WIN] = true;
 
-	matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = false;
-	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::ENEMY][Collider::Type::WIN] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::WIN] = false;
 
 	matrix[Collider::Type::WIN][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::WIN][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::WIN][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::WIN][Collider::Type::ENEMY_HITBOX] = false;
 	matrix[Collider::Type::WIN][Collider::Type::WIN] = false;
 }
 
@@ -160,11 +160,14 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::PLAYER: // green
 			app->render->DrawRectangle(list1->data->rect, 0, 255, 0, alpha);
 			break;
-			case Collider::Type::ENEMY: // red
+			case Collider::Type::ENEMY_HITBOX: // red
 			app->render->DrawRectangle(list1->data->rect, 255, 0, 0, alpha);
 			break;
 			case Collider::Type::WIN: // pink
 			app->render->DrawRectangle(list1->data->rect, 255, 192, 203, alpha);
+			break;
+			case Collider::Type::CHECKPOINT: // mediumspringgreen	
+			app->render->DrawRectangle(list1->data->rect, 0, 250, 154, alpha);
 			break;
 		}
 		list1 = list1->next;

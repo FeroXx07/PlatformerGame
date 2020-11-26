@@ -10,6 +10,7 @@ struct Collider
 	enum Items
 	{
 		ITEM_NONE = -1,
+
 	};
 
 	enum Type
@@ -17,11 +18,13 @@ struct Collider
 		TYPE_NONE = -1,
 		PLAYER,
 		GROUND,
-		ENEMY,
+		ENEMY_HITBOX,
 		WIN,
 		CHECKPOINT,
+		ENEMY_HURTBOX,
+		ITEM,
 
-		MAX=5
+		MAX=7,
 	};
 
 	//Methods

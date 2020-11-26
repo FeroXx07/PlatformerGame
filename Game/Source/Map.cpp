@@ -545,11 +545,14 @@ int Map::LoadColliders()
 				case Collider::Type::GROUND: // blue
 					app->collisions->AddCollider(rect, Collider::Type::GROUND);
 					break;
-				case Collider::Type::ENEMY: // blue
-					app->collisions->AddCollider(rect, Collider::Type::ENEMY);
+				case Collider::Type::ENEMY_HITBOX: // blue
+					app->collisions->AddCollider(rect, Collider::Type::ENEMY_HITBOX);
 					break;
 				case Collider::Type::WIN: // blue
 					app->collisions->AddCollider(rect, Collider::Type::WIN);
+					break;
+				case Collider::Type::CHECKPOINT: 
+					app->collisions->AddCollider(rect, Collider::Type::CHECKPOINT);
 					break;
 				}
 			}

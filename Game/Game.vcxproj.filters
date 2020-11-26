@@ -10,7 +10,6 @@
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
-    <ClCompile Include="Source\ModulePlayer.cpp" />
     <ClCompile Include="Source\App.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -59,6 +58,15 @@
     <ClCompile Include="Source\Enemy_FireMinion.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModulePlayer.cpp">
+      <Filter>Player &amp; HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleHud.cpp">
+      <Filter>Player &amp; HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -92,7 +100,6 @@
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
-    <ClInclude Include="Source\ModulePlayer.h" />
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -143,6 +150,15 @@
     <ClInclude Include="Source\Enemy_FireMinion.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ModulePlayer.h">
+      <Filter>Player &amp; HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleHud.h">
+      <Filter>Player &amp; HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -165,6 +181,9 @@
     </Filter>
     <Filter Include="Entities">
       <UniqueIdentifier>{df943ad3-7a0d-4d88-9719-4455e04de3ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player &amp; HUD">
+      <UniqueIdentifier>{9ea56cda-2ac6-445e-9c37-badacf7bde2a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

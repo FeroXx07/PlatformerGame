@@ -100,7 +100,7 @@ bool Entities::Update(float dt)
 		list = list->next;
 	}
 
-	HandleEnemiesDespawn();
+	//HandleEnemiesDespawn();
 
 	return ret;
 }
@@ -164,7 +164,7 @@ bool Entities::CleanUp()
 	return ret;
 }
 
-bool Entities::AddEnemy(EntityType type, int x, int y)
+bool Entities::AddEntity(EntityType type, int x, int y)
 {
 	bool ret = true;
 
@@ -249,7 +249,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 			{
 				case EntityType::ENEMY_FIREMINION:
 				{
-					enemies[i] = new Enemy_FireMinion(info.x, info.y);
+					enemies[i] = new TestEntityEnemy(info.x, info.y);
 					enemies[i]->destroyedFx = enemyDestroyedFx;
 					break;
 				}
@@ -270,7 +270,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 	{
 	case EntityType::ENEMY_FIREMINION:
 	{
-		newEntity = new Enemy_FireMinion(info.x, info.y);
+		newEntity = new TestEntityEnemy(info.x, info.y);
 		newEntity->destroyedFx = enemyDestroyedFx;
 		newEntity->texture = texture;
 

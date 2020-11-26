@@ -104,7 +104,7 @@ bool ModulePlayer::Update(float dt)
 	Input(dt);
 
 	Logic(dt);
-	Collisions(dt);
+	CheckCollisions(dt);
 
 	if (velocity.y>=250.f/*dt*1000.0f > app->cappedMs*/)
 	{
@@ -112,7 +112,7 @@ bool ModulePlayer::Update(float dt)
 		for (int i = 0; i < 5; ++i)
 		{
 			Logic(newDt);
-			Collisions(newDt);
+			CheckCollisions(newDt);
 		}
 		LOG("---------SUBSTEPPING---------");
 	}
@@ -307,7 +307,7 @@ bool ModulePlayer::PostUpdate()
 	return ret;
 }
 
-bool ModulePlayer::Collisions(float dt)
+bool ModulePlayer::CheckCollisions(float dt)
 {
 	bool ret = true;
 	collisionExist = false;
@@ -351,29 +351,26 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				else
 					playerPos.y = c2->rect.y - playerCollider->rect.h;
 				/*isGround = true;*/
-				playerState = onGround;
+				//playerState = onGround;
 				if (playerState == onAir)
 				{
 					//isAir = false;
 					currentAnimation = &idleAnim;
 				}
+				playerState = onGround;
 				isJump = false;
 				LOG("Player feet on ground");
 				ret = true;
 			}
 		}
 	}
-	else
-	{
-		playerState = onAir;
-	}
-
+	
 	if (c2->type == Collider::Type::CHECKPOINT)
 	{
 		app->SaveGameRequest();
 	}
 
-	if (c2->type == Collider::Type::ENEMY && godMode == false)
+	if (c2->type == Collider::Type::ENEMY_HITBOX && godMode == false)
 		destroyed = true;
 
 	if (c2->type == Collider::Type::WIN)
@@ -406,6 +403,16 @@ bool ModulePlayer::SaveState(pugi::xml_node& data) const
 	LOG("Player state succesfully saved. \n Pos.x = %d Pos.y = %d", playerPos.x, playerPos.y);
 	return true;
 }
+
+void ModulePlayer::PlayerDied()
+{
+	app->LoadGameRequest();
+	app->player->destroyed = false;
+	app->player->velocity.y = 0;
+	app->player->velocity.x = 0;
+	//-- one unit of life
+}
+
 
 bool ModulePlayer::CleanUp()
 {

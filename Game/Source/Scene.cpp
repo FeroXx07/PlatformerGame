@@ -69,7 +69,7 @@ bool Scene::Start()
 	app->player->cameraFollow = true;
 
 
-	app->entities->AddEnemy(EntityType::ENEMY_FIREMINION, 38 * 32, 9 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_FIREMINION, 38 * 32, 9 * 32);
 	resetCounter = 0;
 
 	return true;
@@ -108,12 +108,17 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->destroyed == true)
 	{
-		if (resetCounter == 3 * 60)
-		{
-			app->fade->FadeToBlack(this, (Module*)app->deathScene);
-			resetCounter = 0;
-		}
-		++resetCounter;
+		//Check here if player has lost all lives, if true then do the fade to black (permanent death)
+
+			/*if (resetCounter == 3 * 60)
+			{
+				app->fade->FadeToBlack(this, (Module*)app->deathScene);
+				resetCounter = 0;
+			}
+			++resetCounter;*/
+
+		//If player still has lives, minus one live and restart him from the last checkpoint (temporal death)
+		app->player->PlayerDied();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_UP || app->player->win == true)
@@ -143,6 +148,7 @@ bool Scene::PostUpdate()
 	app->map->Draw();
 	return ret;
 }
+
 
 // Called before quitting
 bool Scene::CleanUp()

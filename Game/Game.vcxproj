@@ -107,6 +107,8 @@
     <ClCompile Include="Source\ModuleCollisions.cpp" />
     <ClCompile Include="Source\ModuleEntities.cpp" />
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
+    <ClCompile Include="Source\ModuleFonts.cpp" />
+    <ClCompile Include="Source\ModuleHud.cpp" />
     <ClCompile Include="Source\ModuleInitialScreen.cpp" />
     <ClCompile Include="Source\ModulePlayer.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
@@ -128,6 +130,8 @@
     <ClInclude Include="Source\ModuleCollisions.h" />
     <ClInclude Include="Source\ModuleEntities.h" />
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
+    <ClInclude Include="Source\ModuleFonts.h" />
+    <ClInclude Include="Source\ModuleHud.h" />
     <ClInclude Include="Source\ModuleInitialScreen.h" />
     <ClInclude Include="Source\ModulePlayer.h" />
     <ClInclude Include="Source\PerfTimer.h" />

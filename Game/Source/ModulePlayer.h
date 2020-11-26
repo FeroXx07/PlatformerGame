@@ -90,7 +90,16 @@ private:
 
 	void Input(float dt);
 	void Logic(float dt);
-	bool Collisions(float dt);
+	bool CheckCollisions(float dt);
+
+public:
+	// Player loses life and it is tp to checpoint
+	void PlayerDied();
+
+	// Player has lost all lives
+	void PlayerLost();
+
+	
 };
 
 #endif //!__MODULE_PLAYER_H__

@@ -4,18 +4,19 @@
 #include "ModuleCollisions.h"
 
 
-Enemy_FireMinion::Enemy_FireMinion(int x, int y) : Entity(x, y)
+TestEntityEnemy::TestEntityEnemy(int x, int y) : Entity(x, y)
 {
 	spawnDelay = 0;
 
-	enemy_FireMinionLeftAnim.PushBack({ 0,0,42,40 });
-	currentAnim = &enemy_FireMinionLeftAnim;
+	testAnimation.PushBack({ 0,0,42,40 });
+	currentAnim = &testAnimation;
 
-	collider = app->collisions->AddCollider({0, 0, 42, 40}, Collider::Type::ENEMY, (Module*) app->entities);
+	collider = app->collisions->AddCollider({0, 0, 42, 40}, Collider::Type::ENEMY_HITBOX, (Module*) app->entities);
 }
 
-void Enemy_FireMinion::Update()
+void TestEntityEnemy::Update()
 {
+	
 	// Fire Minion position update
 	//if (spawnDelay >  60) {
 	//	position.x += enemySpeed.x;
@@ -32,7 +33,7 @@ void Enemy_FireMinion::Update()
 	//else
 	//{
 	//	if (enemySpeed.x < 0) 
-	//		currentAnim = &enemy_FireMinionLeftAnim;
+	//		currentAnim = &testAnimation;
 	//	else if (enemySpeed.x > 0) currentAnim = &enemy_FireMinionRightAnim;
 	//}
 	//if (/*			!isGround			*//*			climbingUP || climbingDOWN			*/0) {
