@@ -18,13 +18,14 @@ struct Collider
 		TYPE_NONE = -1,
 		PLAYER,
 		GROUND,
-		ENEMY_HITBOX,
+		DEATH,
 		WIN,
 		CHECKPOINT,
 		ENEMY_HURTBOX,
 		ITEM,
+		ENEMY_HITBOX,
 
-		MAX=7,
+		MAX=8,
 	};
 
 	//Methods

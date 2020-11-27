@@ -35,11 +35,7 @@ public:
 	// Called at the end of the application loop
 	// Performs the render call of the player sprite
 	bool PostUpdate() ;
-
-	// Collision callback, called when the player intersects with another collider
 	
-	/*void OnCollision(Collider* c1, Collider* c2) override;*/
-
 	bool CleanUp();
 
 public:
@@ -53,9 +49,8 @@ public:
 
 	SDL_Texture* texture = nullptr;
 	Collider* playerCollider = nullptr;
+	Collider* previousCollision = nullptr;
 
-	// The pointer to the current player animation
-	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
 	Animation idleAnim;
 	Animation leftRunAnim;
@@ -83,7 +78,7 @@ public:
 private:
 	enum PlayerState {onGround, onAir};
 	PlayerState playerState = onAir;
-	
+
 	bool isJump = false;
 	bool collisionFromBelow = false;
 	bool godMode = false;
@@ -92,14 +87,17 @@ private:
 	void Logic(float dt);
 	bool CheckCollisions(float dt);
 
+	void CheckPlayerState(float dt);
+
 public:
 	// Player loses life and it is tp to checpoint
 	void PlayerDied();
-
 	// Player has lost all lives
 	void PlayerLost();
 
-	
+	uint lives;
+	uint health;
+	uint stars;
 };
 
 #endif //!__MODULE_PLAYER_H__

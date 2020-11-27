@@ -90,10 +90,12 @@ bool ModulePlayer::Start()
 
 	currentAnimation = &idleAnim;
 	currentTexture = &texture;
-	collisionExist = false;
+
 	playerState = onAir;
+	collisionExist = false;
 	collisionFromBelow = false;
 	godMode = false;
+
 	return ret;
 }
 
@@ -202,65 +204,10 @@ void ModulePlayer::Input(float dt)
 
 void ModulePlayer::Logic(float dt)
 {
-	// Gravity
-	if ( (playerState==onAir || collisionExist == false) && godMode == false && destroyed == false)
-	{
-		if (collisionExist == false)
-			playerState = onAir;
+	CheckPlayerState(dt);
 
-		currentTexture = &jumpTexture;
-		/*currentAnimation = &jumpRightAnim;*/
-
-		if (velocity.y <= -200)
-		{
-			//velocity.y += 100.0f/2 * dt;
-			velocity.y += 100.0f * 4.0f * dt;
-		}
-		else 
-		{
-			velocity.y += 100.0f * 3.0f * dt;
-		}
-
-		if (velocity.y < 0)
-		{
-			currentAnimation = &jumpAnim;
-		}
-		else if (velocity.y >= 0)
-		{
-			currentAnimation = &fallAnim;
-		}
-
-		if (velocity.x) // Make player lose some velocity in x while is in air
-		{
-			velocity.x += -0.5f * velocity.x * dt; // Resistence/Friction in the air
-		}
-	}
-
-	if (playerState == onGround) // Stopping the player gradually while at ground
-	{
-		currentTexture = &texture;
-		if (currentAnimation == &jumpAnim)
-		{
-			currentAnimation = &idleAnim;
-		}
-		else if (currentAnimation == &jumpAnim)
-		{
-			currentAnimation = &idleAnim;
-		}
-		if (playerState != onAir && godMode == false)
-		{
-			velocity.y = 0;
-		}
-		velocity.x += -1.0f * velocity.x * dt; // Resistence/Friction in the ground
-		if (fabs(velocity.x) < 0.01f) // Stop the player once velocity is too small
-			velocity.x = 0;
-	}
-
-	if (destroyed)
-	{
-		currentAnimation = &dieAnimation;
-		currentTexture = &dieTexture;
-	}
+	if (health == 0)
+		destroyed = true;
 
 	printf("Velocity in X = %f\nVelocity in Y = %f\n\n", velocity.x, velocity.y);
 	printf("Position in X = %f\nPosition in Y = %f\n\n", playerPos.x, playerPos.y);
@@ -293,6 +240,70 @@ void ModulePlayer::Logic(float dt)
 	printf("Air = %s\n", isAir ? "true" : "false");*/
 	printf("Jump = %s\n", isJump ? "true" : "false");
 }
+
+void ModulePlayer::CheckPlayerState(float dt)
+{
+	// Gravity
+	if ((playerState == onAir || collisionExist == false) && godMode == false && destroyed == false)
+	{
+		if (collisionExist == false)
+			playerState = onAir;
+
+		currentTexture = &jumpTexture;
+		/*currentAnimation = &jumpRightAnim;*/
+
+		if (velocity.y <= -200)
+		{
+			//velocity.y += 100.0f/2 * dt;
+			velocity.y += 100.0f * 4.0f * dt;
+		}
+		else
+		{
+			velocity.y += 100.0f * 3.0f * dt;
+		}
+
+		if (velocity.y < 0)
+		{
+			currentAnimation = &jumpAnim;
+		}
+		else if (velocity.y >= 0)
+		{
+			currentAnimation = &fallAnim;
+		}
+
+		if (velocity.x) // Make player lose some velocity in x while is in air
+		{
+			velocity.x += -0.8f * velocity.x * dt; // Resistence/Friction in the air
+		}
+	}
+
+	if (playerState == onGround) // Stopping the player gradually while at ground
+	{
+		currentTexture = &texture;
+		if (currentAnimation == &jumpAnim)
+		{
+			currentAnimation = &idleAnim;
+		}
+		else if (currentAnimation == &jumpAnim)
+		{
+			currentAnimation = &idleAnim;
+		}
+		if (playerState != onAir && godMode == false)
+		{
+			velocity.y = 0;
+		}
+		velocity.x += -1.0f * velocity.x * dt; // Resistence/Friction in the ground
+		if (fabs(velocity.x) < 0.01f) // Stop the player once velocity is too small
+			velocity.x = 0;
+	}
+
+	if (destroyed)
+	{
+		currentAnimation = &dieAnimation;
+		currentTexture = &dieTexture;
+	}
+}
+
 
 bool ModulePlayer::PostUpdate()
 {
@@ -363,15 +374,28 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				ret = true;
 			}
 		}
+
+		previousCollision = c2;
 	}
 	
 	if (c2->type == Collider::Type::CHECKPOINT)
 	{
+		LOG("SAVING GAME");
 		app->SaveGameRequest();
+		previousCollision = c2;
 	}
 
-	if (c2->type == Collider::Type::ENEMY_HITBOX && godMode == false)
+	if (c2->type == Collider::Type::DEATH && previousCollision->type != Collider::Type::DEATH && godMode == false)
+	{
 		destroyed = true;
+		previousCollision = c2;
+	}
+
+	if (c2->type == Collider::Type::ENEMY_HITBOX && previousCollision->type != Collider::Type::ENEMY_HITBOX && godMode == false)
+	{
+		health -= 1;
+		previousCollision = c2;
+	}
 
 	if (c2->type == Collider::Type::WIN)
 		win = true;
@@ -410,7 +434,8 @@ void ModulePlayer::PlayerDied()
 	app->player->destroyed = false;
 	app->player->velocity.y = 0;
 	app->player->velocity.x = 0;
-	//-- one unit of life
+	lives = lives - 1;
+	health = 3;
 }
 
 

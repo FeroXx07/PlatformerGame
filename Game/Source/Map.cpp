@@ -545,8 +545,8 @@ int Map::LoadColliders()
 				case Collider::Type::GROUND: // blue
 					app->collisions->AddCollider(rect, Collider::Type::GROUND);
 					break;
-				case Collider::Type::ENEMY_HITBOX: // blue
-					app->collisions->AddCollider(rect, Collider::Type::ENEMY_HITBOX);
+				case Collider::Type::DEATH: // blue
+					app->collisions->AddCollider(rect, Collider::Type::DEATH);
 					break;
 				case Collider::Type::WIN: // blue
 					app->collisions->AddCollider(rect, Collider::Type::WIN);

@@ -67,11 +67,14 @@ bool Scene::Start()
 	
 	app->player->velocity.y = 0;
 	app->player->cameraFollow = true;
-
+	app->player->lives = 3;
+	app->player->health = 3;
 
 	app->entities->AddEntity(EntityType::ENEMY_FIREMINION, 38 * 32, 9 * 32);
 	resetCounter = 0;
 
+
+	app->SaveGameRequest();
 	return true;
 }
 
@@ -109,17 +112,24 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->destroyed == true)
 	{
 		//Check here if player has lost all lives, if true then do the fade to black (permanent death)
-
-			/*if (resetCounter == 3 * 60)
+		if (app->player->lives > 0)
+		{
+			//If player still has lives, minus one live and restart him from the last checkpoint (temporal death)
+			app->player->PlayerDied();
+		}
+		else if (app->player->lives == 0)
+		{
+			if (resetCounter == 3 * 60)
 			{
 				app->fade->FadeToBlack(this, (Module*)app->deathScene);
 				resetCounter = 0;
 			}
-			++resetCounter;*/
-
-		//If player still has lives, minus one live and restart him from the last checkpoint (temporal death)
-		app->player->PlayerDied();
+			++resetCounter;
+		}
+			
 	}
+	printf("lives = %u\n", app->player->lives);
+	printf("health = %u\n", app->player->health);
 
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_UP || app->player->win == true)
 		app->fade->FadeToBlack(this, (Module*)app->winScreen);
