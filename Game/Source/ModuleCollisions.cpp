@@ -47,17 +47,17 @@ bool ModuleCollisions::PreUpdate()
 {
 	bool ret = true;
 
-	//// Remove all colliders scheduled for deletion
-	//ListItem<Collider*>* listColl;
-	//listColl = colliders.start;
-	//for (int i = 0 ; i < colliders.Count(); ++i)
-	//{
-	//	while (listColl != NULL && listColl->data->pendingToDelete == true)
-	//	{
-	//		colliders.Del(listColl);
-	//	}
-	//	listColl = listColl->next;
-	//}
+	// Remove all colliders scheduled for deletion
+	ListItem<Collider*>* listColl;
+	listColl = colliders.start;
+	for (int i = 0 ; i < colliders.Count(); ++i)
+	{
+		if (listColl != NULL && listColl->data->pendingToDelete == true)
+		{
+			colliders.Del(listColl);
+		}
+		listColl = listColl->next;
+	}
 
 	//Collider* c1;
 	//Collider* c2;

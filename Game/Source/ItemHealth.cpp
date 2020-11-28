@@ -1,20 +1,20 @@
-#include "Enemy_FireMinion.h"
+#include "ItemHealth.h"
 
 #include "App.h"
 #include "ModuleCollisions.h"
 
 
-TestEntityEnemy::TestEntityEnemy(int x, int y) : Entity(x, y)
+ItemHealth::ItemHealth(int x, int y) : Entity(x, y)
 {
 	spawnDelay = 0;
 
-	testAnimation.PushBack({ 0,0,42,40 });
-	currentAnim = &testAnimation;
+	anim.PushBack({ 97,123,22,22 });
+	currentAnim = &anim;
 
-	collider = app->collisions->AddCollider({0, 0, 42, 40}, Collider::Type::ENEMY_HITBOX, (Module*) app->entities);
+	collider = app->collisions->AddCollider({0, 0, 22, 22 }, Collider::Type::ITEM, (Module*) app->entities, Collider::Items::HEALTH);
 }
 
-void TestEntityEnemy::Update()
+void ItemHealth::Update()
 {
 	
 	// Fire Minion position update
@@ -33,7 +33,7 @@ void TestEntityEnemy::Update()
 	//else
 	//{
 	//	if (enemySpeed.x < 0) 
-	//		currentAnim = &testAnimation;
+	//		currentAnim = &anim;
 	//	else if (enemySpeed.x > 0) currentAnim = &enemy_FireMinionRightAnim;
 	//}
 	//if (/*			!isGround			*//*			climbingUP || climbingDOWN			*/0) {

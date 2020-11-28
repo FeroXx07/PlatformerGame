@@ -70,7 +70,8 @@ bool Scene::Start()
 	app->player->lives = 3;
 	app->player->health = 3;
 
-	app->entities->AddEntity(EntityType::ENEMY_FIREMINION, 38 * 32, 9 * 32);
+	app->entities->AddEntity(EntityType::ITEM_HEALTH, 38 * 32, 11 * 32);
+	app->entities->AddEntity(EntityType::ITEM_STAR, 40 * 32, 11 * 32);
 	resetCounter = 0;
 
 

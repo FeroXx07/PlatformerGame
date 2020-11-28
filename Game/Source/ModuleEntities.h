@@ -9,13 +9,8 @@
 enum class EntityType
 {
 	NO_TYPE,
-	ITEM_NUT,
-	ITEM_IRON,
-	ITEM_UMBRELLA,
-	ITEM_BAG,
-	ITEM_HAMMER,
-	ENEMY_FIREMINION,
-	ENEMY_MINECART
+	ITEM_HEALTH,
+	ITEM_STAR,
 };
 
 struct EntitySpawnpoint

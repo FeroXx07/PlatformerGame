@@ -43,6 +43,20 @@ void Entity::Draw()
 void Entity::OnCollision(Collider* collider)
 {
 	//Check collision type
+	if (this->collider->type == Collider::ITEM)
+	{
+		switch (this->collider->item)
+		{
+		case Collider::Items::HEALTH:
+			this->SetToDelete();
+			break;
+		case Collider::Items::STAR:
+			this->SetToDelete();
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void Entity::SetToDelete()

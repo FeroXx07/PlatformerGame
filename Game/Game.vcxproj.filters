@@ -55,9 +55,6 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Map.cpp" />
-    <ClCompile Include="Source\Enemy_FireMinion.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ModulePlayer.cpp">
       <Filter>Player &amp; HUD</Filter>
     </ClCompile>
@@ -66,6 +63,12 @@
     </ClCompile>
     <ClCompile Include="Source\ModuleHud.cpp">
       <Filter>Player &amp; HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ItemHealth.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ItemStar.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,9 +150,6 @@
     <ClInclude Include="Source\WinScreen.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy_FireMinion.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ModulePlayer.h">
       <Filter>Player &amp; HUD</Filter>
     </ClInclude>
@@ -158,6 +158,12 @@
     </ClInclude>
     <ClInclude Include="Source\ModuleHud.h">
       <Filter>Player &amp; HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ItemHealth.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ItemStar.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

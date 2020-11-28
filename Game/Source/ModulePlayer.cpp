@@ -397,6 +397,28 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		previousCollision = c2;
 	}
 
+	if (c2->type == Collider::Type::ITEM && previousCollision->type != Collider::Type::ITEM && godMode == false)
+	{
+
+		switch (c2->item)
+		{
+		case Collider::Items::HEALTH:
+			health += 1;
+			previousCollision = c2;
+			c2->listener->OnCollision(c2, c1);
+			break;
+		case Collider::Items::STAR:
+			stars += 1;
+			previousCollision = c2;
+			c2->listener->OnCollision(c2, c1);
+			break;
+		default:
+			break;
+		}
+
+		
+	}
+
 	if (c2->type == Collider::Type::WIN)
 		win = true;
 

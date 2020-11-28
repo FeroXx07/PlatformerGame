@@ -12,8 +12,8 @@
 
 #include "Entity.h"
 
-#include "Enemy_FireMinion.h"
-//#include "Item_Nut.h"
+#include "ItemHealth.h"
+#include "ItemStar.h"
 //#include "Item_Iron.h"
 //#include "Item_Umbrella.h"
 //#include "Item_Bag.h"
@@ -43,7 +43,7 @@ bool Entities::Start()
 	enemyDestroyedFx = app->audio->LoadFx("Assets/Music/SFX_Kill.wav");
 	
 	itemPickedFx = app->audio->LoadFx("Assets/Music/SFX_Bonus.wav");*/
-	texture = app->tex->Load("Assets/textures/aa.png");
+	texture = app->tex->Load("Assets/Common/spritesheet_items.png");
 
 
 	return true;
@@ -249,7 +249,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 			{
 				case EntityType::ENEMY_FIREMINION:
 				{
-					enemies[i] = new TestEntityEnemy(info.x, info.y);
+					enemies[i] = new ItemHealth(info.x, info.y);
 					enemies[i]->destroyedFx = enemyDestroyedFx;
 					break;
 				}
@@ -268,17 +268,17 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 	Entity* newEntity = NULL;
 	switch (info.type)
 	{
-	case EntityType::ENEMY_FIREMINION:
+	case EntityType::ITEM_HEALTH:
 	{
-		newEntity = new TestEntityEnemy(info.x, info.y);
+		newEntity = new ItemHealth(info.x, info.y);
 		newEntity->destroyedFx = enemyDestroyedFx;
 		newEntity->texture = texture;
 
 		break;
 	}
-	case EntityType::ITEM_NUT:
+	case EntityType::ITEM_STAR:
 	{
-		newEntity = new Entity(info.x, info.y);
+		newEntity = new ItemStar(info.x, info.y);
 		newEntity->texture = texture;
 		newEntity->destroyedFx = itemPickedFx;;
 		break;
@@ -287,7 +287,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 	entities.Add(newEntity);
 }
 
-bool Entities::OnCollision(Collider* c1, Collider* c2)
+bool Entities::OnCollision(Collider* c1, Collider* c2) // This is called through listener from the OnCollision(c2,c1) of player.cpp c2->entity rect c1->player rect
 {
 	//for(uint i = 0; i < MAX_ENEMIES; ++i)
 	//{
@@ -302,6 +302,12 @@ bool Entities::OnCollision(Collider* c1, Collider* c2)
 	entitiesList = entities.start;
 	for (int i = 0; i < entities.Count(); ++i)
 	{
+		if (entitiesList->data->GetCollider() == c1)
+			entitiesList->data->OnCollision(c1);
+	}
+	
+	/*for (int i = 0; i < entities.Count(); ++i)
+	{
 		for (ListItem<Collider*>*collsList = app->collisions->colliders.start; collsList != NULL ; collsList = collsList->next)
 		{
 			if (entitiesList->data->GetCollider()->Intersects(collsList->data->rect))
@@ -311,7 +317,7 @@ bool Entities::OnCollision(Collider* c1, Collider* c2)
 			collsList = collsList->next;
 		}
 		entitiesList = entitiesList->next;
-	}
-
+	}*/
+	
 	return true;
 }
