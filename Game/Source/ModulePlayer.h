@@ -76,8 +76,10 @@ public:
 	bool destroyed = false;
 	bool win = false;
 private:
-	enum PlayerState {onGround, onAir};
-	PlayerState playerState = onAir;
+	enum PlayerState {ON_GROUND, ON_AIR};
+	PlayerState playerState = ON_AIR;
+	enum PlayerDirection {RIGHT,LEFT,UP,DOWN};
+	PlayerDirection playerDirection;
 
 	bool isJump = false;
 	bool collisionFromBelow = false;
@@ -88,6 +90,7 @@ private:
 	bool CheckCollisions(float dt);
 
 	void CheckPlayerState(float dt);
+	void BulletLogic(float dt);
 
 public:
 	// Player loses life and it is tp to checpoint

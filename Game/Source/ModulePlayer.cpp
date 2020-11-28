@@ -9,6 +9,9 @@
 #include "ModuleFadeToBlack.h"
 //#include "ModuleHud.h"
 #include "DeathScene.h"
+#include "ModuleParticles.h"
+#include "Window.h"
+
 #include "Log.h"
 
 #include <stdio.h>
@@ -91,7 +94,7 @@ bool ModulePlayer::Start()
 	currentAnimation = &idleAnim;
 	currentTexture = &texture;
 
-	playerState = onAir;
+	playerState = ON_AIR;
 	collisionExist = false;
 	collisionFromBelow = false;
 	godMode = false;
@@ -163,14 +166,14 @@ void ModulePlayer::Input(float dt)
 		velocity.y -= VELOCITY*dt;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerState == onGround)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerState == ON_GROUND)
 	{
 		// Stop moving just before jumping
 		velocity.x = velocity.x / 2;
 		if (velocity.y == 0)
 		{
 			velocity.y = -160.0f * 2;
-			playerState = onAir;
+			playerState = ON_AIR;
 			isJump = true;
 		}
 	/*	velocity.y = -160.0f * 2;
@@ -199,6 +202,40 @@ void ModulePlayer::Input(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		destroyed = true;
+	}
+
+	BulletLogic(dt);
+}
+
+void ModulePlayer::BulletLogic(float dt)
+{
+	iPoint mousePoint;
+	app->input->GetMousePosition(mousePoint.x, mousePoint.y);
+
+	uPoint window;
+	app->win->GetWindowSize(window.x, window.y);
+
+	fPoint center = { (float)window.x / 2,(float)window.y / 2 };
+
+	fPoint direction;
+	direction = { center.x - mousePoint.x , center.y - mousePoint.y };
+
+	float magnitude = sqrt(direction.x * direction.x + direction.y * direction.y);
+
+	direction = { direction.x / magnitude, direction.y / magnitude }; // Vector unitario/dirección
+	direction.Negate();
+
+	printf("mouse = %f %f\n", center.x, center.y);
+	printf("dir = %f %f\n", direction.x, direction.y);
+
+	if ((app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN))
+	{
+		Particle newBullet = app->particles->bullet;
+	
+		newBullet.speed.y = { direction.y * 500.0f +app->player->velocity.y};
+		newBullet.speed.x = { direction.x * 500.0f + app->player->velocity.x};
+
+		app->particles->AddParticle(newBullet, playerPos.x + playerWh.x/2, playerPos.y, Collider::Type::BULLET);
 	}
 }
 
@@ -244,10 +281,10 @@ void ModulePlayer::Logic(float dt)
 void ModulePlayer::CheckPlayerState(float dt)
 {
 	// Gravity
-	if ((playerState == onAir || collisionExist == false) && godMode == false && destroyed == false)
+	if ((playerState == ON_AIR || collisionExist == false) && godMode == false && destroyed == false)
 	{
 		if (collisionExist == false)
-			playerState = onAir;
+			playerState = ON_AIR;
 
 		currentTexture = &jumpTexture;
 		/*currentAnimation = &jumpRightAnim;*/
@@ -264,10 +301,12 @@ void ModulePlayer::CheckPlayerState(float dt)
 
 		if (velocity.y < 0)
 		{
+			playerDirection = UP;
 			currentAnimation = &jumpAnim;
 		}
 		else if (velocity.y >= 0)
 		{
+			playerDirection = DOWN;
 			currentAnimation = &fallAnim;
 		}
 
@@ -277,7 +316,7 @@ void ModulePlayer::CheckPlayerState(float dt)
 		}
 	}
 
-	if (playerState == onGround) // Stopping the player gradually while at ground
+	if (playerState == ON_GROUND) // Stopping the player gradually while at ground
 	{
 		currentTexture = &texture;
 		if (currentAnimation == &jumpAnim)
@@ -288,7 +327,7 @@ void ModulePlayer::CheckPlayerState(float dt)
 		{
 			currentAnimation = &idleAnim;
 		}
-		if (playerState != onAir && godMode == false)
+		if (playerState != ON_AIR && godMode == false)
 		{
 			velocity.y = 0;
 		}
@@ -329,7 +368,14 @@ bool ModulePlayer::CheckCollisions(float dt)
 	for (listColliders = app->collisions->colliders.start; listColliders != NULL; listColliders = listColliders->next)
 	{
 		if (playerCollider->Intersects(listColliders->data->rect))
+		{
 			collisionExist = this->OnCollision(playerCollider, listColliders->data);
+			if (listColliders->data->listener != nullptr && listColliders->data->type != Collider::Type::PLAYER)
+			{
+				if(listColliders->data->type != Collider::Type::BULLET)
+					listColliders->data->listener->OnCollision(listColliders->data, playerCollider);
+			}
+		}
 	}
 
 	return ret;
@@ -362,13 +408,13 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				else
 					playerPos.y = c2->rect.y - playerCollider->rect.h;
 				/*isGround = true;*/
-				//playerState = onGround;
-				if (playerState == onAir)
+				//playerState = ON_GROUND;
+				if (playerState == ON_AIR)
 				{
 					//isAir = false;
 					currentAnimation = &idleAnim;
 				}
-				playerState = onGround;
+				playerState = ON_GROUND;
 				isJump = false;
 				LOG("Player feet on ground");
 				ret = true;

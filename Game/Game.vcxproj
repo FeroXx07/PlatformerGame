@@ -111,7 +111,9 @@
     <ClCompile Include="Source\ModuleFonts.cpp" />
     <ClCompile Include="Source\ModuleHud.cpp" />
     <ClCompile Include="Source\ModuleInitialScreen.cpp" />
+    <ClCompile Include="Source\ModuleParticles.cpp" />
     <ClCompile Include="Source\ModulePlayer.cpp" />
+    <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -135,7 +137,9 @@
     <ClInclude Include="Source\ModuleFonts.h" />
     <ClInclude Include="Source\ModuleHud.h" />
     <ClInclude Include="Source\ModuleInitialScreen.h" />
+    <ClInclude Include="Source\ModuleParticles.h" />
     <ClInclude Include="Source\ModulePlayer.h" />
+    <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\PerfTimer.h" />
     <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Audio.h" />

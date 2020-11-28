@@ -15,6 +15,7 @@
 #include "WinScreen.h"
 
 #include "ModuleEntities.h"
+#include "ModuleParticles.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -44,6 +45,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	initialScreen = new ModuleInitialScreen(true);
 	collisions = new ModuleCollisions(true);
 	entities = new Entities(false);
+	particles = new ModuleParticles(false);
+
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
@@ -61,6 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 
 	AddModule(entities);
+	AddModule(particles);
 	AddModule(collisions);
 	AddModule(fade);
 

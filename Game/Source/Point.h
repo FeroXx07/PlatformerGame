@@ -127,5 +127,5 @@ public:
 
 typedef Point<int> iPoint;
 typedef Point<float> fPoint;
-
+typedef Point<uint> uPoint;
 #endif // __POINT_H__

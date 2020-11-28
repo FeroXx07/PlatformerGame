@@ -178,6 +178,9 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::ENEMY_HURTBOX: // Olive	
 			app->render->DrawRectangle(list1->data->rect, 128, 128, 0, alpha);
 			break;
+			case Collider::Type::BULLET: // Hot pink	
+			app->render->DrawRectangle(list1->data->rect, 255, 0, 208, alpha);
+			break;
 		}
 		list1 = list1->next;
 	}

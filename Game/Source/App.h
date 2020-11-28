@@ -30,6 +30,7 @@ class Map;
 class ModuleInitialScreen;
 class ModuleCollisions;
 class Entities;
+class ModuleParticles;
 
 class App
 {
@@ -109,7 +110,8 @@ public:
 	ModulePlayer* player;
 
 	ModuleCollisions* collisions;
-	
+	ModuleParticles* particles;
+
 	ModuleDebugInfo* debug;
 	ModuleFadeToBlack* fade;
 	Entities* entities;

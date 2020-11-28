@@ -47,7 +47,6 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModuleEntities.cpp" />
-    <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\TitleScreen.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -69,6 +68,13 @@
     </ClCompile>
     <ClCompile Include="Source\ItemStar.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleParticles.cpp" />
+    <ClCompile Include="Source\Particle.cpp">
+      <Filter>Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,7 +149,6 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleEntities.h" />
-    <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\TitleScreen.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -164,6 +169,13 @@
     </ClInclude>
     <ClInclude Include="Source\ItemStar.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleParticles.h" />
+    <ClInclude Include="Source\Particle.h">
+      <Filter>Particles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +202,9 @@
     </Filter>
     <Filter Include="Player &amp; HUD">
       <UniqueIdentifier>{9ea56cda-2ac6-445e-9c37-badacf7bde2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{2cdfb3d9-8e4c-4ad8-b123-1744b2d1afef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

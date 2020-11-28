@@ -10,6 +10,7 @@
 #include "ModuleCollisions.h"
 #include "ModulePlayer.h"
 #include "ModuleEntities.h"
+#include "ModuleParticles.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -58,6 +59,9 @@ bool Scene::Start()
 
 	if (app->entities->IsEnabled() == false)
 		app->entities->Enable();
+
+	if (app->particles->IsEnabled() == false)
+		app->particles->Enable();
 
 	app->map->LoadColliders();
 
@@ -169,6 +173,7 @@ bool Scene::CleanUp()
 	app->player->Disable();
 	app->collisions->Disable();
 	app->entities->Disable();
+	app->particles->Disable();
 	app->map->CleanUp();
 	return true;
 }

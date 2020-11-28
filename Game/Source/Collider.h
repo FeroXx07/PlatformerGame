@@ -25,8 +25,9 @@ struct Collider
 		ENEMY_HURTBOX,
 		ITEM,
 		ENEMY_HITBOX,
+		BULLET,
 
-		MAX=8,
+		MAX=9,
 	};
 
 	//Methods
