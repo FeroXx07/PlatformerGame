@@ -115,14 +115,13 @@ bool Entities::PostUpdate()
 			enemies[i]->Draw();
 	}*/
 
-	ListItem<Entity*>* list;
-	list = entities.start;
-
+	ListItem<Entity> entitiesList;
+	entitiesList = entities.start;
 	for (int i = 0; i < entities.Count(); ++i)
 	{
-		if (list != NULL)
-			list->data->Draw();
-		list = list->next;
+		if (entitiesList->data->GetCollider() == c1)
+			entitiesList->data->OnCollision(c2);
+		entitiesList = entitiesList->next;
 	}
 
 	return ret;
