@@ -1,6 +1,7 @@
 #include "ModulePlayer.h"
 
 #include "App.h"
+#include "Audio.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Render.h"
@@ -85,7 +86,13 @@ bool ModulePlayer::Start()
 	jumpTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
 	dieTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
 	fallTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
-	
+
+	// Audio of the player's actions
+
+	walkingSfx = app->audio->LoadFx("Assets/Audio/Fx/player_walking.wav");
+	jumpingSfx = app->audio->LoadFx("Assets/Audio/Fx/player_jump.wav");
+	shootingSfx = app->audio->LoadFx("Assets/Audio/Fx/player_shot.wav");
+
 	//Starting position of the Mario
 	playerWh = { 66.0f,79.0f };
 	playerCollider = app->collisions->AddCollider({(int)playerPos.x + (int)playerWh.x / 2,(int)playerPos.y,(int)playerWh.x/2,(int)playerWh.y}, Collider::Type::PLAYER, (Module*)app->player);
@@ -105,6 +112,11 @@ bool ModulePlayer::Start()
 bool ModulePlayer::Update(float dt)
 {
 	bool ret = true;
+
+	if (dt > 1.0f / 30.0f)
+	{
+		dt = 1.0f / 30.0f;
+	}
 
 	Input(dt);
 
@@ -142,6 +154,10 @@ void ModulePlayer::Input(float dt)
 			leftRunAnim.Reset();
 			currentAnimation = &leftRunAnim;
 		}
+		if (playerState == ON_GROUND)
+		{
+			app->audio->PlayFx(walkingSfx);
+		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -154,6 +170,10 @@ void ModulePlayer::Input(float dt)
 		{
 			rightRunAnim.Reset();
 			currentAnimation = &rightRunAnim;
+		}
+		if (playerState = ON_GROUND)
+		{
+			app->audio->PlayFx(walkingSfx);
 		}
 	}
 
@@ -175,6 +195,7 @@ void ModulePlayer::Input(float dt)
 			velocity.y = -160.0f * 2;
 			playerState = ON_AIR;
 			isJump = true;
+			app->audio->PlayFx(jumpingSfx);
 		}
 	/*	velocity.y = -160.0f * 2;
 		isAir = true;*/
@@ -236,6 +257,7 @@ void ModulePlayer::BulletLogic(float dt)
 		newBullet.speed.x = { direction.x * 500.0f + app->player->velocity.x};
 
 		app->particles->AddParticle(newBullet, playerPos.x + playerWh.x/2, playerPos.y, Collider::Type::BULLET);
+		app->audio->PlayFx(shootingSfx);
 	}
 }
 

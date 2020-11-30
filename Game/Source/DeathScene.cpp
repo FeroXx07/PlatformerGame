@@ -33,6 +33,8 @@ bool DeathScene::Start()
 	app->render->camera = { 0,0,1280,720 };
 	logoTex = app->tex->Load("Assets/textures/DeathScreen.png");
 
+	app->audio->PlayMusic("Assets/Audio/music/loose_soundtrack.ogg");
+
 	if (logoTex == nullptr)
 	{
 		ret = false;

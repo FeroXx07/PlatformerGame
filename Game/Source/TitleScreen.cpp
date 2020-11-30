@@ -31,6 +31,8 @@ bool TitleScreen::Start()
 
 	// Include title
 
+	app->audio->PlayMusic("Assets/Audio/music/initial_screen.ogg");
+
 	titleTex = app->tex->Load("Assets/textures/TitleScreen.png");
 	app->render->background = { 0,0,0,0 };
 	if (titleTex == nullptr)

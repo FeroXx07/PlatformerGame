@@ -101,6 +101,13 @@ public:
 	uint lives;
 	uint health;
 	uint stars;
+
+public:
+
+	uint walkingSfx;
+	uint jumpingSfx;
+	uint shootingSfx;
+
 };
 
 #endif //!__MODULE_PLAYER_H__

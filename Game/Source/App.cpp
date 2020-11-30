@@ -9,6 +9,7 @@
 #include "ModuleFadeToBlack.h"
 #include "TitleScreen.h"
 #include "ModulePlayer.h"
+#include "ModuleHud.h"
 #include "Map.h"
 #include "ModuleInitialScreen.h"
 #include "ModuleCollisions.h"
@@ -39,6 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	titleScreen = new TitleScreen(false);
 	deathScene = new DeathScene(false);
 	winScreen = new WinScreen(false);
+	hud = new ModuleHud(false);
 	player = new ModulePlayer(false);
 	map = new Map();
 	fade = new ModuleFadeToBlack();
@@ -62,6 +64,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(titleScreen);
 	AddModule(winScreen);
 	AddModule(player);
+	AddModule(hud);
 
 	AddModule(entities);
 	AddModule(particles);

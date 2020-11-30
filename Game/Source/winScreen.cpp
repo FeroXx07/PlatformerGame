@@ -29,6 +29,8 @@ bool WinScreen::Start()
 
 	// Include logo
 
+	app->audio->PlayMusic("Assets/Audio/music/win_soundtrack.ogg");
+
 	logoTex = app->tex->Load("Assets/textures/winScreen.png");
 	app->render->background = { 0,0,0,0 };
 	if (logoTex == nullptr)

@@ -30,6 +30,7 @@ class Map;
 class ModuleInitialScreen;
 class ModuleCollisions;
 class Entities;
+class ModuleHud;
 class ModuleParticles;
 
 class App
@@ -106,6 +107,7 @@ public:
 	ModuleInitialScreen* initialScreen;
 	DeathScene* deathScene;
 	WinScreen* winScreen;
+	ModuleHud* hud;
 	Map* map;
 	ModulePlayer* player;
 

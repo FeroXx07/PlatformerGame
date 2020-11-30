@@ -1,4 +1,5 @@
 #include "App.h"
+#include "Audio.h"
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -6,6 +7,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleHud.h"
 #include "Map.h"
 #include "ModuleCollisions.h"
 #include "ModulePlayer.h"
@@ -45,10 +47,10 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	app->map->Load("Level1.tmx");
 
 	app->render->background = { 99,210,222,0 };
+	app->audio->PlayMusic("Assets/audio/music/level_soundtrack.ogg");
 	// Layers gets gid correctly
 	
 	if (app->collisions->IsEnabled() == false)
@@ -77,7 +79,6 @@ bool Scene::Start()
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 38 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_STAR, 40 * 32, 11 * 32);
 	resetCounter = 0;
-
 
 	app->SaveGameRequest();
 	return true;

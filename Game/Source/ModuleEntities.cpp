@@ -44,6 +44,7 @@ bool Entities::Start()
 	
 	itemPickedFx = app->audio->LoadFx("Assets/Music/SFX_Bonus.wav");*/
 	texture = app->tex->Load("Assets/Common/spritesheet_items.png");
+	itemPickedFx = app->audio->LoadFx("Assets/Audio/Fx/item_taken.wav");
 
 
 	return true;
@@ -271,7 +272,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 	case EntityType::ITEM_HEALTH:
 	{
 		newEntity = new ItemHealth(info.x, info.y);
-		newEntity->destroyedFx = enemyDestroyedFx;
+		newEntity->destroyedFx = itemPickedFx;
 		newEntity->texture = texture;
 
 		break;
@@ -280,7 +281,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 	{
 		newEntity = new ItemStar(info.x, info.y);
 		newEntity->texture = texture;
-		newEntity->destroyedFx = itemPickedFx;;
+		newEntity->destroyedFx = itemPickedFx;
 		break;
 	}
 	}
