@@ -12,6 +12,7 @@
 #include "DeathScene.h"
 #include "ModuleParticles.h"
 #include "Window.h"
+#include "Map.h"
 
 #include "Log.h"
 
@@ -106,6 +107,8 @@ bool ModulePlayer::Start()
 	collisionFromBelow = false;
 	godMode = false;
 
+	isWalking = false;
+
 	return ret;
 }
 
@@ -156,7 +159,13 @@ void ModulePlayer::Input(float dt)
 		}
 		if (playerState == ON_GROUND)
 		{
-			app->audio->PlayFx(walkingSfx);
+			if (isWalking == false) 
+				isWalking = app->audio->PlayFx(walkingSfx);
+			if (counterWalking.Read() >= 20.0f)
+			{
+				isWalking = false;
+			}
+			counterWalking.Start();
 		}
 	}
 
@@ -171,9 +180,15 @@ void ModulePlayer::Input(float dt)
 			rightRunAnim.Reset();
 			currentAnimation = &rightRunAnim;
 		}
-		if (playerState = ON_GROUND)
+		if (playerState == ON_GROUND)
 		{
-			app->audio->PlayFx(walkingSfx);
+			if (isWalking == false)
+				isWalking = app->audio->PlayFx(walkingSfx);
+			if (counterWalking.Read() >= 20.0f)
+			{
+				isWalking = false;
+			}
+			counterWalking.Start();
 		}
 	}
 
@@ -223,6 +238,27 @@ void ModulePlayer::Input(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		destroyed = true;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
+	{
+		// Teleport Checkpoint
+		Collider* dstCheckpoint = NULL;
+		for (int i = 0; i < app->map->checkpointsList.Count(); ++i)
+		{
+			// SDL_SCANCODE_0 is 39 SDL_SCANCODE_1 is 30 SDL_SCANCODE_2 is 31
+			if(app->input->GetKey(30+i) == KEY_DOWN)
+			{
+				dstCheckpoint = app->map->checkpointsList.At(i)->data;
+				break;
+			}
+		}
+
+		if (dstCheckpoint != NULL)
+		{
+			playerPos = { (float)dstCheckpoint->rect.x,(float)dstCheckpoint->rect.y };
+			velocity = { 0.0f,0.0f };
+		}
 	}
 
 	BulletLogic(dt);
@@ -446,7 +482,7 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		previousCollision = c2;
 	}
 	
-	if (c2->type == Collider::Type::CHECKPOINT)
+	if (c2->type == Collider::Type::CHECKPOINT && previousCollision->type != Collider::Type::CHECKPOINT)
 	{
 		LOG("SAVING GAME");
 		app->SaveGameRequest();

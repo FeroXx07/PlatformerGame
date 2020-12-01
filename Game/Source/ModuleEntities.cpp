@@ -22,12 +22,11 @@
 
 
 #define SPAWN_MARGIN 50
-
+#define MAX_ENTITIES 20
 
 Entities::Entities(bool startEnabled) : Module(startEnabled)
 {
-	/*for(uint i = 0; i < MAX_ENEMIES; ++i)
-		enemies[i] = nullptr;*/
+	name.Create("entity");
 	
 }
 
@@ -114,14 +113,14 @@ bool Entities::PostUpdate()
 		if (enemies[i] != nullptr)
 			enemies[i]->Draw();
 	}*/
+	ListItem<Entity*>* list;
+	list = entities.start;
 
-	ListItem<Entity> entitiesList;
-	entitiesList = entities.start;
 	for (int i = 0; i < entities.Count(); ++i)
 	{
-		if (entitiesList->data->GetCollider() == c1)
-			entitiesList->data->OnCollision(c2);
-		entitiesList = entitiesList->next;
+		if (list != NULL)
+			list->data->Draw();
+		list = list->next;
 	}
 
 	return ret;
@@ -132,22 +131,12 @@ bool Entities::CleanUp()
 {
 	bool ret = true;
 	//app->audio->UnloadFx(enemyDestroyedFx);
-	//
 	//app->audio->UnloadFx(itemPickedFx);
-	//
-	//app->tex->Unload(texture);
-	//
+	
+	app->tex->UnLoad(texture);
+
 
 	LOG("Freeing all enemies");
-
-	/*for(uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if(enemies[i] != nullptr)
-		{
-			delete enemies[i];
-			enemies[i] = nullptr;
-		}
-	}*/
 
 	ListItem<Entity*>* list;
 	list = entities.start;
@@ -240,31 +229,6 @@ void Entities::HandleEnemiesDespawn()
 
 void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 {
-	// Find an empty slot in the enemies array
-	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (enemies[i] == nullptr)
-		{
-			switch (info.type)
-			{
-				case EntityType::ENEMY_FIREMINION:
-				{
-					enemies[i] = new ItemHealth(info.x, info.y);
-					enemies[i]->destroyedFx = enemyDestroyedFx;
-					break;
-				}
-				case EntityType::ITEM_NUT:
-				{
-					enemies[i] = new Item_Nut(info.x, info.y);
-					enemies[i]->texture = texture;
-					enemies[i]->destroyedFx = itemPickedFx;;
-					break;
-				}
-			}
-			enemies[i]->texture = texture;
-			break;
-		}
-	}*/
 	Entity* newEntity = NULL;
 	switch (info.type)
 	{
@@ -289,24 +253,16 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 
 bool Entities::OnCollision(Collider* c1, Collider* c2) // This is called through listener from the OnCollision(c2,c1) of player.cpp c2->entity rect c1->player rect
 {
-	//for(uint i = 0; i < MAX_ENEMIES; ++i)
-	//{
-	//	if(enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
-	//	{
-	//		enemies[i]->OnCollision(c2); //Notify the enemy of a collision
-	//		break;
-	//	}
-	//}
-
 	ListItem<Entity*>* entitiesList;
 	entitiesList = entities.start;
 	for (int i = 0; i < entities.Count(); ++i)
 	{
+		entitiesList = entities.At(i);
 		if (entitiesList->data->GetCollider() == c1)
-			entitiesList->data->OnCollision(c1);
+			entitiesList->data->OnCollision(c2);
 	}
 	
-	/*for (int i = 0; i < entities.Count(); ++i)
+	/*for (int i = 0; i < ent.Count(); ++i)
 	{
 		for (ListItem<Collider*>*collsList = app->collisions->colliders.start; collsList != NULL ; collsList = collsList->next)
 		{
@@ -320,4 +276,48 @@ bool Entities::OnCollision(Collider* c1, Collider* c2) // This is called through
 	}*/
 	
 	return true;
+}
+
+bool Entities::SaveState(pugi::xml_node& data) const // Node is pointing to "entity"
+{
+	bool ret = true;
+	// First change total num of ent
+	pugi::xml_node entityCount;
+	entityCount = data;
+	entityCount.child("entitiesCount").attribute("Num").set_value(this->entities.Count());
+	
+	// Then erase all ent in the xml
+	pugi::xml_node listEnt;
+	listEnt = data.child("entitiesList");
+	for (int i=0; i< MAX_ENTITIES;++i)
+	{
+		bool remove = listEnt.remove_child("entities");
+		if (remove == false)
+			break;
+	}
+
+	// Finally add all ent in the xml
+	ListItem<Entity*>* list;
+	list = entities.start;
+	for (int i = 0; i < this->entities.Count(); ++i)
+	{
+		list->data = entities.At(i)->data;
+
+		pugi::xml_node newEnt = data.child("entitiesList");
+		newEnt = newEnt.append_child("entities");
+		newEnt.append_attribute("Num").set_value(i);
+		newEnt.append_attribute("Item").set_value(list->data->GetCollider()->item);
+		newEnt.append_attribute("Type").set_value(list->data->GetCollider()->type);
+		newEnt.append_attribute("x").set_value(list->data->GetCollider()->rect.x);
+		newEnt.append_attribute("y").set_value(list->data->GetCollider()->rect.y);
+
+	}
+	return ret;
+}
+
+bool Entities::LoadState(pugi::xml_node& data)  // Node is pointing to "entity"
+{
+	bool ret = true;
+
+	return ret;
 }

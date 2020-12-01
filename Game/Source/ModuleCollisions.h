@@ -55,6 +55,9 @@ private:
 
 	// Simple debugging flag to draw all colliders
 	bool debug = false;
+
+public:
+	
 };
 
 #endif // __MODULE_COLLISIONS_H__

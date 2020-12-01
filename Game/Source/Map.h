@@ -168,6 +168,10 @@ private:
     pugi::xml_document mapFile;
     SString folder;
     bool mapLoaded;
+
+public:
+	// Special lists for some access
+	List<Collider*>checkpointsList;
 };
 
 #endif // __MAP_H__

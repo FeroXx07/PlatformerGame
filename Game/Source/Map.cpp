@@ -221,6 +221,17 @@ bool Map::CleanUp()
 	// Clean up the pugui tree
 	mapFile.reset();
 
+
+	ListItem<Collider*>* item3;
+	item3 = checkpointsList.start;
+
+	while (item3 != NULL)
+	{
+		RELEASE(item3->data);
+		item3 = item3->next;
+	}
+	checkpointsList.Clear();
+
     return true;
 }
 
@@ -552,7 +563,7 @@ int Map::LoadColliders()
 					app->collisions->AddCollider(rect, Collider::Type::WIN);
 					break;
 				case Collider::Type::CHECKPOINT: 
-					app->collisions->AddCollider(rect, Collider::Type::CHECKPOINT);
+					checkpointsList.Add(app->collisions->AddCollider(rect, Collider::Type::CHECKPOINT));
 					break;
 				}
 			}

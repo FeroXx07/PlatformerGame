@@ -55,6 +55,10 @@ public:
 	// The enemy is destroyed and an explosion particle is fired
 	bool OnCollision(Collider* c1, Collider* c2);
 
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	// Add an enemy into the queue to be spawned later
 	bool AddEntity(EntityType type, int x, int y);
 

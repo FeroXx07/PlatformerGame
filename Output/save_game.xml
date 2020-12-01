@@ -11,4 +11,8 @@
 	<renderer>
 		<camera x="-1696" y="253" />
 	</renderer>
+	<entity>
+		<entitiesCount Num="0" />
+		<entitiesList />
+	</entity>
 </game_state>

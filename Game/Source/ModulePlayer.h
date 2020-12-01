@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Point.h"
+#include "Timer.h"
 
 #define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
 #define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
@@ -108,6 +109,9 @@ public:
 	uint jumpingSfx;
 	uint shootingSfx;
 
+	int isWalking = false;
+	//float counterWalking = 0.0f;
+	Timer counterWalking;
 };
 
 #endif //!__MODULE_PLAYER_H__
