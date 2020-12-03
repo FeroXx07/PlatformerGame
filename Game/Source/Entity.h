@@ -3,9 +3,11 @@
 
 #include "Point.h"
 #include "Animation.h"
+#include "SString.h"
 
 struct SDL_Texture;
 struct Collider;
+enum EntityType;
 
 class Entity
 {
@@ -37,7 +39,7 @@ public:
 	// The current position in the world
 	iPoint position;
 
-	// The enemy's texture
+	// The enemy's itemsTexture
 	SDL_Texture* texture = nullptr;
 
 	// Sound fx when destroyed
@@ -45,6 +47,11 @@ public:
 
 	// A flag for the enemy removal. Important! We do not delete objects instantly
 	bool pendingToDelete = false;
+
+	EntityType entityType;
+
+	SString name = SString("NONE");
+	uint health;
 
 protected:
 	// A ptr to the current animation
@@ -60,15 +67,9 @@ protected:
 
 	enum DirectionState { LEFT,RIGHT,UP,DOWN, };
 
-	bool goingLeft = true;
-
-	bool climbingUP = false;
-
-	bool climbingDOWN = false;
-
 	bool inCollision = false;
 
-	int tempx = 0;
+	int offsetX = 0;
 };
 
 #endif // __ENEMY_H__

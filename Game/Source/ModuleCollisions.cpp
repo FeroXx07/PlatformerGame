@@ -17,24 +17,94 @@ ModuleCollisions::ModuleCollisions(bool b) : Module(b)
 	colliders2 = colliders.start;
 
 	matrix[Collider::Type::GROUND][Collider::Type::GROUND] = false;
-	matrix[Collider::Type::GROUND][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::GROUND][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::WIN] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::BULLET] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::WIN] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::BULLET] = false;
 
 	matrix[Collider::Type::DEATH][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::DEATH][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::WIN] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::BULLET] = false;
 
 	matrix[Collider::Type::WIN][Collider::Type::GROUND] = false;
-	matrix[Collider::Type::WIN][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::WIN][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::WIN][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::WIN][Collider::Type::WIN] = false;
+	matrix[Collider::Type::WIN][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::WIN][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::WIN][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::WIN][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::WIN][Collider::Type::BULLET] = false;
+
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::WIN] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::BULLET] = false;
+
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::WIN] = false;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::ENEMY_HURTBOX][Collider::Type::BULLET] = true;
+
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::WIN] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::ENEMY_HITBOX][Collider::Type::BULLET] = false;
+
+	matrix[Collider::Type::ITEM][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::ITEM][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ITEM][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::ITEM][Collider::Type::WIN] = false;
+	matrix[Collider::Type::ITEM][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::ITEM][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::ITEM][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::ITEM][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::ITEM][Collider::Type::BULLET] = false;
+
+	matrix[Collider::Type::BULLET][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::WIN] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::CHECKPOINT] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::ENEMY_HURTBOX] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::ITEM] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::ENEMY_HITBOX] = false;
+	matrix[Collider::Type::BULLET][Collider::Type::BULLET] = false;
 }
 
 // Destructor

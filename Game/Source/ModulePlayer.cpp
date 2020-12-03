@@ -83,7 +83,7 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = app->tex->Load("Assets/textures/blue_player_animations.png"); 
+	itemsTexture = app->tex->Load("Assets/textures/blue_player_animations.png"); 
 	jumpTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
 	dieTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
 	fallTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
@@ -100,7 +100,7 @@ bool ModulePlayer::Start()
 	
 
 	currentAnimation = &idleAnim;
-	currentTexture = &texture;
+	currentTexture = &itemsTexture;
 
 	playerState = ON_AIR;
 	collisionExist = false;
@@ -376,7 +376,7 @@ void ModulePlayer::CheckPlayerState(float dt)
 
 	if (playerState == ON_GROUND) // Stopping the player gradually while at ground
 	{
-		currentTexture = &texture;
+		currentTexture = &itemsTexture;
 		if (currentAnimation == &jumpAnim)
 		{
 			currentAnimation = &idleAnim;
@@ -428,11 +428,11 @@ bool ModulePlayer::CheckCollisions(float dt)
 		if (playerCollider->Intersects(listColliders->data->rect))
 		{
 			collisionExist = this->OnCollision(playerCollider, listColliders->data);
-			if (listColliders->data->listener != nullptr && listColliders->data->type != Collider::Type::PLAYER)
+			/*if (listColliders->data->listener != nullptr && listColliders->data->type != Collider::Type::PLAYER)
 			{
 				if(listColliders->data->type != Collider::Type::BULLET)
 					listColliders->data->listener->OnCollision(listColliders->data, playerCollider);
-			}
+			}*/
 		}
 	}
 
@@ -533,8 +533,11 @@ bool ModulePlayer::LoadState(pugi::xml_node& data)
 {
 	//...
 	LOG("Loading Player state...");
-	playerPos.x = data.child("position").attribute("x").as_int();
-	playerPos.y = data.child("position").attribute("y").as_int();
+	playerPos.x = data.child("data").attribute("x").as_int();
+	playerPos.y = data.child("data").attribute("y").as_int();
+	lives = data.child("data").attribute("lives").as_int();
+	health = data.child("data").attribute("health").as_int();
+	stars = data.child("data").attribute("stars").as_int();
 	LOG("Player state succesfully loaded.\n Pos.x = %d Pos.y = %d", playerPos.x, playerPos.y);
 	return true;
 }
@@ -544,12 +547,15 @@ bool ModulePlayer::SaveState(pugi::xml_node& data) const
 {
 	//...
 	// Delete old data
-	data.remove_child("position");
+	data.remove_child("data");
 	// Add new data
 	LOG("Saving Player state...");
-	pugi::xml_node pos = data.append_child("position");
+	pugi::xml_node pos = data.append_child("data");
 	pos.append_attribute("x").set_value(playerPos.x);
 	pos.append_attribute("y").set_value(playerPos.y);
+	pos.append_attribute("lives").set_value(this->lives);
+	pos.append_attribute("health").set_value(this->health);
+	pos.append_attribute("stars").set_value(this->stars);
 	LOG("Player state succesfully saved. \n Pos.x = %d Pos.y = %d", playerPos.x, playerPos.y);
 	return true;
 }
@@ -571,7 +577,7 @@ bool ModulePlayer::CleanUp()
 
 	// TODO 1: Remove ALL remaining resources. Update resource count properly
 
-	app->tex->UnLoad(texture);
+	app->tex->UnLoad(itemsTexture);
 	app->tex->UnLoad(jumpTexture);
 	
 	return true;

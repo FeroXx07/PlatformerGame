@@ -113,6 +113,7 @@ public:
 
 	ModuleCollisions* collisions;
 	ModuleParticles* particles;
+	ModuleFonts* fonts;
 
 	ModuleDebugInfo* debug;
 	ModuleFadeToBlack* fade;

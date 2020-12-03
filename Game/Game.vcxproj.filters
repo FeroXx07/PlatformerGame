@@ -76,6 +76,9 @@
     <ClCompile Include="Source\Particle.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnemyWalking.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -176,6 +179,9 @@
     <ClInclude Include="Source\ModuleParticles.h" />
     <ClInclude Include="Source\Particle.h">
       <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyWalking.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

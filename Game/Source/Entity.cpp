@@ -4,6 +4,7 @@
 #include "ModuleCollisions.h"
 #include "Audio.h"
 #include "Render.h"
+#include "ModuleFonts.h"
 //#include "ModuleParticles.h"
 //include scene 
 #include "ModuleEntities.h"
@@ -31,13 +32,16 @@ void Entity::Update()
 		currentAnim->Update();
 
 	if (collider != nullptr)
-		collider->SetPos(position.x + tempx, position.y);
+		collider->SetPos(position.x + offsetX, position.y);
 }
 
 void Entity::Draw()
 {
 	if (currentAnim != nullptr)
+	{
 		app->render->DrawTexture(texture, position.x, position.y, &(currentAnim->GetCurrentFrame()));
+	}
+
 }
 
 void Entity::OnCollision(Collider* collider)
@@ -54,8 +58,10 @@ void Entity::OnCollision(Collider* collider)
 			this->SetToDelete();
 			break;
 		default:
+			this->SetToDelete();
 			break;
 		}
+		this->SetToDelete();
 	}
 }
 

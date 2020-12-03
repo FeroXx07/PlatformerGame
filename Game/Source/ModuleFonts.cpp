@@ -17,7 +17,7 @@ ModuleFonts::~ModuleFonts()
 
 }
 
-// Load new texture from file path
+// Load new itemsTexture from file path
 int ModuleFonts::Load(const char* texture_path, const char* characters, uint rows)
 {
 	int id = -1;
@@ -39,14 +39,14 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 	//Font& font = fonts[id];
 	Font* font = new Font();
 	fonts.Add(font);
-	font->texture = tex;
+	font->itemsTexture = tex;
 	font->rows = rows;
 
 	// TODO 1: Finish storing font data
 
 	// totalLength ---	length of the lookup table
-	// table ---------  All characters displayed in the same order as the texture
-	// columns -------  Amount of chars per row of the texture
+	// table ---------  All characters displayed in the same order as the itemsTexture
+	// columns -------  Amount of chars per row of the itemsTexture
 	// char_w --------	Width of each character
 	// char_h --------	Height of each character
 
@@ -81,10 +81,10 @@ void ModuleFonts::UnLoad(int font_id)
 	ListItem<Font*>* list;
 	list = fonts.start;
 	list = fonts.At(font_id);
-	if(font_id >= 0 && font_id < fonts.Count() && list->data->texture != nullptr)
+	if(font_id >= 0 && font_id < fonts.Count() && list->data->itemsTexture != nullptr)
 	{
-		app->tex->UnLoad(list->data->texture);
-		list->data->texture = nullptr;
+		app->tex->UnLoad(list->data->itemsTexture);
+		list->data->itemsTexture = nullptr;
 		LOG("Successfully Unloaded BMP font_id %d", font_id);
 	}
 }
@@ -93,7 +93,7 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 {
 	Font* data;
 	data = fonts.At(font_id)->data;
-	if(text == nullptr || font_id < 0 || data->texture == nullptr)
+	if(text == nullptr || font_id < 0 || data->itemsTexture == nullptr)
 	{
 		LOG("Unable to render text with bmp font id %d", font_id);
 		return;
@@ -108,7 +108,7 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 
 	for(uint i = 0; i < len; ++i)
 	{
-		// TODO 2: Find the character in the table and its position in the texture, then Blit
+		// TODO 2: Find the character in the table and its position in the itemsTexture, then Blit
 		uint charIndex = 0;
 
 		// Find the location of the current character in the lookup table
@@ -125,7 +125,7 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		app->render->DrawTexture(font->texture, x, y, &spriteRect, 0.0f, false);
+		app->render->DrawTexture(font->itemsTexture, x, y, &spriteRect, 0.0f);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

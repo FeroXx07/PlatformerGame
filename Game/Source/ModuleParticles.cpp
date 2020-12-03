@@ -25,7 +25,7 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	texture = app->tex->Load("Assets/Common/spritesheet_items.png");
+	itemsTexture = app->tex->Load("Assets/Common/spritesheet_items.png");
 	// Do pushbacks of particle animations:
 	// Particle->Anim->Pushback... etx
 	bullet.anim.PushBack({ 74,77,24,22});
@@ -39,7 +39,7 @@ bool ModuleParticles::Start()
 
 bool ModuleParticles::CleanUp()
 {
-	app->tex->UnLoad(texture);
+	app->tex->UnLoad(itemsTexture);
 	LOG("Unloading particles");
 
 	// Delete all remaining active particles on application exit 
@@ -145,7 +145,7 @@ bool ModuleParticles::PostUpdate()
 	for (list = particles.start; list != NULL; list = list->next)
 	{
 		if (list->data->isAlive)
-			app->render->DrawTexture(texture, list->data->position.x, list->data->position.y, &(list->data->anim.GetCurrentFrame()));
+			app->render->DrawTexture(itemsTexture, list->data->position.x, list->data->position.y, &(list->data->anim.GetCurrentFrame()));
 	}
 
 	return ret;

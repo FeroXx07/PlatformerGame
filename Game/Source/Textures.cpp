@@ -60,10 +60,10 @@ bool Textures::CleanUp()
 	return true;
 }
 
-// Load new texture from file path
+// Load new itemsTexture from file path
 SDL_Texture* const Textures::Load(const char* path)
 {
-	SDL_Texture* texture = NULL;
+	SDL_Texture* itemsTexture = NULL;
 	SDL_Surface* surface = IMG_Load(path);
 
 	if(surface == NULL)
@@ -72,21 +72,21 @@ SDL_Texture* const Textures::Load(const char* path)
 	}
 	else
 	{
-		texture = LoadSurface(surface);
+		itemsTexture = LoadSurface(surface);
 		SDL_FreeSurface(surface);
 	}
 
-	return texture;
+	return itemsTexture;
 }
 
-// Unload texture
-bool Textures::UnLoad(SDL_Texture* texture)
+// Unload itemsTexture
+bool Textures::UnLoad(SDL_Texture* itemsTexture)
 {
 	ListItem<SDL_Texture*>* item;
 
 	for(item = textures.start; item != NULL; item = item->next)
 	{
-		if(texture == item->data)
+		if(itemsTexture == item->data)
 		{
 			SDL_DestroyTexture(item->data);
 			textures.Del(item);
@@ -97,25 +97,25 @@ bool Textures::UnLoad(SDL_Texture* texture)
 	return false;
 }
 
-// Translate a surface into a texture
+// Translate a surface into a itemsTexture
 SDL_Texture* const Textures::LoadSurface(SDL_Surface* surface)
 {
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(app->render->renderer, surface);
+	SDL_Texture* itemsTexture = SDL_CreateTextureFromSurface(app->render->renderer, surface);
 
-	if(texture == NULL)
+	if(itemsTexture == NULL)
 	{
 		LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
 	}
 	else
 	{
-		textures.Add(texture);
+		textures.Add(itemsTexture);
 	}
 
-	return texture;
+	return itemsTexture;
 }
 
-// Retrieve size of a texture
-void Textures::GetSize(const SDL_Texture* texture, uint& width, uint& height) const
+// Retrieve size of a itemsTexture
+void Textures::GetSize(const SDL_Texture* itemsTexture, uint& width, uint& height) const
 {
-	SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*) &width, (int*) &height);
+	SDL_QueryTexture((SDL_Texture*)itemsTexture, NULL, NULL, (int*) &width, (int*) &height);
 }

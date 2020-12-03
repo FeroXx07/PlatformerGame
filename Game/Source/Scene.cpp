@@ -76,9 +76,10 @@ bool Scene::Start()
 	app->player->lives = 3;
 	app->player->health = 3;
 
-	//app->entities->AddEntity(EntityType::ITEM_HEALTH, 38 * 32, 11 * 32);
+	app->entities->AddEntity(EntityType::ITEM_HEALTH, 38 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_STAR, 40 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 43 * 32, 11 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 36 * 32, 448 + 20);
 
 	resetCounter = 0;
 

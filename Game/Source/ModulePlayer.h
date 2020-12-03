@@ -48,7 +48,7 @@ public:
 	// The speed in which we move the player (pixels per frame)
 	fPoint velocity = { 0,0 };
 
-	SDL_Texture* texture = nullptr;
+	SDL_Texture* itemsTexture = nullptr;
 	Collider* playerCollider = nullptr;
 	Collider* previousCollision = nullptr;
 

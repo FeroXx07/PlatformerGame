@@ -38,12 +38,12 @@ void ItemHealth::Update()
 	//}
 	//if (/*			!isGround			*//*			climbingUP || climbingDOWN			*/0) {
 	//	collider->rect.w = 5;
-	//	offsetX = 4;
+	//	tempx = 4;
 	//}
 	//else {
 	//	collider->rect.w = 15;
-	//	offsetX = 0;
+	//	tempx = 0;
 	//}
-	//collider->SetPos(position.x + offsetX, position.y);
+	//collider->SetPos(position.x + tempx, position.y);
 	Entity::Update();
 }

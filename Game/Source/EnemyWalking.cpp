@@ -1,20 +1,20 @@
-#include "ItemHealth.h"
+#include "EnemyWalking.h"
 
 #include "App.h"
 #include "ModuleCollisions.h"
 
 
-ItemHealth::ItemHealth(int x, int y) : Entity(x, y)
+EnemyWalking::EnemyWalking(int x, int y) : Entity(x, y)
 {
 	spawnDelay = 0;
 
-	anim.PushBack({ 97,123,22,22 });
+	anim.PushBack({158,106,32,44});
 	currentAnim = &anim;
 	
-	collider = app->collisions->AddCollider({0, 0, 22, 22 }, Collider::Type::ITEM, (Module*) app->entities, Collider::Items::HEALTH);
+	collider = app->collisions->AddCollider({0, 0, 32, 44 }, Collider::Type::ENEMY_HURTBOX, (Module*) app->entities, Collider::Items::ITEM_NONE);
 }
 
-void ItemHealth::Update()
+void EnemyWalking::Update()
 {
 	
 	// Fire Minion position update
@@ -44,6 +44,6 @@ void ItemHealth::Update()
 	//	collider->rect.w = 15;
 	//	offsetX = 0;
 	//}
-	//collider->SetPos(position.x + offsetX, position.y);
+	collider->SetPos(position.x + offsetX, position.y);
 	Entity::Update();
 }

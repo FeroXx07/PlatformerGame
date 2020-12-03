@@ -17,6 +17,7 @@
 
 #include "ModuleEntities.h"
 #include "ModuleParticles.h"
+#include "ModuleFonts.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -48,13 +49,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collisions = new ModuleCollisions(true);
 	entities = new Entities(false);
 	particles = new ModuleParticles(false);
-
+	fonts = new ModuleFonts();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(fonts);
 
 	AddModule(deathScene);
 	AddModule(initialScreen);

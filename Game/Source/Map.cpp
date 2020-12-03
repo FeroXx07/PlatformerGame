@@ -80,7 +80,7 @@ void Map::Draw()
 					tileset = GetTilesetFromTileId(tileId);
 					SDL_Rect n = tileset->GetTileRect(tileId);
 					iPoint pos = MapToWorld(x, y);
-					app->render->DrawTexture(tileset->texture, pos.x, pos.y, &n);
+					app->render->DrawTexture(tileset->itemsTexture, pos.x, pos.y, &n);
 				}
 			}
 		}
@@ -364,7 +364,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* set)
 		// L03: TODO: Load Tileset image
 		LOG("Filling TilesetDetails");
 		SString tmp("%s%s", folder.GetString(), image.attribute("source").as_string());
-		set->texture = app->tex->Load(tmp.GetString());
+		set->itemsTexture = app->tex->Load(tmp.GetString());
 		set->texWidth = image.attribute("width").as_int();
 		set->texHeight = image.attribute("height").as_int();
 

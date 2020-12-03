@@ -6,11 +6,12 @@
 
 
 
-enum class EntityType
+enum EntityType
 {
 	NO_TYPE,
 	ITEM_HEALTH,
 	ITEM_STAR,
+	ENEMY_WALKING,
 };
 
 struct EntitySpawnpoint
@@ -82,13 +83,17 @@ private:
 	List<Entity*>entities;
 
 	// The enemies sprite sheet
-	SDL_Texture* texture = nullptr;
+	SDL_Texture* itemsTexture = nullptr;
+	SDL_Texture* enemiesTexture = nullptr;
 
 	// The audio fx for destroying an enemy/item
 	int enemyDestroyedFx = 0;
 
 	// The audio fx for picking an item
 	int itemPickedFx = 0;
+
+	EntityType StrToEntityType(SString s);
+
 };
 
 #endif // __MODULE_ENTITIES_H__
