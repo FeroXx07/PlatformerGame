@@ -20,6 +20,4 @@ private:
 
 	// The enemy animation
 	Animation anim;
-
-	int enemyFireMinionSpeed = 1;
 };

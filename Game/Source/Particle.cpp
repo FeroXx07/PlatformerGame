@@ -29,6 +29,13 @@ bool Particle::Update(float dt)
 	if (!isAlive && frameCount >= 0)
 		isAlive = true;
 
+	if (hasDied)
+	{
+		ret = false;
+		collider->pendingToDelete = true;
+		isAlive = false;
+	}
+
 	if (isAlive)
 	{
 		anim.Update();

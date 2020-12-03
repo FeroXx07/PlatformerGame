@@ -35,13 +35,14 @@ public:
 	// Sets flag for deletion and for the collider aswell
 	virtual void SetToDelete();
 
+	bool CheckRectEqual(SDL_Rect &a, SDL_Rect &b);
 public:
 	// The current position in the world
 	iPoint position;
 
 	// The enemy's itemsTexture
 	SDL_Texture* texture = nullptr;
-
+	
 	// Sound fx when destroyed
 	int destroyedFx = 0;
 
@@ -51,25 +52,26 @@ public:
 	EntityType entityType;
 
 	SString name = SString("NONE");
-	uint health;
-
-protected:
-	// A ptr to the current animation
-	Animation* currentAnim = nullptr;
+	int health = 0;
 
 	// The enemy's collider
 	Collider* collider = nullptr;
 
+	bool isDead = false;
+protected:
+	// A ptr to the current animation
+	Animation* currentAnim = nullptr;
+
 	// Original spawn position. Stored for movement calculations
 	iPoint spawnPos;
-
 	iPoint entitySpeed = { 0,0 };
 
 	enum DirectionState { LEFT,RIGHT,UP,DOWN, };
 
 	bool inCollision = false;
 
-	int offsetX = 0;
+	iPoint drawOffset = { 0,0 };
+	iPoint collOffset = { 0,0 };
 };
 
 #endif // __ENEMY_H__

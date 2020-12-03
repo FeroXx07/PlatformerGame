@@ -125,6 +125,7 @@ bool ModuleCollisions::PreUpdate()
 		if (listColl != NULL && listColl->data->pendingToDelete == true)
 		{
 			colliders.Del(listColl);
+			delete listColl->data;
 		}
 		listColl = listColl->next;
 	}
@@ -268,6 +269,8 @@ bool ModuleCollisions::CleanUp()
 		if (listColl != NULL)
 		{
 			colliders.Del(listColl);
+			delete listColl->data;
+
 		}
 		listColl = listColl->next;
 	}
@@ -291,6 +294,7 @@ void ModuleCollisions::RemoveCollider(Collider* collider)
 		if (listColl != NULL && listColl->data == collider)
 		{
 			colliders.Del(listColl);
+			delete listColl->data;
 		}
 		listColl = listColl->next;
 	}

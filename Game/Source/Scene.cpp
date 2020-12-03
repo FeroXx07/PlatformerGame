@@ -83,7 +83,6 @@ bool Scene::Start()
 
 	resetCounter = 0;
 
-	app->SaveGameRequest();
 	return true;
 }
 
@@ -120,10 +119,10 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN || app->player->destroyed == true)
 	{
-		//Check here if player has lost all lives, if true then do the fade to black (permanent death)
+		//Check here if player has lost all lives, if true then do the fade to black (permanent deathAnim)
 		if (app->player->lives > 0)
 		{
-			//If player still has lives, minus one live and restart him from the last checkpoint (temporal death)
+			//If player still has lives, minus one live and restart him from the last checkpoint (temporal deathAnim)
 			app->player->PlayerDied();
 		}
 		else if (app->player->lives == 0)

@@ -54,7 +54,6 @@ private:
 	SDL_Texture* itemsTexture = nullptr;
 
 	// An array to store and handle all the particles
-	//Particle* particles[MAX_ACTIVE_PARTICLES] = { nullptr };
 	List<Particle*>particles;
 	// Total amount of particles laoded into the array
 	uint particlesCount = 0;

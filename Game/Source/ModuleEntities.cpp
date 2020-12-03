@@ -250,6 +250,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 			newEntity = new EnemyWalking(info.x, info.y);
 			newEntity->texture = enemiesTexture;
 			newEntity->name = "EnemyWalking";
+			newEntity->health = 300;
 			newEntity->destroyedFx = itemPickedFx;
 			newEntity->entityType = EntityType::ENEMY_WALKING;
 			break;
@@ -318,7 +319,7 @@ bool Entities::SaveState(pugi::xml_node& data) const // Node is pointing to "ent
 		newEnt.append_attribute("Type").set_value(list->data->entityType);
 		newEnt.append_attribute("x").set_value(list->data->GetCollider()->rect.x);
 		newEnt.append_attribute("y").set_value(list->data->GetCollider()->rect.y);
-
+		newEnt.append_attribute("dead").set_value(list->data->isDead);
 	}
 	return ret;
 }
@@ -352,7 +353,8 @@ bool Entities::LoadState(pugi::xml_node& data)  // Node is pointing to "entity"
 		iPoint position{ 0,0 };
 		position.x = newEnt.attribute("x").as_int();
 		position.y = newEnt.attribute("y").as_int();
-		AddEntity(type, position.x, position.y);
+		if (newEnt.attribute("dead").as_bool() == false)
+			AddEntity(type, position.x, position.y);
 		
 		newEnt = newEnt.next_sibling();
 	}

@@ -77,7 +77,7 @@ public:
 	bool destroyed = false;
 	bool win = false;
 private:
-	enum PlayerState {ON_GROUND, ON_AIR};
+	enum PlayerState {ON_GROUND, ON_AIR, ON_HURT};
 	PlayerState playerState = ON_AIR;
 	enum PlayerDirection {RIGHT,LEFT,UP,DOWN};
 	PlayerDirection playerDirection;

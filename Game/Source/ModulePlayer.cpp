@@ -339,7 +339,7 @@ void ModulePlayer::Logic(float dt)
 void ModulePlayer::CheckPlayerState(float dt)
 {
 	// Gravity
-	if ((playerState == ON_AIR || collisionExist == false) && godMode == false && destroyed == false)
+	if ((playerState == ON_AIR || collisionExist == false) && playerState != ON_GROUND && godMode == false && destroyed == false)
 	{
 		if (collisionExist == false)
 			playerState = ON_AIR;
@@ -427,7 +427,8 @@ bool ModulePlayer::CheckCollisions(float dt)
 	{
 		if (playerCollider->Intersects(listColliders->data->rect))
 		{
-			collisionExist = this->OnCollision(playerCollider, listColliders->data);
+			if (previousCollision != listColliders->data && listColliders->data->type != Collider::Type::PLAYER)
+				collisionExist = this->OnCollision(playerCollider, listColliders->data);
 			/*if (listColliders->data->listener != nullptr && listColliders->data->type != Collider::Type::PLAYER)
 			{
 				if(listColliders->data->type != Collider::Type::BULLET)
@@ -450,7 +451,6 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		if (((playerCollider->rect.y < c2->rect.y) || (playerCollider->rect.y > c2->rect.y)) && (playerCollider->rect.y + playerCollider->rect.h > c2->rect.y +c2->rect.h/2))
 		{
 			collisionFromBelow = true;
-			LOG("Player through the ground");
 			ret = false;
 		}
 		else
@@ -474,7 +474,6 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				}
 				playerState = ON_GROUND;
 				isJump = false;
-				LOG("Player feet on ground");
 				ret = true;
 			}
 		}
@@ -519,10 +518,14 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		default:
 			break;
 		}
-
-		
 	}
 
+	if (c2->type == Collider::Type::ENEMY_HITBOX && previousCollision->type != Collider::Type::ENEMY_HITBOX && godMode == false)
+	{
+
+		previousCollision = c2;
+		c2->listener->OnCollision(c2, c1);
+	}
 	if (c2->type == Collider::Type::WIN)
 		win = true;
 

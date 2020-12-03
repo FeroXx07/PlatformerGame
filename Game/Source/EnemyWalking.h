@@ -20,7 +20,7 @@ private:
 
 	// The enemy animation
 	Animation anim;
-	
-	int enemyFireMinionSpeed = 1;
+	Animation deathAnim;
+	int maxHealth = 300;
 };
 
