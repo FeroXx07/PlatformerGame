@@ -79,6 +79,9 @@
     <ClCompile Include="Source\EnemyWalking.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Pathfinding.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -183,6 +186,12 @@
     <ClInclude Include="Source\EnemyWalking.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Pathfinding.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PQueue.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -211,6 +220,9 @@
     </Filter>
     <Filter Include="Particles">
       <UniqueIdentifier>{2cdfb3d9-8e4c-4ad8-b123-1744b2d1afef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pathfinding">
+      <UniqueIdentifier>{3ff3d3ea-116b-46c8-8c33-0d1909ea0c5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

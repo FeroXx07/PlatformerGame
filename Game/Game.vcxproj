@@ -115,6 +115,7 @@
     <ClCompile Include="Source\ModuleParticles.cpp" />
     <ClCompile Include="Source\ModulePlayer.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
+    <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -142,7 +143,9 @@
     <ClInclude Include="Source\ModuleParticles.h" />
     <ClInclude Include="Source\ModulePlayer.h" />
     <ClInclude Include="Source\Particle.h" />
+    <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\PQueue.h" />
     <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Input.h" />

@@ -18,6 +18,7 @@
 #include "ModuleEntities.h"
 #include "ModuleParticles.h"
 #include "ModuleFonts.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -50,6 +51,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entities = new Entities(false);
 	particles = new ModuleParticles(false);
 	fonts = new ModuleFonts();
+	pathfinding = new PathFinding();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
@@ -57,6 +59,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(fonts);
+	AddModule(pathfinding);
 
 	AddModule(deathScene);
 	AddModule(initialScreen);

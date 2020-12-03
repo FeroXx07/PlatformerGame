@@ -1,5 +1,5 @@
 #include "Entity.h"
-
+#include "DynArray.h"
 class EnemyWalking : public Entity
 {
 public:
@@ -8,9 +8,11 @@ public:
 	// Creates animation data and the collider
 	EnemyWalking(int x, int y);
 
-	// The enemy is going to perform a sinusoidal movement
-	void Update() override;
+	void Update(float dt) override;
 
+	DirectionState Gps(iPoint& p);
+
+	void SetVelDirection(DirectionState dir);
 private:
 
 	int spawnDelay = 0;
@@ -22,5 +24,10 @@ private:
 	Animation anim;
 	Animation deathAnim;
 	int maxHealth = 300;
+
+	//Pathfinding
+	bool hasPath = false;
+	bool hasReachedDst = false;
+	DynArray<iPoint> path;
 };
 

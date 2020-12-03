@@ -14,7 +14,7 @@ ItemHealth::ItemHealth(int x, int y) : Entity(x, y)
 	collider = app->collisions->AddCollider({0, 0, 22, 22 }, Collider::Type::ITEM, (Module*) app->entities, Collider::Items::HEALTH);
 }
 
-void ItemHealth::Update()
+void ItemHealth::Update(float dt)
 {
 	
 	// Fire Minion position update
@@ -45,5 +45,5 @@ void ItemHealth::Update()
 	//	offsetX = 0;
 	//}
 	//collider->SetPos(position.x + offsetX, position.y);
-	Entity::Update();
+	Entity::Update(dt);
 }

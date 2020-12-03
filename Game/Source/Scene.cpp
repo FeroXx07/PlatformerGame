@@ -13,6 +13,7 @@
 #include "ModulePlayer.h"
 #include "ModuleEntities.h"
 #include "ModuleParticles.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -48,7 +49,14 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	app->map->Load("Level1.tmx");
+	{
+		int w, h;
+		uchar* data = NULL;
 
+		if (app->map->CreateWalkabilityMap(&w, &h, &data)) app->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
 	app->render->background = { 99,210,222,0 };
 	app->audio->PlayMusic("Assets/audio/music/level_soundtrack.ogg");
 	// Layers gets gid correctly
@@ -80,6 +88,7 @@ bool Scene::Start()
 	app->entities->AddEntity(EntityType::ITEM_STAR, 40 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 43 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 36 * 32, 448 + 20);
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 20 * 32, 448 + 20);
 
 	resetCounter = 0;
 

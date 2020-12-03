@@ -42,22 +42,17 @@ enum MapTypes
 };
 
 
-struct Property
-{
-	//...
-	SString name;
-	bool value;
-};
+
 
 // L06: TODO 5: Create a generic structure to hold properties
 struct Properties
 {
-	//struct Property
-	//{
-	//	//...
-	//	SString name;
-	//	bool draw;
-	//};
+	struct Property
+	{
+		//...
+		SString name;
+		bool value;
+	};
 	
 	~Properties()
 	{
@@ -142,6 +137,8 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 	int LoadColliders();
+
+	bool CreateWalkabilityMap(int* width, int* height, uchar** buffer) const;
 private:
 
 	// L03: Methods to load all required map data

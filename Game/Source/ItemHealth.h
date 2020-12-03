@@ -9,7 +9,7 @@ public:
 	ItemHealth(int x, int y);
 
 	// The enemy is going to perform a sinusoidal movement
-	void Update() override;
+	void Update(float dt) override;
 
 private:
 

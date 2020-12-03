@@ -4,8 +4,6 @@
 #include "Module.h"
 #include "List.h"
 
-
-
 enum EntityType
 {
 	NO_TYPE,
@@ -86,7 +84,7 @@ private:
 	// The enemies sprite sheet
 	SDL_Texture* itemsTexture = nullptr;
 	SDL_Texture* enemiesTexture = nullptr;
-
+	SDL_Texture* debugTex = nullptr;
 	// The audio fx for destroying an enemy/item
 	int enemyDestroyedFx = 0;
 

@@ -14,8 +14,8 @@ ItemStar::ItemStar(int x, int y) : Entity(x, y)
 	collider = app->collisions->AddCollider({ 0, 0, 32, 30 }, Collider::Type::ITEM, (Module*)app->entities, Collider::Items::STAR);
 }
 
-void ItemStar::Update()
+void ItemStar::Update(float dt)
 {
 
-	Entity::Update();
+	Entity::Update(dt);
 }

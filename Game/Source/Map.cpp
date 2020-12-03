@@ -21,22 +21,16 @@ Map::~Map()
 // L06: TODO 7: Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
-	//...
-	int result = defaultValue;
-	SString targetName(value);
-	ListItem<Property*> *propList = list.start;
-	while (propList != NULL)
+	ListItem<Property*>* item = list.start;
+
+	while (item)
 	{
-		SString name(propList->data->name.GetString());
-		if (name == targetName)
-		{
-			result = propList->data->value;
-			break;
-		}
-		propList = propList->next;
+		if (item->data->name == value)
+			return item->data->value;
+		item = item->next;
 	}
 
-	return result;
+	return defaultValue;
 }
 
 // Called before render is available
@@ -63,7 +57,7 @@ void Map::Draw()
 	TileSet* tileset = NULL;
 	while (layer != NULL)
 	{
-		if (layer->data->properties.GetProperty("Nodraw") == 0) // Layer draw property is false
+		if (layer->data->properties.GetProperty("NoDraw") == 0) // Layer draw property is false
 		{
 			layer = layer->next;
 			continue;
@@ -406,6 +400,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		if (ret == true) ret = StoreId(gidNode, layer, i);
 		++i;
 	}
+	ret = LoadProperties(node.child("properties"), layer->properties);
 
 	LOG("Layer <<%s>> has loaded %d tiles", layer->name.GetString(), i);
 	return ret;
@@ -484,36 +479,58 @@ bool to_bool(std::string const& s) {
 }
 
 // L06: TODO 6: Load a group of properties from a node and fill a list with it
+//bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+//{
+//	bool ret = false;
+//
+//	pugi::xml_node propertiesNode;
+//	propertiesNode = node.child("properties");
+//
+//	pugi::xml_node propertyNode = propertiesNode.child("property");
+//	
+//	int i = 0;
+//	while (propertyNode != NULL)
+//	{
+//		Property* prop = new Property();
+//
+//		prop->name = propertyNode.attribute("name").as_string();
+//
+//		if (propertyNode.attribute("type"))
+//		{
+//			prop->value = propertyNode.attribute("value").as_bool();
+//		}
+//		else
+//		{
+//			prop->value = to_bool(propertyNode.attribute("value").as_string());
+//		}
+//
+//		properties.list.Add(prop);
+//		propertyNode = propertyNode.next_sibling("property");
+//	}
+//	
+//	//...
+//	return ret;
+//}
+
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
 	bool ret = false;
 
-	pugi::xml_node propertiesNode;
-	propertiesNode = node.child("properties");
-
-	pugi::xml_node propertyNode = propertiesNode.child("property");
-	
-	int i = 0;
-	while (propertyNode != NULL)
+	pugi::xml_node property;
+	for (property = node.child("property"); property; property = property.next_sibling("property"))
 	{
-		Property* prop = new Property();
+		Properties::Property* prop = new Properties::Property();
 
-		prop->name = propertyNode.attribute("name").as_string();
+		prop->name = property.attribute("name").as_string();
+		prop->value = property.attribute("value").as_int();
 
-		if (propertyNode.attribute("type"))
-		{
-			prop->value = propertyNode.attribute("value").as_bool();
+		if (prop != nullptr) {
+			ret = true;
 		}
-		else
-		{
-			prop->value = to_bool(propertyNode.attribute("value").as_string());
-		}
-
 		properties.list.Add(prop);
-		propertyNode = propertyNode.next_sibling("property");
 	}
-	
-	//...
+
+
 	return ret;
 }
 
@@ -571,4 +588,48 @@ int Map::LoadColliders()
 	}
 	count = app->collisions->GetColliderCount();
 	return count;
+}
+
+// L12b: Create walkability map for pathfinding
+bool Map::CreateWalkabilityMap(int* width, int* height, uchar** buffer) const
+{
+	bool ret = false;
+	ListItem<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.GetProperty("Navigation", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width * layer->height];
+		memset(map, 1, layer->width * layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y * layer->width) + x;
+
+				int tileId = layer->Get(x, y);
+				TileSet* tileset = (tileId > 0) ? GetTilesetFromTileId(tileId) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tileId - tileset->firstgid) > 0 ? 0 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		*width = data.width;
+		*height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
 }

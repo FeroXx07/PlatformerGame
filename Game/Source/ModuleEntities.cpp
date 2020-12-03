@@ -10,6 +10,9 @@
 #include "List.h"
 #include "ModuleCollisions.h"
 #include "ModuleFonts.h"
+#include "Input.h"
+#include "Map.h"
+#include "Pathfinding.h"
 
 #include "Entity.h"
 
@@ -49,6 +52,7 @@ bool Entities::Start()
 	char lookupTableTextAndLives[] = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ.-" };
 	//yellowFont = app->fonts->Load("Assets/Fonts/fonts_yellow.png", lookupTableTextAndLives, 1);
 
+	debugTex = app->tex->Load("Assets/maps/x_img.png");
 	return true;
 }
 
@@ -80,6 +84,29 @@ bool Entities::PreUpdate()
 		list = list->next;
 	}
 
+	// L12b: Debug pathfing
+	static iPoint origin;
+	static bool originSelected = false;
+
+	int mouseX, mouseY;
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	p = app->map->WorldToMap(p.x, p.y);
+
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (originSelected == true)
+		{
+			app->pathfinding->lastPath.Clear();
+			app->pathfinding->CreatePath(origin, p);
+			originSelected = false;
+		}
+		else
+		{
+			origin = p;
+			originSelected = true;
+		}
+	}
 	return ret;
 }
 
@@ -94,7 +121,7 @@ bool Entities::Update(float dt)
 	for (int i = 0; i < entities.Count(); ++i)
 	{
 		if (list != NULL)
-			list->data->Update();
+			list->data->Update(dt);
 		list = list->next;
 	}
 
@@ -115,6 +142,24 @@ bool Entities::PostUpdate()
 		if (list != NULL)
 			list->data->Draw();
 		list = list->next;
+	}
+
+
+	// L12b: Debug pathfinding
+	int mouseX, mouseY;
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	p = app->map->WorldToMap(p.x, p.y);
+	p = app->map->MapToWorld(p.x, p.y);
+
+	app->render->DrawTexture(debugTex, p.x, p.y);
+
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(debugTex, pos.x, pos.y);
 	}
 
 	return ret;
@@ -249,6 +294,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 		{
 			newEntity = new EnemyWalking(info.x, info.y);
 			newEntity->texture = enemiesTexture;
+			newEntity->debugTexture = debugTex;
 			newEntity->name = "EnemyWalking";
 			newEntity->health = 300;
 			newEntity->destroyedFx = itemPickedFx;

@@ -524,7 +524,6 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 
 		previousCollision = c2;
-		c2->listener->OnCollision(c2, c1);
 	}
 	if (c2->type == Collider::Type::WIN)
 		win = true;

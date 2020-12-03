@@ -4,6 +4,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "SString.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -12,6 +13,8 @@ enum EntityType;
 class Entity
 {
 public:
+
+	enum DirectionState { STOP, LEFT, RIGHT, UP, DOWN, };
 	// Constructor
 	// Saves the spawn position for later movement calculations
 	Entity(int x, int y);
@@ -24,7 +27,7 @@ public:
 
 	// Called from inhering enemies' Udpate
 	// Updates animation and collider position
-	virtual void Update();
+	virtual void Update(float dt);
 
 	// Called from ModuleEnemies' Update
 	virtual void Draw();
@@ -36,13 +39,14 @@ public:
 	virtual void SetToDelete();
 
 	bool CheckRectEqual(SDL_Rect &a, SDL_Rect &b);
+
 public:
 	// The current position in the world
-	iPoint position;
+	fPoint position;
 
 	// The enemy's itemsTexture
 	SDL_Texture* texture = nullptr;
-	
+	SDL_Texture* debugTexture = nullptr;
 	// Sound fx when destroyed
 	int destroyedFx = 0;
 
@@ -63,15 +67,15 @@ protected:
 	Animation* currentAnim = nullptr;
 
 	// Original spawn position. Stored for movement calculations
-	iPoint spawnPos;
-	iPoint entitySpeed = { 0,0 };
+	fPoint spawnPos;
+	fPoint entitySpeed = { 0,0 };
 
-	enum DirectionState { LEFT,RIGHT,UP,DOWN, };
-
+	DirectionState direction = STOP;
+	Timer counter;
 	bool inCollision = false;
 
-	iPoint drawOffset = { 0,0 };
-	iPoint collOffset = { 0,0 };
+	fPoint drawOffset = { 0,0 };
+	fPoint collOffset = { 0,0 };
 };
 
 #endif // __ENEMY_H__

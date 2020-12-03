@@ -28,7 +28,7 @@ const Collider* Entity::GetCollider() const
 	return collider;
 }
 
-void Entity::Update()
+void Entity::Update(float dt)
 {
 	if (currentAnim != nullptr)
 		currentAnim->Update();

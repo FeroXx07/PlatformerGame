@@ -32,6 +32,7 @@ class ModuleCollisions;
 class Entities;
 class ModuleHud;
 class ModuleParticles;
+class PathFinding;
 
 class App
 {
@@ -118,7 +119,7 @@ public:
 	ModuleDebugInfo* debug;
 	ModuleFadeToBlack* fade;
 	Entities* entities;
-
+	PathFinding* pathfinding;
 	float cappedMs = -1;
 private:
 
