@@ -29,8 +29,10 @@ bool ModuleHud::Start()
 
 	char lookupTableNumbers[] = { "0123456789" };
 
-	char lookupTableTextAndLives[] = { "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ.-" };
-	yellowFont = app->fonts->Load("Assets/Fonts/fonts_yellow.png", lookupTableTextAndLives, 1);
+	char lookupTableTextAndLives[] = { "0123456789/" };
+	char lookupTableTextAndStars[] = { "0123456789/" };
+	lifesFont = app->fonts->Load("Assets/Fonts/arcade_font.png", lookupTableTextAndLives, 1);
+	starsFont = app->fonts->Load("Assets/Fonts/arcade_font_star.png", lookupTableTextAndStars, 1);
 
 	return ret;
 }
@@ -39,7 +41,8 @@ bool ModuleHud::Update(float dt)
 {
 	bool ret = true;
 	// Draw UI (score) --------------------------------------
-	sprintf_s(livesText, 10, "%4d", app->player->lives);
+	sprintf_s(livesText, 5, "%4d", app->player->lives);
+	sprintf_s(starText, 5, "%0d", app->player->lives);
 
 	return ret;
 }
@@ -48,7 +51,8 @@ bool ModuleHud::PostUpdate()
 {
 	bool ret = true;
 	// TODO 3: Blit the text of the score in at the bottom of the screen
-	app->fonts->BlitText(1000, 600, yellowFont, livesText);
+	app->fonts->BlitText(1050, 20, lifesFont, livesText);
+	app->fonts->BlitText(600, 20, starsFont, starText);
 
 		/*if (App->player->destroyed && App->hud->lives == 0 && App->intro->IsEnabled() == false)
 		{
