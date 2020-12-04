@@ -6,32 +6,35 @@
 	<audio />
 	<scene />
 	<player>
-		<data x="1518" y="433" lives="2" health="3" stars="1" />
+		<data x="9040.08301" y="433" lives="3" health="3" stars="0" />
 	</player>
 	<renderer>
 		<camera x="-1696" y="253" />
 	</renderer>
 	<entity>
-		<entitiesCount Num="18" />
+		<entitiesCount Num="21" />
 		<entitiesList>
-			<entities Num="0" Type="3" x="8448" y="564" dead="false" />
-			<entities Num="1" Type="3" x="1095" y="468" dead="false" />
-			<entities Num="2" Type="3" x="869" y="468" dead="false" />
-			<entities Num="3" Type="4" x="710" y="415" dead="false" />
-			<entities Num="4" Type="3" x="2400" y="340" dead="false" />
-			<entities Num="5" Type="3" x="2880" y="212" dead="false" />
-			<entities Num="6" Type="3" x="2880" y="468" dead="false" />
-			<entities Num="7" Type="3" x="3904" y="212" dead="false" />
-			<entities Num="8" Type="3" x="4032" y="212" dead="false" />
-			<entities Num="9" Type="3" x="4960" y="468" dead="false" />
-			<entities Num="10" Type="3" x="5312" y="372" dead="false" />
-			<entities Num="11" Type="3" x="5568" y="372" dead="false" />
-			<entities Num="12" Type="3" x="6208" y="468" dead="false" />
-			<entities Num="13" Type="3" x="6848" y="436" dead="false" />
-			<entities Num="14" Type="3" x="7040" y="500" dead="false" />
-			<entities Num="15" Type="3" x="7520" y="500" dead="false" />
-			<entities Num="16" Type="3" x="8000" y="468" dead="false" />
-			<entities Num="17" Type="3" x="8448" y="564" dead="false" />
+			<entities Num="0" Type="3" x="8448" y="564" dead="true" />
+			<entities Num="1" Type="1" x="1216" y="352" dead="false" />
+			<entities Num="2" Type="2" x="1280" y="352" dead="false" />
+			<entities Num="3" Type="1" x="1376" y="352" dead="false" />
+			<entities Num="4" Type="3" x="1151" y="468" dead="true" />
+			<entities Num="5" Type="3" x="766" y="468" dead="true" />
+			<entities Num="6" Type="4" x="590" y="465" dead="true" />
+			<entities Num="7" Type="3" x="2400" y="340" dead="true" />
+			<entities Num="8" Type="3" x="2869" y="212" dead="true" />
+			<entities Num="9" Type="3" x="2880" y="468" dead="true" />
+			<entities Num="10" Type="3" x="3946" y="212" dead="true" />
+			<entities Num="11" Type="3" x="4038" y="212" dead="true" />
+			<entities Num="12" Type="3" x="4987" y="468" dead="true" />
+			<entities Num="13" Type="3" x="5256" y="372" dead="true" />
+			<entities Num="14" Type="3" x="5219" y="372" dead="true" />
+			<entities Num="15" Type="3" x="5663" y="468" dead="true" />
+			<entities Num="16" Type="3" x="6848" y="436" dead="true" />
+			<entities Num="17" Type="3" x="7040" y="500" dead="true" />
+			<entities Num="18" Type="3" x="7520" y="500" dead="true" />
+			<entities Num="19" Type="3" x="8000" y="468" dead="true" />
+			<entities Num="20" Type="3" x="8448" y="564" dead="true" />
 		</entitiesList>
 	</entity>
 </game_state>

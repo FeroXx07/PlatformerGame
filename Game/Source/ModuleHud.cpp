@@ -6,11 +6,13 @@
 #include "ModuleFonts.h"
 #include "ModulePlayer.h"
 #include "Log.h"
+#include "Input.h"
 
 #include <stdio.h>
 ModuleHud::ModuleHud( bool start_enabled) : Module(start_enabled)
 {
 	spriteStar = { 41, 0, 32, 30 };
+	spriteAim = { 66,129,64,64 };
 }
 
 
@@ -35,7 +37,8 @@ bool ModuleHud::Start()
 	starsFont = app->fonts->Load("Assets/Fonts/arcade_font_star.png", lookupTableTextAndStars, 1);
 
 	itemsTexture = app->tex->Load("Assets/Common/spritesheet_items.png");
-
+	aimTexture = app->tex->Load("Assets/Common/cursor_sprite.png");
+	SDL_ShowCursor(SDL_DISABLE);
 	return ret;
 }
 
@@ -58,13 +61,17 @@ bool ModuleHud::PostUpdate()
 	app->fonts->BlitText(600, 20, starsFont, starText);
 	app->fonts->BlitText(1050, 80, lifesFont, healthText);
 
-	app->render->DrawTexture(itemsTexture, 600 - 50, 20, &spriteStar);
+	app->render->DrawTexture(itemsTexture, 600 - 50, 20, &spriteStar,0.0f); // 0.0f makes it fix to the screen
 
+	int mouseX, mouseY;
+	app->input->GetMousePosition(mouseX, mouseY);
+	app->render->DrawTexture(aimTexture, mouseX, mouseY, &spriteAim, 0.0f);
 	return ret;
 }
 
 
 bool ModuleHud::CleanUp()
 {
+	SDL_ShowCursor(SDL_ENABLE);
 	return true;
 }

@@ -1,9 +1,10 @@
 
 #include "Module.h"
 #include "List.h"
+#include "Textures.h"
 
+#include "SDL/include/SDL_rect.h"
 struct SDL_Rect;
-struct SDL_Texture;
 
 class ModuleHud: public Module
 {
@@ -26,8 +27,10 @@ public:
 public:
 
 	SDL_Texture* itemsTexture = nullptr;
+	SDL_Texture* aimTexture = nullptr;
 	SDL_Rect spriteStar;
 	SDL_Rect spriteHealth;
+	SDL_Rect spriteAim;
 
 	int lifesFont = -1;
 	int starsFont = -1;

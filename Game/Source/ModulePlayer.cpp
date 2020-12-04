@@ -208,7 +208,7 @@ void ModulePlayer::Input(float dt)
 	{
 		// Stop moving just before jumping
 		velocity.x = velocity.x / 2;
-		if (velocity.y == 0)
+		if (velocity.y == 0 && collisionEnemy == false)
 		{
 			velocity.y = -160.0f * 2;
 			playerState = ON_AIR;

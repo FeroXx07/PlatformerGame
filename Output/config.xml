@@ -20,6 +20,6 @@
 
   <!-- L03: Added maps folder as config option -->
   <map>
-    <folder>Assets/maps/</folder>
+    <folder>Assets/Maps/</folder>
   </map>
 </config>

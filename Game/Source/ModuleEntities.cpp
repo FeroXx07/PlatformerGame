@@ -309,8 +309,8 @@ bool Entities::OnCollision(Collider* c1, Collider* c2) // This is called through
 		if (entitiesList->data->GetCollider() == c1)
 		{
 			entitiesList->data->OnCollision(c2);
-			if (c2->listener != nullptr)
-				c2->listener->OnCollision(c2, c1);
+			/*if (c2->listener != nullptr && c2)
+				c2->listener->OnCollision(c2, c1);*/
 		}
 	}
 	

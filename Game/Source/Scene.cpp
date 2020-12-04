@@ -48,7 +48,7 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	app->map->Load("Level1.tmx");
+	app->map->Load("level_one.tmx");
 	{
 		int w, h;
 		uchar* data = NULL;

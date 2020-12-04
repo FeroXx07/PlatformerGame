@@ -121,11 +121,12 @@ bool ModuleParticles::PreUpdate()
 		{
 			if (listParticles->data->collider->Intersects(listEntities->data->collider->rect))
 			{
+				if ((listParticles->data->collider->listener != nullptr) && listParticles)
+					listParticles->data->collider->listener->OnCollision(listParticles->data->collider, listEntities->data->collider);
+
 				if (listEntities->data->GetCollider()->listener !=nullptr && listEntities->data->isDead == false)
 					listEntities->data->GetCollider()->listener->OnCollision(listEntities->data->collider, listParticles->data->collider);
-
-				//if ((listParticles->data->collider->listener != nullptr) && listParticles)
-				//	listParticles->data->collider->listener->OnCollision(listParticles->data->collider, listEntities->data->collider);
+				
 			}
 		}
 	}
