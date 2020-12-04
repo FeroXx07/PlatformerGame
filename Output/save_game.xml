@@ -6,13 +6,32 @@
 	<audio />
 	<scene />
 	<player>
-		<data x="1520.73999" y="433" lives="3" health="4" stars="0" />
+		<data x="1456.49243" y="433" lives="2" health="3" stars="1" />
 	</player>
 	<renderer>
 		<camera x="-1696" y="253" />
 	</renderer>
 	<entity>
-		<entitiesCount Num="0" />
-		<entitiesList />
+		<entitiesCount Num="18" />
+		<entitiesList>
+			<entities Num="0" Type="3" x="8448" y="564" dead="false" />
+			<entities Num="1" Type="3" x="980" y="468" dead="false" />
+			<entities Num="2" Type="3" x="994" y="468" dead="false" />
+			<entities Num="3" Type="4" x="628" y="430" dead="false" />
+			<entities Num="4" Type="3" x="2400" y="340" dead="false" />
+			<entities Num="5" Type="3" x="2880" y="212" dead="false" />
+			<entities Num="6" Type="3" x="2880" y="468" dead="false" />
+			<entities Num="7" Type="3" x="3904" y="212" dead="false" />
+			<entities Num="8" Type="3" x="4032" y="212" dead="false" />
+			<entities Num="9" Type="3" x="4960" y="468" dead="false" />
+			<entities Num="10" Type="3" x="5312" y="372" dead="false" />
+			<entities Num="11" Type="3" x="5568" y="372" dead="false" />
+			<entities Num="12" Type="3" x="6208" y="468" dead="false" />
+			<entities Num="13" Type="3" x="6848" y="436" dead="false" />
+			<entities Num="14" Type="3" x="7040" y="500" dead="false" />
+			<entities Num="15" Type="3" x="7520" y="500" dead="false" />
+			<entities Num="16" Type="3" x="8000" y="468" dead="false" />
+			<entities Num="17" Type="3" x="8448" y="564" dead="false" />
+		</entitiesList>
 	</entity>
 </game_state>

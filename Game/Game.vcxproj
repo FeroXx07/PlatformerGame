@@ -98,6 +98,7 @@
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\DeathScene.cpp" />
+    <ClCompile Include="Source\EnemyFlying.cpp" />
     <ClCompile Include="Source\EnemyWalking.cpp" />
     <ClCompile Include="Source\ItemHealth.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\DeathScene.h" />
+    <ClInclude Include="Source\EnemyFlying.h" />
     <ClInclude Include="Source\EnemyWalking.h" />
     <ClInclude Include="Source\ItemHealth.h" />
     <ClInclude Include="Source\Entity.h" />

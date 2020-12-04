@@ -10,6 +10,7 @@ enum EntityType
 	ITEM_HEALTH,
 	ITEM_STAR,
 	ENEMY_WALKING,
+	ENEMY_FLYING,
 };
 
 struct EntitySpawnpoint

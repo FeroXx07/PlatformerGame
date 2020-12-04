@@ -221,7 +221,8 @@ bool Map::CleanUp()
 
 	while (item3 != NULL)
 	{
-		RELEASE(item3->data);
+		//RELEASE(item3->data);
+		checkpointsList.Del(item3);
 		item3 = item3->next;
 	}
 	checkpointsList.Clear();

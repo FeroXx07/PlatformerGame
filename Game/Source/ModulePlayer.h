@@ -74,6 +74,7 @@ public:
 
 	bool cameraFollow = false;
 	bool collisionExist = false;
+	bool collisionEnemy = false;
 	bool destroyed = false;
 	bool win = false;
 private:
@@ -86,7 +87,7 @@ private:
 	bool isJump = false;
 	bool collisionFromBelow = false;
 	bool godMode = false;
-
+	bool loadDeath = false;
 	void Input(float dt);
 	void Logic(float dt);
 	bool CheckCollisions(float dt);
@@ -113,6 +114,7 @@ public:
 	int isWalking = false;
 	//float counterWalking = 0.0f;
 	Timer counterWalking;
+	Timer counterDamage;
 };
 
 #endif //!__MODULE_PLAYER_H__

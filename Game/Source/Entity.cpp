@@ -74,7 +74,7 @@ void Entity::OnCollision(Collider* collider)
 		if (collider->pendingToDelete == false)
 		{
 			LOG("DAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAGE");
-			if (this->entityType == ENEMY_WALKING)
+			if (this->entityType == ENEMY_WALKING || this->entityType == ENEMY_FLYING)
 			{
 				if (health > 300) health = 300;
 				this->health += -100;

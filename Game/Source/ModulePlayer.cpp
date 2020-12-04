@@ -105,6 +105,7 @@ bool ModulePlayer::Start()
 	playerState = ON_AIR;
 	collisionExist = false;
 	collisionFromBelow = false;
+	collisionEnemy = false;
 	godMode = false;
 
 	isWalking = false;
@@ -285,7 +286,7 @@ void ModulePlayer::BulletLogic(float dt)
 	printf("mouse = %f %f\n", center.x, center.y);
 	printf("dir = %f %f\n", direction.x, direction.y);
 
-	if ((app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN))
+	if ((app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN))
 	{
 		Particle newBullet = app->particles->bullet;
 	
@@ -338,8 +339,9 @@ void ModulePlayer::Logic(float dt)
 
 void ModulePlayer::CheckPlayerState(float dt)
 {
+
 	// Gravity
-	if ((playerState == ON_AIR || collisionExist == false) && playerState != ON_GROUND && godMode == false && destroyed == false)
+	if ((playerState == ON_AIR || collisionExist == false)&& collisionEnemy == false && godMode == false && destroyed == false)
 	{
 		if (collisionExist == false)
 			playerState = ON_AIR;
@@ -429,11 +431,6 @@ bool ModulePlayer::CheckCollisions(float dt)
 		{
 			if (previousCollision != listColliders->data && listColliders->data->type != Collider::Type::PLAYER)
 				collisionExist = this->OnCollision(playerCollider, listColliders->data);
-			/*if (listColliders->data->listener != nullptr && listColliders->data->type != Collider::Type::PLAYER)
-			{
-				if(listColliders->data->type != Collider::Type::BULLET)
-					listColliders->data->listener->OnCollision(listColliders->data, playerCollider);
-			}*/
 		}
 	}
 
@@ -520,11 +517,17 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		}
 	}
 
-	if (c2->type == Collider::Type::ENEMY_HITBOX && previousCollision->type != Collider::Type::ENEMY_HITBOX && godMode == false)
+	if (c2->type == Collider::Type::ENEMY_HURTBOX && previousCollision->type != Collider::Type::ENEMY_HURTBOX && godMode == false)
 	{
-
+		if (counterDamage.ReadSec()>2.0f)
+			health += -1;
+		collisionEnemy = true;
 		previousCollision = c2;
+		counterDamage.Start();
 	}
+	else
+		collisionEnemy = false;
+
 	if (c2->type == Collider::Type::WIN)
 		win = true;
 
@@ -537,8 +540,13 @@ bool ModulePlayer::LoadState(pugi::xml_node& data)
 	LOG("Loading Player state...");
 	playerPos.x = data.child("data").attribute("x").as_int();
 	playerPos.y = data.child("data").attribute("y").as_int();
-	lives = data.child("data").attribute("lives").as_int();
-	health = data.child("data").attribute("health").as_int();
+	if (loadDeath)
+		loadDeath = false;
+	else
+	{
+		lives = data.child("data").attribute("lives").as_int();
+		health = data.child("data").attribute("health").as_int();
+	}
 	stars = data.child("data").attribute("stars").as_int();
 	LOG("Player state succesfully loaded.\n Pos.x = %d Pos.y = %d", playerPos.x, playerPos.y);
 	return true;
@@ -566,6 +574,7 @@ void ModulePlayer::PlayerDied()
 {
 	app->LoadGameRequest();
 	app->player->destroyed = false;
+	loadDeath = true;
 	app->player->velocity.y = 0;
 	app->player->velocity.x = 0;
 	lives = lives - 1;

@@ -19,10 +19,10 @@
 #include "ItemHealth.h"
 #include "ItemStar.h"
 #include "EnemyWalking.h"
-
+#include "EnemyFlying.h"
 
 #define SPAWN_MARGIN 50
-#define MAX_ENTITIES 20
+#define MAX_ENTITIES 30
 
 Entities::Entities(bool startEnabled) : Module(startEnabled)
 {
@@ -45,7 +45,7 @@ bool Entities::Start()
 	itemsTexture = app->tex->Load("Assets/Common/spritesheet_items.png");
 	itemPickedFx = app->audio->LoadFx("Assets/Audio/Fx/item_taken.wav");
 
-	enemiesTexture = app->tex->Load("Assets/Common/spritesheet_enemies.png");
+	enemiesTexture = app->tex->Load("Assets/Characters/spritesheet_enemies.png");
 	char lookupTableNumbers[] = { "0123456789" };
 
 	debugTex = app->tex->Load("Assets/maps/x_img.png");
@@ -174,7 +174,7 @@ bool Entities::CleanUp()
 	//app->audio->UnloadFx(itemPickedFx);
 	
 	app->tex->UnLoad(itemsTexture);
-
+	app->tex->UnLoad(enemiesTexture);
 
 	LOG("Freeing all enemies");
 
@@ -211,15 +211,6 @@ bool Entities::AddEntity(EntityType type, int x, int y, bool isDead)
 
 void Entities::HandleEnemiesSpawn()
 {
-	// Iterate all the enemies queue
-	//for (uint i = 0; i < MAX_ENEMIES; ++i)
-	//{
-	//	if (spawnQueue[i].type != EntityType::NO_TYPE)
-	//	{
-	//		SpawnEnemy(spawnQueue[i]);
-	//		spawnQueue[i].type = EntityType::NO_TYPE; // Removing the newly spawned enemy from the queue
-	//	}
-	//}
 
 	ListItem<EntitySpawnpoint>* list;
 	list = spawnQueue.start;
@@ -238,20 +229,6 @@ void Entities::HandleEnemiesSpawn()
 void Entities::HandleEnemiesDespawn()
 {
 	// Iterate existing enemies
-	//for (uint i = 0; i < MAX_ENEMIES; ++i)
-	//{
-	//	if (enemies[i] != nullptr)
-	//	{
-	//		// Delete the enemy when it has reached the end of the screen
-	//		if (enemies[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN)
-	//		{
-	//			LOG("DeSpawning enemy at %d", enemies[i]->position.x * SCREEN_SIZE);
-
-	//			enemies[i]->SetToDelete();
-	//		}
-	//	}
-	//}
-
 	ListItem<Entity*>* list;
 	list = entities.start;
 	for (int i = 0; i < entities.Count(); ++i)
@@ -304,6 +281,18 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 			newEntity->isDead = info.isDead;
 			break;
 		}
+		case EntityType::ENEMY_FLYING:
+		{
+			newEntity = new EnemyFlying(info.x, info.y);
+			newEntity->texture = enemiesTexture;
+			newEntity->debugTexture = debugTex;
+			newEntity->name = "EnemyWalking";
+			newEntity->health = 300;
+			newEntity->destroyedFx = itemPickedFx;
+			newEntity->entityType = EntityType::ENEMY_FLYING;
+			newEntity->isDead = info.isDead;
+			break;
+		}
 	}
 	entities.Add(newEntity);
 }
@@ -317,21 +306,14 @@ bool Entities::OnCollision(Collider* c1, Collider* c2) // This is called through
 	{
 		entitiesList = entities.At(i);
 		if (entitiesList->data->GetCollider() == c1)
+		{
 			entitiesList->data->OnCollision(c2);
+			if (c2->listener != nullptr)
+				c2->listener->OnCollision(c2, c1);
+		}
 	}
 	
-	/*for (int i = 0; i < ent.Count(); ++i)
-	{
-		for (ListItem<Collider*>*collsList = app->collisions->colliders.start; collsList != NULL ; collsList = collsList->next)
-		{
-			if (entitiesList->data->GetCollider()->Intersects(collsList->data->rect))
-			{
-				entitiesList->data->OnCollision(collsList->data);
-			}
-			collsList = collsList->next;
-		}
-		entitiesList = entitiesList->next;
-	}*/
+
 	
 	return true;
 }

@@ -41,8 +41,9 @@ bool ModuleHud::Update(float dt)
 {
 	bool ret = true;
 	// Draw UI (score) --------------------------------------
-	sprintf_s(livesText, 5, "%4d", app->player->lives);
-	sprintf_s(starText, 5, "%0d", app->player->lives);
+	sprintf_s(livesText, 5, "%0d", app->player->lives);
+	sprintf_s(starText, 5, "%0d", app->player->stars);
+	sprintf_s(healthText, 5, "%0d", app->player->health);
 
 	return ret;
 }
@@ -53,7 +54,7 @@ bool ModuleHud::PostUpdate()
 	// TODO 3: Blit the text of the score in at the bottom of the screen
 	app->fonts->BlitText(1050, 20, lifesFont, livesText);
 	app->fonts->BlitText(600, 20, starsFont, starText);
-
+	app->fonts->BlitText(1050, 80, lifesFont, healthText);
 		/*if (App->player->destroyed && App->hud->lives == 0 && App->intro->IsEnabled() == false)
 		{
 			App->fonts->BlitText(78, 185, lightBlueFont, "GAME");

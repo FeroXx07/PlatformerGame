@@ -28,8 +28,8 @@ public:
 	int starsFont = -1;
 
 	char livesText[10] = { "\0"};
-
 	char starText[10] = { "\0" };
+	char healthText[10] = { "\0" };
 
 	int drawScore = 0;
 };

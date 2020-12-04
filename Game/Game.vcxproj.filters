@@ -82,6 +82,9 @@
     <ClCompile Include="Source\Pathfinding.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnemyFlying.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -191,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="Source\PQueue.h">
       <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyFlying.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

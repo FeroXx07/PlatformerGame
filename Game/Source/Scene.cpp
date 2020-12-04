@@ -93,9 +93,30 @@ bool Scene::Start()
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 43 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 36 * 32, 448 + 20);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 20 * 32, 448 + 20);
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 15 * 32, 448 + 20);
 
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 75 * 32, 11 * 32 - 12);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 90 * 32, 7 * 32 - 12);
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 90 * 32, 15 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 122 * 32, 7 * 32 - 12);
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 126 * 32, 7 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 155 * 32, 15 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 166 * 32, 12 * 32 - 12);
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 174 * 32, 12 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 194 * 32, 15 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 214 * 32, 14 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 220 * 32, 16 * 32 - 12);
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 235 * 32, 16 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 250 * 32, 15 * 32 - 12);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 264 * 32, 18 * 32 - 12);
 
 	resetCounter = 0;
 
