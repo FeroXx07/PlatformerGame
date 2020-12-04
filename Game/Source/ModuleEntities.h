@@ -90,8 +90,9 @@ private:
 	// The audio fx for destroying an enemy/item
 	int enemyDestroyedFx = 0;
 
-	// The audio fx for picking an item
+	// The audio fx for picking an item and a flag checkpoint
 	int itemPickedFx = 0;
+	int flagPickedFx = 0;
 
 	EntityType StrToEntityType(SString s);
 

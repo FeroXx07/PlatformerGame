@@ -110,6 +110,8 @@ public:
 	uint walkingSfx;
 	uint jumpingSfx;
 	uint shootingSfx;
+	uint itemPickedFx;
+	uint flagPickedFx;
 
 	int isWalking = false;
 	//float counterWalking = 0.0f;

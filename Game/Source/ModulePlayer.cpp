@@ -93,6 +93,8 @@ bool ModulePlayer::Start()
 	walkingSfx = app->audio->LoadFx("Assets/Audio/Fx/player_walking.wav");
 	jumpingSfx = app->audio->LoadFx("Assets/Audio/Fx/player_jump.wav");
 	shootingSfx = app->audio->LoadFx("Assets/Audio/Fx/player_shot.wav");
+	itemPickedFx = app->audio->LoadFx("Assets/Audio/Fx/item_taken.wav");
+	flagPickedFx = app->audio->LoadFx("Assets/Audio/Fx/flag_taken.wav");
 
 	//Starting position of the Mario
 	playerWh = { 66.0f,79.0f };
@@ -481,6 +483,7 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == Collider::Type::CHECKPOINT && previousCollision->type != Collider::Type::CHECKPOINT)
 	{
 		LOG("SAVING GAME");
+		app->audio->PlayFx(flagPickedFx);
 		app->SaveGameRequest();
 		previousCollision = c2;
 	}
@@ -504,11 +507,13 @@ bool ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		{
 		case Collider::Items::HEALTH:
 			health += 1;
+			app->audio->PlayFx(itemPickedFx);
 			previousCollision = c2;
 			c2->listener->OnCollision(c2, c1);
 			break;
 		case Collider::Items::STAR:
 			stars += 1;
+			app->audio->PlayFx(itemPickedFx);
 			previousCollision = c2;
 			c2->listener->OnCollision(c2, c1);
 			break;

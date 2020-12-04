@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "List.h"
 
+struct SDL_Rect;
+struct SDL_Texture;
 
 class ModuleHud: public Module
 {
@@ -23,8 +25,11 @@ public:
 
 public:
 
-	int lifesFont = -1;
+	SDL_Texture* itemsTexture = nullptr;
+	SDL_Rect spriteStar;
+	SDL_Rect spriteHealth;
 
+	int lifesFont = -1;
 	int starsFont = -1;
 
 	char livesText[10] = { "\0"};

@@ -61,6 +61,9 @@ private:
 public:
 	//Template particle
 	Particle bullet;
+
+	uint enemyHitSfx;
+
 };
 
 #endif // !__MODULEPARTICLES_H__

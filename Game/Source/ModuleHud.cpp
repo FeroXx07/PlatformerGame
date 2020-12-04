@@ -10,7 +10,7 @@
 #include <stdio.h>
 ModuleHud::ModuleHud( bool start_enabled) : Module(start_enabled)
 {
-
+	spriteStar = { 41, 0, 32, 30 };
 }
 
 
@@ -34,6 +34,8 @@ bool ModuleHud::Start()
 	lifesFont = app->fonts->Load("Assets/Fonts/arcade_font.png", lookupTableTextAndLives, 1);
 	starsFont = app->fonts->Load("Assets/Fonts/arcade_font_star.png", lookupTableTextAndStars, 1);
 
+	itemsTexture = app->tex->Load("Assets/Common/spritesheet_items.png");
+
 	return ret;
 }
 
@@ -55,11 +57,8 @@ bool ModuleHud::PostUpdate()
 	app->fonts->BlitText(1050, 20, lifesFont, livesText);
 	app->fonts->BlitText(600, 20, starsFont, starText);
 	app->fonts->BlitText(1050, 80, lifesFont, healthText);
-		/*if (App->player->destroyed && App->hud->lives == 0 && App->intro->IsEnabled() == false)
-		{
-			App->fonts->BlitText(78, 185, lightBlueFont, "GAME");
-			App->fonts->BlitText(120, 185, lightBlueFont, "OVER");
-		}*/
+
+	app->render->DrawTexture(itemsTexture, 600 - 50, 20, &spriteStar);
 
 	return ret;
 }

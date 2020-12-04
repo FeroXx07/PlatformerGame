@@ -44,6 +44,7 @@ bool Entities::Start()
 	itemPickedFx = app->audio->LoadFx("Assets/Music/SFX_Bonus.wav");*/
 	itemsTexture = app->tex->Load("Assets/Common/spritesheet_items.png");
 	itemPickedFx = app->audio->LoadFx("Assets/Audio/Fx/item_taken.wav");
+	flagPickedFx = app->audio->LoadFx("Assets/Audio/Fx/flag_taken.wav");
 
 	enemiesTexture = app->tex->Load("Assets/Characters/spritesheet_enemies.png");
 	char lookupTableNumbers[] = { "0123456789" };

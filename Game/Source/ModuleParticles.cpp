@@ -2,6 +2,7 @@
 
 #include "App.h"
 
+#include "Audio.h"
 #include "Textures.h"
 #include "Render.h"
 #include "ModuleCollisions.h"
@@ -33,6 +34,8 @@ bool ModuleParticles::Start()
 	bullet.anim.PushBack({ 74,77,24,22});
 	bullet.anim.loop = false;
 	bullet.anim.speed = 0.1f;
+
+	enemyHitSfx = app->audio->LoadFx("Assets/Audio/Fx/bullet_sound.wav");
 
 	//bullet.speed.x = app->player->velocity.x + 500.0f;
 	bullet.lifetime = 60;
@@ -87,6 +90,7 @@ bool ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 					{
 					case Collider::Type::BULLET:
 						LOG("BULLLLLLLLLLLLLLLLLLLLLLLET HIIIIIIIIIIIIIIIIIIIIIIT");
+						app->audio->PlayFx(enemyHitSfx);
 						list->data->hasDied = true;
 						break;
 
