@@ -22,20 +22,10 @@ public:
 	bool CleanUp();
 
 public:
-	uint score = 0;
-	uint highScore = 0;
-	uint previousScore = 0;
 
-	int whiteFont = -1;
-	int redFont = -1;
-	int greenFont = -1;
+	int yellowFont = -1;
 
-	char scoreText[10] = { "\0" };
-	char highScoreText[10] = { "\0" };
-	char previousScoreText[10] = { "\0" };
 	char livesText[10] = { "\0"};
 
-	bool drawScore = true;
-	
-	int LevelWins = 0;
+	int drawScore = 0;
 };

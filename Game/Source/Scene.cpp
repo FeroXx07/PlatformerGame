@@ -73,6 +73,9 @@ bool Scene::Start()
 	if (app->particles->IsEnabled() == false)
 		app->particles->Enable();
 
+	if (app->hud->IsEnabled() == false)
+		app->hud->Enable();
+
 	app->map->LoadColliders();
 
 	app->player->destroyed = false;
@@ -184,6 +187,7 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(bg);
 	app->player->Disable();
 	app->collisions->Disable();
+	app->hud->Disable();
 	app->entities->Disable();
 	app->particles->Disable();
 	app->map->CleanUp();

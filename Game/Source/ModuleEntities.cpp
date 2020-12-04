@@ -47,10 +47,6 @@ bool Entities::Start()
 
 	enemiesTexture = app->tex->Load("Assets/Common/spritesheet_enemies.png");
 	char lookupTableNumbers[] = { "0123456789" };
-	//whiteFont = app->fonts->Load("Assets/Fonts/fonts_white.png", lookupTableNumbers, 1);
-
-	char lookupTableTextAndLives[] = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ.-" };
-	//yellowFont = app->fonts->Load("Assets/Fonts/fonts_yellow.png", lookupTableTextAndLives, 1);
 
 	debugTex = app->tex->Load("Assets/maps/x_img.png");
 	return true;
