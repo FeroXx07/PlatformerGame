@@ -71,7 +71,7 @@ protected:
 	fPoint entitySpeed = { 0,0 };
 
 	DirectionState direction = STOP;
-	Timer counter;
+	float counter = 0;
 	bool inCollision = false;
 
 	fPoint drawOffset = { 0,0 };

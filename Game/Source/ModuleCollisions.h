@@ -42,6 +42,8 @@ public:
 
 	List<Collider*> colliders;
 
+	bool debug = false;
+
 private:
 	// All existing colliders in the scene
 	//Collider* colliders[MAX_COLLIDERS] = { nullptr };
@@ -54,8 +56,6 @@ private:
 	uint colliderCount = 0;
 
 	// Simple debugging flag to draw all colliders
-	bool debug = false;
-
 public:
 	
 };

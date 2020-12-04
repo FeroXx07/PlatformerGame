@@ -77,11 +77,12 @@ public:
 	bool destroyed = false;
 	bool win = false;
 private:
-	enum PlayerState {ON_GROUND, ON_AIR, ON_HURT};
+	enum PlayerState {ON_GROUND, ON_AIR};
 	PlayerState playerState = ON_AIR;
 	enum PlayerDirection {RIGHT,LEFT,UP,DOWN};
 	PlayerDirection playerDirection;
 
+	bool isHurt = false;
 	bool isJump = false;
 	bool collisionFromBelow = false;
 	bool godMode = false;

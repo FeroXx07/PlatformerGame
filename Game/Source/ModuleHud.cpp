@@ -29,13 +29,13 @@ bool ModuleHud::Start()
 
 	char lookupTableNumbers[] = { "0123456789" };
 
-	char lookupTableTextAndLives[] = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ.-" };
-	yellowFont = app->fonts->Load("Assets/Fonts/fonts_yellow.png", lookupTableNumbers, 1);
+	char lookupTableTextAndLives[] = { "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ.-" };
+	yellowFont = app->fonts->Load("Assets/Fonts/fonts_yellow.png", lookupTableTextAndLives, 1);
 
 	return ret;
 }
 
-bool ModuleHud::Update()
+bool ModuleHud::Update(float dt)
 {
 	bool ret = true;
 	// Draw UI (score) --------------------------------------
@@ -48,7 +48,7 @@ bool ModuleHud::PostUpdate()
 {
 	bool ret = true;
 	// TODO 3: Blit the text of the score in at the bottom of the screen
-		app->fonts->BlitText(20, 30, yellowFont, livesText);
+	app->fonts->BlitText(1000, 600, yellowFont, livesText);
 
 		/*if (App->player->destroyed && App->hud->lives == 0 && App->intro->IsEnabled() == false)
 		{

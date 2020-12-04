@@ -111,6 +111,11 @@ bool Entities::Update(float dt)
 	bool ret = true;
 	HandleEnemiesSpawn();
 
+	if (dt > 1.0f / 30.0f)
+	{
+		dt = 1.0f / 30.0f;
+	}
+
 	ListItem<Entity*>* list;
 	list = entities.start;
 
@@ -141,22 +146,22 @@ bool Entities::PostUpdate()
 	}
 
 
-	// L12b: Debug pathfinding
-	int mouseX, mouseY;
-	app->input->GetMousePosition(mouseX, mouseY);
-	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
-	p = app->map->WorldToMap(p.x, p.y);
-	p = app->map->MapToWorld(p.x, p.y);
+	//// L12b: Debug pathfinding
+	//int mouseX, mouseY;
+	//app->input->GetMousePosition(mouseX, mouseY);
+	//iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	//p = app->map->WorldToMap(p.x, p.y);
+	//p = app->map->MapToWorld(p.x, p.y);
 
-	app->render->DrawTexture(debugTex, p.x, p.y);
+	//app->render->DrawTexture(debugTex, p.x, p.y);
 
-	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	//const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(debugTex, pos.x, pos.y);
-	}
+	//for (uint i = 0; i < path->Count(); ++i)
+	//{
+	//	iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+	//	app->render->DrawTexture(debugTex, pos.x, pos.y);
+	//}
 
 	return ret;
 }
@@ -189,7 +194,7 @@ bool Entities::CleanUp()
 	return ret;
 }
 
-bool Entities::AddEntity(EntityType type, int x, int y)
+bool Entities::AddEntity(EntityType type, int x, int y, bool isDead)
 {
 	bool ret = true;
 
@@ -197,6 +202,7 @@ bool Entities::AddEntity(EntityType type, int x, int y)
 	spawn.type = type;
 	spawn.x = x;
 	spawn.y = y;
+	spawn.isDead = isDead;
 
 	spawnQueue.Add(spawn);
 
@@ -295,6 +301,7 @@ void Entities::SpawnEnemy(const EntitySpawnpoint& info)
 			newEntity->health = 300;
 			newEntity->destroyedFx = itemPickedFx;
 			newEntity->entityType = EntityType::ENEMY_WALKING;
+			newEntity->isDead = info.isDead;
 			break;
 		}
 	}
@@ -395,8 +402,8 @@ bool Entities::LoadState(pugi::xml_node& data)  // Node is pointing to "entity"
 		iPoint position{ 0,0 };
 		position.x = newEnt.attribute("x").as_int();
 		position.y = newEnt.attribute("y").as_int();
-		if (newEnt.attribute("dead").as_bool() == false)
-			AddEntity(type, position.x, position.y);
+		bool b = newEnt.attribute("dead").as_bool();
+		AddEntity(type, position.x, position.y,b);
 		
 		newEnt = newEnt.next_sibling();
 	}

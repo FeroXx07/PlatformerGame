@@ -6,19 +6,22 @@
 	<audio />
 	<scene />
 	<player>
-		<data x="1520.72583" y="433" lives="3" health="3" stars="0" />
+		<data x="2535.5105" y="305" lives="3" health="3" stars="0" />
 	</player>
 	<renderer>
 		<camera x="-1696" y="253" />
 	</renderer>
 	<entity>
-		<entitiesCount Num="5" />
+		<entitiesCount Num="8" />
 		<entitiesList>
-			<entities Num="0" Type="3" x="640" y="448" dead="false" />
-			<entities Num="1" Type="2" x="1280" y="352" dead="false" />
-			<entities Num="2" Type="1" x="1376" y="352" dead="false" />
-			<entities Num="3" Type="3" x="1152" y="448" dead="false" />
-			<entities Num="4" Type="3" x="640" y="448" dead="false" />
+			<entities Num="0" Type="3" x="2645" y="212" dead="true" />
+			<entities Num="1" Type="1" x="1216" y="352" dead="false" />
+			<entities Num="2" Type="2" x="1280" y="352" dead="false" />
+			<entities Num="3" Type="1" x="1376" y="352" dead="false" />
+			<entities Num="4" Type="3" x="917" y="468" dead="false" />
+			<entities Num="5" Type="3" x="966" y="468" dead="false" />
+			<entities Num="6" Type="3" x="2429" y="340" dead="true" />
+			<entities Num="7" Type="3" x="2645" y="212" dead="true" />
 		</entitiesList>
 	</entity>
 </game_state>

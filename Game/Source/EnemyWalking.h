@@ -27,7 +27,6 @@ private:
 
 	//Pathfinding
 	bool hasPath = false;
-	bool hasReachedDst = false;
 	DynArray<iPoint> path;
 };
 

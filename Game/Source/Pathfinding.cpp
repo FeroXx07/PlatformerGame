@@ -178,7 +178,8 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	PathList open;
 	PathList closed;
 
-	PathNode originNode = PathNode(0, origin.DistanceTo(destination), origin, nullptr);
+	//PathNode originNode = PathNode(0, origin.DistanceTo(destination), origin, nullptr);
+	PathNode originNode = PathNode(0, origin.DistanceManhattan(destination), origin, nullptr);
 	open.list.Add(originNode);
 
 	/*for (int i = 0; i < open.list.Count(); ++i)

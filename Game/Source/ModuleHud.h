@@ -13,7 +13,7 @@ public:
 	bool Start();
 
 	//Called at the middle of each application loop
-	bool Update();
+	bool Update(float dt);
 
 	//Called at the end of each application loop
 	bool PostUpdate();

@@ -16,6 +16,7 @@ struct EntitySpawnpoint
 {
 	EntityType type = EntityType::NO_TYPE;
 	int x, y;
+	bool isDead = false;
 };
 
 class Entity;
@@ -59,7 +60,7 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 	// Add an enemy into the queue to be spawned later
-	bool AddEntity(EntityType type, int x, int y);
+	bool AddEntity(EntityType type, int x, int y, bool isDead = false);
 
 	// Iterates the queue and checks for camera position
 	void HandleEnemiesSpawn();

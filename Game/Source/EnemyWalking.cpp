@@ -10,7 +10,9 @@
 
 #include "Log.h"
 
-#define SPEED 30.0f;
+#define SPEED_X 60.0f;
+#define SPEED_Y 15.0f;
+
 EnemyWalking::EnemyWalking(int x, int y) : Entity(x, y)
 {
 	spawnDelay = 0;
@@ -33,6 +35,8 @@ EnemyWalking::EnemyWalking(int x, int y) : Entity(x, y)
 
 Entity::DirectionState EnemyWalking::Gps(iPoint &p)
 {
+	if (this->position.y - 12 < p.y)
+		return DirectionState::DOWN;
 	if (this->position.x > p.x)
 		return DirectionState::LEFT;
 	else
@@ -41,13 +45,17 @@ Entity::DirectionState EnemyWalking::Gps(iPoint &p)
 
 void EnemyWalking::SetVelDirection(DirectionState dir)
 {
-	if (dir == RIGHT)
+	if (dir == DOWN)
 	{
-		this->entitySpeed.x = SPEED;
+		this->entitySpeed.y = SPEED_Y;
+	}
+	else if (dir == RIGHT)
+	{
+		this->entitySpeed.x = SPEED_X;
 	}
 	else if (dir == LEFT)
 	{
-		this->entitySpeed.x = -SPEED;
+		this->entitySpeed.x = -SPEED_X;
 	}
 }
 void EnemyWalking::Update(float dt)
@@ -76,16 +84,17 @@ void EnemyWalking::Update(float dt)
 	if (isDead)
 	{
 		currentAnim = &deathAnim;
+		this->collider->pendingToDelete = true;
 	}
 
 	// Manually get pathfinding
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	if ((app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN || hasPath == false) && isDead == false)
 	{
 		// Clear any old path from pathfinding class
 		app->pathfinding->lastPath.Clear();
 
 		// Conversion
-		iPoint dst = { (int)app->player->playerPos.x,(int)app->player->playerPos.y };
+		iPoint dst = { (int)app->player->playerPos.x,(int)app->player->playerPos.y + 32};
 		dst = app->map->WorldToMap(dst.x, dst.y);
 
 		// Conversion
@@ -104,7 +113,7 @@ void EnemyWalking::Update(float dt)
 		hasPath = true;
 	}
 
-	if (path.Count()>0 && hasPath)
+	if (path.Count() > 0 )
 	{
 		iPoint nextPos; 
 		if (direction == STOP)
@@ -120,21 +129,21 @@ void EnemyWalking::Update(float dt)
 		if (direction != STOP)
 		{
 			SetVelDirection(direction);
+			counter += 1.0f * dt;
 		}
 		
 		// After time ended reset directions to stop
-		uint32 diff = counter.ReadSec();
-		if ( diff >= 0.5f)
+		
+		if (counter >= 0.8f) // 1.0f too long
 		{
 			direction = STOP;
+			counter = 0.0f;
 		}
-		counter.Start();
 	}
 	else
 	{
-		if (path.Count() == 0)
-			hasPath = false;
 		direction = STOP;
+		hasPath = false;
 	}
 
 	if (direction == STOP)
@@ -142,7 +151,7 @@ void EnemyWalking::Update(float dt)
 		entitySpeed = { 0,0 };
 	}
 
-	if (hasReachedDst == false)
+	if (app->collisions->debug)
 	{
 		for (uint i = 0; i < path.Count(); ++i)
 		{
@@ -151,9 +160,11 @@ void EnemyWalking::Update(float dt)
 		}
 	}
 
-
-	position.x = position.x + entitySpeed.x * dt;
-	position.y = position.y + entitySpeed.y * dt;
+	if (isDead == false)
+	{
+		position.x = position.x + entitySpeed.x * dt;
+		position.y = position.y + entitySpeed.y * dt;
+	}
 
 	collider->SetPos(position.x, position.y);
 }

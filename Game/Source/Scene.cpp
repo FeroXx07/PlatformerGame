@@ -87,11 +87,15 @@ bool Scene::Start()
 	app->player->lives = 3;
 	app->player->health = 3;
 
+	app->entities->AddEntity(EntityType::ITEM_HEALTH, -100,-100);
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 38 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_STAR, 40 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 43 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 36 * 32, 448 + 20);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 20 * 32, 448 + 20);
+
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 75 * 32, 11 * 32 - 12);
+	app->entities->AddEntity(EntityType::ENEMY_WALKING, 90 * 32, 7 * 32 - 12);
 
 	resetCounter = 0;
 
