@@ -16,6 +16,17 @@ A platformer game made for the subject of video game development of the grade of
  - Player walk/jump/die/idle animations.
  - Ending screen (on dying).
  - DEBUG keys.
+ - Destroy enemies by shooting.
+ - Game items to recover health / lives.
+ - Game collectable items to accumulate points: coins, stars...
+ - Checkpoint autosave with feedback on passing.
+ - Map checkpoints teleportation.
+ - Audio feedback.
+ - Walking type enemy that can pathfind to the player.
+ - Flying enemy that can pathfind to the player avoiding non-walkable areas.
+ - Load and Save that considers each enemy state.
+ - Game capped to stable 60 frames per second.
+ - Game's movement normalized using dt (deltaTime).
  
 ## Controls
 
@@ -23,6 +34,7 @@ A platformer game made for the subject of video game development of the grade of
  - "D" to move to he right.
  - "Space" to jump.
  - "Enter" to start the game.
+ - "Left Click" to shoot.
  - "F1" to start the first level.
  - "F3" to start from the beginning of the current level.
  - "F5" to save the current game state.
@@ -30,7 +42,8 @@ A platformer game made for the subject of video game development of the grade of
  - "F7" to die instantly.
  - "F9" to view colliders and logic.
  - "F10" to enter the God mode (fly around and cannot be killed).
- - "F11" to win the level.
+ - "F11" to enable or disable the FPS to 30.
+ - "F12" to win the level.
 
 ## Developers
 
