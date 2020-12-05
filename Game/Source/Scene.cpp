@@ -133,6 +133,7 @@ bool Scene::Start()
 
 	resetCounter = 0;
 
+	app->SaveGameRequest();
 	return true;
 }
 

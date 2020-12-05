@@ -148,7 +148,7 @@ void EnemyFlying::Update(float dt)
 		
 		// After time ended reset directions to stop
 		
-		if (counter >= 1.0f) // 1.0f too long
+		if (counter >= 0.3f) // 1.0f too long
 		{
 			direction = STOP;
 			counter = 0.0f;

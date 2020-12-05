@@ -58,6 +58,7 @@ void EnemyWalking::SetVelDirection(DirectionState dir)
 		this->entitySpeed.x = -SPEED_X;
 	}
 }
+
 void EnemyWalking::Update(float dt)
 {
 	Entity::Update(dt);
@@ -133,7 +134,6 @@ void EnemyWalking::Update(float dt)
 		}
 		
 		// After time ended reset directions to stop
-		
 		if (counter >= 0.8f) // 1.0f too long
 		{
 			direction = STOP;
