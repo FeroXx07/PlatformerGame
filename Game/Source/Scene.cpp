@@ -89,9 +89,11 @@ bool Scene::Start()
 
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, -100,-100);
 
-	app->entities->AddEntity(EntityType::ITEM_HEALTH, 38 * 32, 11 * 32);
-	app->entities->AddEntity(EntityType::ITEM_STAR, 40 * 32, 11 * 32);
-	app->entities->AddEntity(EntityType::ITEM_HEALTH, 43 * 32, 11 * 32);
+	app->entities->AddEntity(EntityType::ITEM_STAR, 71 * 32, 7 * 32);
+	app->entities->AddEntity(EntityType::ITEM_STAR, 114 * 32, 8 * 32);
+	app->entities->AddEntity(EntityType::ITEM_STAR, 224 * 32, 15 * 32);
+	app->entities->AddEntity(EntityType::ITEM_HEALTH, 168 * 32, 10 * 32);
+	app->entities->AddEntity(EntityType::ITEM_HEALTH, 255 * 32, 11 * 32);
 
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 36 * 32, 448 + 20);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 20 * 32, 448 + 20);
