@@ -12,7 +12,9 @@
 ModuleHud::ModuleHud( bool start_enabled) : Module(start_enabled)
 {
 	spriteStar = { 41, 0, 32, 30 };
-	spriteAim = { 66,129,64,64 };
+	spriteAim = { 66, 129, 64, 64 };
+	spriteLifes = { 74, 31, 24, 22 };
+	spriteHearts = { 74, 100, 24, 22 };
 }
 
 
@@ -62,6 +64,8 @@ bool ModuleHud::PostUpdate()
 	app->fonts->BlitText(1050, 80, lifesFont, healthText);
 
 	app->render->DrawTexture(itemsTexture, 600 - 50, 20, &spriteStar,0.0f); // 0.0f makes it fix to the screen
+	app->render->DrawTexture(itemsTexture, 1050 - 50, 20, &spriteLifes, 0.0f);
+	app->render->DrawTexture(itemsTexture, 1050 - 50, 80, &spriteHearts, 0.0f);
 
 	int mouseX, mouseY;
 	app->input->GetMousePosition(mouseX, mouseY);

@@ -31,6 +31,8 @@ public:
 	SDL_Rect spriteStar;
 	SDL_Rect spriteHealth;
 	SDL_Rect spriteAim;
+	SDL_Rect spriteLifes;
+	SDL_Rect spriteHearts;
 
 	int lifesFont = -1;
 	int starsFont = -1;
