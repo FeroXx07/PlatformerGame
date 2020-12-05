@@ -287,7 +287,7 @@ void App::FinishUpdate()
 	app->win->SetTitle(title);
 
     // L08: TODO 2: Use SDL_Delay to make sure you get your capped framerate
-	if (cappedMs - lastFrameMs > 0.0f && cappedMs != -1)
+	if (((cappedMs - (float)lastFrameMs) > 0.0f) && cappedMs != -1) 
 	{
 		// L08: TODO 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
 		PERF_START(ptimer);

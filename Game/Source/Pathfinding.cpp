@@ -142,6 +142,7 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill) const
 	if(app->pathfinding->IsWalkable(cell))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
+
 	return listToFill.list.Count();
 }
 
