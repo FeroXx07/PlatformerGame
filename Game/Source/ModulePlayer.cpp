@@ -83,10 +83,7 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	itemsTexture = app->tex->Load("Assets/textures/blue_player_animations.png"); 
-	jumpTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
-	dieTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
-	fallTexture = app->tex->Load("Assets/textures/blue_player_animations.png");
+	texture = app->tex->Load("Assets/textures/blue_player_animations.png");
 
 	// Audio of the player's actions
 
@@ -102,7 +99,7 @@ bool ModulePlayer::Start()
 	
 
 	currentAnimation = &idleAnim;
-	currentTexture = &itemsTexture;
+	currentTexture = &texture;
 
 	playerState = ON_AIR;
 	collisionExist = false;
@@ -285,8 +282,8 @@ void ModulePlayer::BulletLogic(float dt)
 	direction = { direction.x / magnitude, direction.y / magnitude }; // Vector unitario/dirección
 	direction.Negate();
 
-	printf("mouse = %f %f\n", center.x, center.y);
-	printf("dir = %f %f\n", direction.x, direction.y);
+	/*printf("mouse = %f %f\n", center.x, center.y);
+	printf("dir = %f %f\n", direction.x, direction.y);*/
 
 	if ((app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN))
 	{
@@ -307,8 +304,8 @@ void ModulePlayer::Logic(float dt)
 	if (health == 0)
 		destroyed = true;
 
-	printf("Velocity in X = %f\nVelocity in Y = %f\n\n", velocity.x, velocity.y);
-	printf("Position in X = %f\nPosition in Y = %f\n\n", playerPos.x, playerPos.y);
+	//printf("Velocity in X = %f\nVelocity in Y = %f\n\n", velocity.x, velocity.y);
+	//printf("Position in X = %f\nPosition in Y = %f\n\n", playerPos.x, playerPos.y);
 
 	// Integrators
 	if (destroyed == false)
@@ -336,7 +333,7 @@ void ModulePlayer::Logic(float dt)
 
 	/*printf("Ground = %s\n", isGround ? "true" : "false");
 	printf("Air = %s\n", isAir ? "true" : "false");*/
-	printf("Jump = %s\n", isJump ? "true" : "false");
+	//printf("Jump = %s\n", isJump ? "true" : "false");
 }
 
 void ModulePlayer::CheckPlayerState(float dt)
@@ -348,7 +345,7 @@ void ModulePlayer::CheckPlayerState(float dt)
 		if (collisionExist == false)
 			playerState = ON_AIR;
 
-		currentTexture = &jumpTexture;
+		currentTexture = &texture;
 		/*currentAnimation = &jumpRightAnim;*/
 
 		if (velocity.y <= -200)
@@ -380,7 +377,7 @@ void ModulePlayer::CheckPlayerState(float dt)
 
 	if (playerState == ON_GROUND) // Stopping the player gradually while at ground
 	{
-		currentTexture = &itemsTexture;
+		currentTexture = &texture;
 		if (currentAnimation == &jumpAnim)
 		{
 			currentAnimation = &idleAnim;
@@ -401,7 +398,7 @@ void ModulePlayer::CheckPlayerState(float dt)
 	if (destroyed)
 	{
 		currentAnimation = &dieAnimation;
-		currentTexture = &dieTexture;
+		currentTexture = &texture;
 	}
 }
 
@@ -593,8 +590,7 @@ bool ModulePlayer::CleanUp()
 
 	// TODO 1: Remove ALL remaining resources. Update resource count properly
 
-	app->tex->UnLoad(itemsTexture);
-	app->tex->UnLoad(jumpTexture);
+	app->tex->UnLoad(texture);
 	
 	return true;
 }

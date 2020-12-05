@@ -22,7 +22,7 @@
 #include "EnemyFlying.h"
 
 #define SPAWN_MARGIN 50
-#define MAX_ENTITIES 30
+#define MAX_ENTITIES 50
 
 Entities::Entities(bool startEnabled) : Module(startEnabled)
 {
@@ -57,15 +57,7 @@ bool Entities::Start()
 bool Entities::PreUpdate()
 {
 	bool ret = true;
-	// Remove all enemies scheduled for deletion
-	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (enemies[i] != nullptr && enemies[i]->pendingToDelete)
-		{
-			delete enemies[i];
-			enemies[i] = nullptr;
-		}
-	}*/
+	
 	ListItem<Entity*>* list;
 	list = entities.start;
 

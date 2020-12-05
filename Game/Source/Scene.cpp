@@ -88,9 +88,11 @@ bool Scene::Start()
 	app->player->health = 3;
 
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, -100,-100);
+
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 38 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_STAR, 40 * 32, 11 * 32);
 	app->entities->AddEntity(EntityType::ITEM_HEALTH, 43 * 32, 11 * 32);
+
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 36 * 32, 448 + 20);
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 20 * 32, 448 + 20);
 	app->entities->AddEntity(EntityType::ENEMY_FLYING, 15 * 32, 448 + 20);
@@ -117,6 +119,15 @@ bool Scene::Start()
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 250 * 32, 15 * 32 - 12);
 
 	app->entities->AddEntity(EntityType::ENEMY_WALKING, 264 * 32, 18 * 32 - 12);
+
+
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 60 * 32, 12 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 90 * 32, 11 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 101 * 32, 11 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 142 * 32, 8 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 170 * 32, 7 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 220 * 32, 10 * 32);
+	app->entities->AddEntity(EntityType::ENEMY_FLYING, 265 * 32, 14 * 32);
 
 	resetCounter = 0;
 
@@ -173,10 +184,10 @@ bool Scene::Update(float dt)
 		}
 			
 	}
-	printf("lives = %u\n", app->player->lives);
-	printf("health = %u\n", app->player->health);
+	/*printf("lives = %u\n", app->player->lives);
+	printf("health = %u\n", app->player->health);*/
 
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_UP || app->player->win == true)
+	if (app->input->GetKey(SDL_SCANCODE_F12) == KEY_UP || app->player->win == true)
 		app->fade->FadeToBlack(this, (Module*)app->winScreen);
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",

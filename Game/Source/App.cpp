@@ -52,6 +52,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	particles = new ModuleParticles(false);
 	fonts = new ModuleFonts();
 	pathfinding = new PathFinding();
+
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
@@ -131,7 +132,6 @@ bool App::Awake()
 		newMaxFramerate = configApp.attribute("framerate_cap").as_int();
 		if (!(newMaxFramerate <=0))
 			cappedMs = (1000.0f / (float)newMaxFramerate);
-
 	}
 
 	if(ret == true)
@@ -219,6 +219,19 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_UP)
+	{
+		if (newMaxFramerate == 60.0f)
+		{
+			newMaxFramerate = 30.0f;
+		}
+		else if (newMaxFramerate == 30.0f)
+		{
+			newMaxFramerate = 60.0f;
+		}
+	}
+
+	cappedMs = (1000.0f / (float)newMaxFramerate);
     frameCount++;
     lastSecFrameCount++;
 	dt = frameTime.ReadSec();
@@ -259,9 +272,18 @@ void App::FinishUpdate()
 	framesOnLastSec = prevLastSecFrameCount;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-			  averageFps, lastFrameMs, framesOnLastSec, dt, secondsSinceStartup, frameCount);
-
+	//sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+	//		  averageFps, lastFrameMs, framesOnLastSec, dt, secondsSinceStartup, frameCount);
+	if (vSync)
+	{
+		sprintf_s(title, 256, "FPS: %i / Avg. FPS: %.2f / Last-frame MS: %02u / Vsync: on",
+			framesOnLastSec, averageFps, lastFrameMs);
+	}
+	else
+		sprintf_s(title, 256, "FPS: %i / Avg. FPS: %.2f / Last-frame MS: %02u / Vsync: off",
+			framesOnLastSec, averageFps, lastFrameMs);
+	
+		
 	app->win->SetTitle(title);
 
     // L08: TODO 2: Use SDL_Delay to make sure you get your capped framerate

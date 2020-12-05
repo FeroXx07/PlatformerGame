@@ -121,6 +121,9 @@ public:
 	Entities* entities;
 	PathFinding* pathfinding;
 	float cappedMs = -1;
+	bool vSync = false;
+
+
 private:
 
 	int argc;
@@ -153,7 +156,6 @@ private:
 	uint32 prevLastSecFrameCount = 0;
 	float dt = 0.0f;
 
-	
 	int newMaxFramerate = 0;
 };
 

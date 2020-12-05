@@ -531,7 +531,6 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 		properties.list.Add(prop);
 	}
 
-
 	return ret;
 }
 
