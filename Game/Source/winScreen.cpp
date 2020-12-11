@@ -39,7 +39,7 @@ bool WinScreen::Start()
 	}
 
 	app->render->camera = { 0,0,1280,720 };
-	app->player->cameraFollow = false;
+	//app->player->cameraFollow = false;
 	return ret;
 }
 
