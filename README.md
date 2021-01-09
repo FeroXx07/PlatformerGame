@@ -27,6 +27,39 @@ A platformer game made for the subject of video game development of the grade of
  - Load and Save that considers each enemy state.
  - Game capped to stable 60 frames per second.
  - Game's movement normalized using dt (deltaTime).
+ - NEW! Entity System: All the elements in the game (Player, Enemies, Props, Coins / Collectibles) must
+hereby from a base Entity class and an EntityManager class must manage them (Initialize, include in
+a list, Update, Draw, CleanUp…)
+- NEW! GUI: Title Screen Main Menu: It includes the following GuiButtons:
+- PLAY: Smooth transition to the gameplay screen.
+- CONTINUE: Only enabled if there is a saved game. It must transition to the last saved
+game. Use a different visible state for disabled!
+- SETTINGS: Open options menu. Including the following options:
+- Adjust music volume, with a GuiSlider.
+- Adjust fx volume, with a GuiSlider.
+- Toggle fullscreen mode, with a GuiCheckBox.
+- Toggle VSync, with a GuiCheckBox.
+- CREDITS: Open a credits panel where you can read the authors and the license.
+- EXIT: Quit the game.
+- NOTE: Buttons must be responsive and include:
+- Visible state change on mouse-hover (FOCUSED)
+- Visible state change on mouse-pressed (PRESSED)
+- Generate an OnMouseClick event to be processed
+- Audio feedback on mouse-hover and mouse-click.
+- NEW! GUI: Gameplay Screen HUD: In-game GUI with the following elements:
+○ Player lives: The game will cycle from the beginning of each level until the
+player consumes all its lifes. At that point, the game must transition to the ending
+screen or title screen.
+○ Coins: There must be some sort of coins that the player must
+be able to collect throughout the game.
+○ Timer: It contains the time so far accumulated from the player while playing the level or
+the remaining time to finish the level.
+- NEW! GUI: Gameplay Screen Pause Menu: Pressing ESCAPE triggers an in-game Pause Menu with
+the following options GuiButtons:
+○ RESUME: Continue playing the game after displaying the menu.
+○ SETTINGS: Shows settings menu (same one from Title Screen).
+○ BACK to TITLE: Returns to title screen.
+○ EXIT: Quits the game.
  
 ## Controls
 
@@ -44,6 +77,7 @@ A platformer game made for the subject of video game development of the grade of
  - "F10" to enter the God mode (fly around and cannot be killed).
  - "F11" to enable or disable the FPS to 30.
  - "F12" to win the level.
+ - "ESCAPE" to pause menu in-game.
 
 ## Developers
 
