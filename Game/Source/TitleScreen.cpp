@@ -40,8 +40,8 @@ bool TitleScreen::Start()
 		ret = false;
 	}
 
-	app->player->playerPos = { -1000,-1000 };
-	app->player->cameraFollow = false;
+	//app->player->playerPos = { -1000,-1000 };
+	//app->player->cameraFollow = false;
 	return ret;
 }
 
