@@ -6,7 +6,6 @@
 #include "Render.h"
 #include "Window.h"
 #include "LevelScene.h"
-#include "ModuleFadeToBlack.h"
 #include "Map.h"
 #include "ModuleCollisions.h"
 #include "EntityManager.h"
@@ -125,7 +124,7 @@ bool LevelScene::Load(Textures* tex)
 
 	app->SaveGameRequest();
 
-	font = new Font("Assets/Fonts/pottaOneRegular.xml", app->tex);
+	font = new Font("Assets/Fonts/potta_one_regular.xml", app->tex);
 
 	timerSec.Start();
 	return true;

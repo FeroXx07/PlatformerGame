@@ -5,7 +5,7 @@
 
     NOTE: This atlas contains a sprite font description
 -->
-<AtlasTexture imagePath='pottaOneRegular.png' width='512' height='512' spriteCount='95' isFont='1' fontSize='72'>
+<AtlasTexture imagePath='potta_one_regular.png' width='512' height='512' spriteCount='95' isFont='1' fontSize='72'>
     <Sprite nameId='PottaOne-Regular' originX='0' originY='0' positionX='0' positionY='0' sourceSizeWidth='19' sourceSizeHeight='72' padding='2' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='0' trimRecHeight='0' charValue='32' charOffsetX='0' charOffsetY='0' charAdvanceX='19' />
     <Sprite nameId='PottaOne-Regular' originX='0' originY='0' positionX='23' positionY='0' sourceSizeWidth='14' sourceSizeHeight='72' padding='2' trimmed='0' trimRecX='0' trimRecY='17' trimRecWidth='14' trimRecHeight='41' charValue='33' charOffsetX='3' charOffsetY='0' charAdvanceX='19' />
     <Sprite nameId='PottaOne-Regular' originX='0' originY='0' positionX='41' positionY='0' sourceSizeWidth='20' sourceSizeHeight='72' padding='2' trimmed='0' trimRecX='0' trimRecY='14' trimRecWidth='20' trimRecHeight='19' charValue='34' charOffsetX='4' charOffsetY='0' charAdvanceX='27' />

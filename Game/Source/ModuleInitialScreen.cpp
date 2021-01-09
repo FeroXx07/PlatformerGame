@@ -1,7 +1,6 @@
 #include "ModuleInitialScreen.h"
 #include "App.h"
 #include "Textures.h"
-#include "ModuleFadeToBlack.h"
 #include "Input.h"
 #include "TitleScreen.h"
 #include "Window.h"

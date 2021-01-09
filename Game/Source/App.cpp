@@ -6,7 +6,6 @@
 #include "Audio.h"
 #include "LevelScene.h"
 #include "DeathScene.h"
-#include "ModuleFadeToBlack.h"
 #include "TitleScreen.h"
 #include "Map.h"
 #include "ModuleInitialScreen.h"
@@ -36,7 +35,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 
 	sceneManager = new SceneManager(input,render,tex);
-	fade = new ModuleFadeToBlack();
 	collisions = new ModuleCollisions(true);
 	entityman = new EntityManager(true);
 	pathfinding = new PathFinding();
@@ -52,8 +50,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entityman);
 	AddModule(sceneManager);
 	AddModule(collisions);
-	AddModule(fade);
-
 	// render last to swap buffer
 	AddModule(render);
 	

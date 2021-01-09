@@ -117,7 +117,6 @@
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
-    <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
     <ClCompile Include="Source\ModuleInitialScreen.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\PauseMenu.cpp" />
@@ -151,7 +150,6 @@
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
-    <ClInclude Include="Source\ModuleFadeToBlack.h" />
     <ClInclude Include="Source\ModuleInitialScreen.h" />
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\PauseMenu.h" />
