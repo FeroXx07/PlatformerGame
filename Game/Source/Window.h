@@ -28,7 +28,7 @@ public:
 	void GetWindowSize(uint& width, uint& height) const;
 
 	// Retrieve window scale
-	uint GetScale() const;
+	float GetScale() const;
 
 public:
 	// The window we'll be rendering to
@@ -37,11 +37,12 @@ public:
 	// The surface contained by the window
 	SDL_Surface* screenSurface;
 
-private:
+public:
 	SString title;
 	uint width;
 	uint height;
-	uint scale;
+	float scale;
+	bool fullScreen = false;
 };
 
 #endif // __WINDOW_H__

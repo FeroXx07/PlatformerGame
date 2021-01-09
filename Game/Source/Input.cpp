@@ -158,3 +158,8 @@ void Input::GetMouseMotion(int& x, int& y)
 	x = mouseMotionX;
 	y = mouseMotionY;
 }
+
+void Input::CloseApp()
+{
+	windowEvents[WE_QUIT] = true;
+}

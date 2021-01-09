@@ -2,30 +2,41 @@
 #define __SCENE2_H__
 
 #include "Module.h"
+#include "Scene.h"
+
+#include "GuiButton.h"
+#include "Animation.h"
 
 struct SDL_Rect;
 
-class TitleScreen : public Module
+class TitleScreen : public Scene
 {
 public:
-
-	TitleScreen(bool startEnabled);
+	TitleScreen();
 	~TitleScreen();
 
-	bool Start();
-	bool Update(float dt);
-	bool PostUpdate();
-	bool CleanUp();
+	bool Load(Textures* tex);
 
+	bool Update(Input* input, float dt);
+
+	bool Draw(Render* render);
+
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
+	bool Unload();
 private:
 
 	SDL_Texture* titleTex = nullptr;
-	SDL_Texture* tex = nullptr;
+	SDL_Texture* guiTex = nullptr;
 	SDL_Rect title;
 
-	Uint32 startTime = 0;
-	Uint32 endTime = 0;
-	Uint32 actualTime = 0;
+	GuiButton* btnStart;
+	GuiButton* btnContinue;
+	GuiButton* btnSettings;
+	GuiButton* btnCredits;
+	GuiButton* btnExit;
+
+	int textFont = -1;
 };
 
 #endif // __SCENE_H__

@@ -1821,7 +1821,7 @@ PUGI__NS_BEGIN
                 memmove(end - size, end, reinterpret_cast<char*>(s) - reinterpret_cast<char*>(end));
             }
                 
-            s += count; // end of current gap
+            s += count; // end of previousScene gap
                 
             // "merge" two gaps
             end = s;
@@ -3608,7 +3608,7 @@ PUGI__NS_BEGIN
         {
             assert(node);
 
-            // begin writing current node
+            // begin writing previousScene node
             if (PUGI__NODETYPE(node) == node_pcdata || PUGI__NODETYPE(node) == node_cdata)
             {
                 node_output_simple(writer, node, flags);

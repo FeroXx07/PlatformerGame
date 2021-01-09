@@ -1,44 +1,18 @@
-#ifndef __MODULE_PLAYER_H__
-#define __MODULE_PLAYER_H__
+#include "Entity.h"
 
-#include "Module.h"
-#include "Animation.h"
-#include "Point.h"
-#include "Timer.h"
-
-struct SDL_Texture;
-struct Collider;
-
-class ModulePlayer : public Module
+class Player : public Entity
 {
 public:
-	// Constructor
-	ModulePlayer(bool b);
+	Player();
+	~Player();
 
-	// Destructor
-	~ModulePlayer();
+	bool Update(float dt) override;
+	bool Draw() override;
+	bool HandleInput(float dt) override;
 
-	// Called when the module is activated
-	// Loads the necessary textures for the player
-	bool Start();
-
-	// Called at the middle of the application loop
-	// Processes new input and handles player movement
-	bool Update(float dt);
-
-	// Called at the end of the application loop
-	// Performs the render call of the player sprite
-	bool PostUpdate() ;
-	
-	bool CleanUp();
-
-public:
-	// Position of the player in the map
-	fPoint playerPos;
 	fPoint playerWh; // Data that contains width and height of player
 	fPoint colliderPos;
 
-	// The speed in which we move the player (pixels per frame)
 	fPoint velocity = { 0,0 };
 
 	SDL_Texture* itemsTexture = nullptr;
@@ -54,14 +28,9 @@ public:
 	Animation fallAnim;
 
 	SDL_Texture** currentTexture = nullptr;
-	SDL_Texture* texture = nullptr;
 
 	// Collision callback, called when the player intersects with another collider
 	bool OnCollision(Collider* c1, Collider* c2);
-
-	// Load / Save
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
 
 	bool cameraFollow = false;
 	bool collisionExist = false;
@@ -69,9 +38,9 @@ public:
 	bool destroyed = false;
 	bool win = false;
 private:
-	enum PlayerState {ON_GROUND, ON_AIR};
+	enum PlayerState { ON_GROUND, ON_AIR };
 	PlayerState playerState = ON_AIR;
-	enum PlayerDirection {RIGHT,LEFT,UP,DOWN};
+	enum PlayerDirection { RIGHT, LEFT, UP, DOWN };
 	PlayerDirection playerDirection;
 
 	bool isHurt = false;
@@ -79,6 +48,7 @@ private:
 	bool collisionFromBelow = false;
 	bool godMode = false;
 	bool loadDeath = false;
+
 	void Input(float dt);
 	void Logic(float dt);
 	bool CheckCollisions(float dt);
@@ -87,6 +57,10 @@ private:
 	void BulletLogic(float dt);
 
 public:
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	// Player loses life and it is tp to checpoint
 	void PlayerDied();
 	// Player has lost all lives
@@ -109,5 +83,3 @@ public:
 	Timer counterWalking;
 	Timer counterDamage;
 };
-
-#endif //!__MODULE_PLAYER_H__

@@ -197,53 +197,69 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
 	if (IsWalkable(origin) == false || IsWalkable(destination) == false)
 		return -1;
-	
+	// L12b: TODO 2: Create two lists: open, close
+	// Add the origin tile to open
+	// Iterate while we have tile in the open list
 	PathList open;
 	PathList closed;
 
+	//PathNode originNode = PathNode(0, origin.DistanceTo(destination), origin, nullptr);
 	PathNode originNode = PathNode(0, origin.DistanceManhattan(destination), origin, nullptr);
 	open.list.Add(originNode);
 
+	/*for (int i = 0; i < open.list.Count(); ++i)
+	{*/
 	while (open.list.Count() != 0)
 	{
+		// L12b: TODO 3: Move the lowest score cell from open list to the closed list
 		PathNode lowestScore = open.GetNodeLowestScore()->data;
 		open.list.Del(open.GetNodeLowestScore());
 		closed.list.Add(lowestScore);
 
-		
-		if (closed.list.end->data.pos == destination) 
+		// L12b: TODO 4: If we just added the destination, we are done!
+		// Backtrack to create the final path
+		// Use the Pathnode::parent and Flip() the path when you are finish
+		if (/*lowestScore.pos*/closed.list.end->data.pos == destination) // We have reached the end
 		{
 			PathNode backtrack = closed.list.end->data;
 			lastPath.PushBack(backtrack.pos);
-
-			while (backtrack.parent != nullptr)
+			do
 			{
 				if (backtrack.parent != NULL)
 					backtrack = closed.Find(backtrack.parent->pos)->data;
 				lastPath.PushBack(backtrack.pos);
-			}
-
+			} while (backtrack.parent != nullptr);
 			lastPath.Flip();
 			return 0;
 		}
 		
 
-		PathList adjacentNodes;
-		closed.list.end->data.FindWalkableAdjacents(adjacentNodes);
+		// L12b: TODO 5: Fill a list of all adjancent nodes
+		PathList adjcNodes;
+		closed.list.end->data.FindWalkableAdjacents(adjcNodes);
+
+		// L12b: TODO 6: Iterate adjancent nodes:
+		// ignore nodes in the closed list
+		// If it is NOT found, calculate its F and add it to the open list
+		// If it is already in the open list, check if it is a better path (compare G)
+		// If it is a better path, Update the parent
 		
-		for (ListItem<PathNode>* list = adjacentNodes.list.start; list != NULL; list = list->next)
+		
+		for (ListItem<PathNode>* list = adjcNodes.list.start; list != NULL; list = list->next)
 		{
 			if (closed.Find(list->data.pos) != NULL)
 			{
 				continue;
 			}
-			else if (open.Find(list->data.pos) != NULL) 
+			else if (open.Find(list->data.pos) != NULL) //NOT FOUND
 			{
-				PathNode current = open.Find(list->data.pos)->data;
+				/*int F = list->data.CalculateF(destination);
+				open.list.Add(list->data);*/
+				PathNode tmp = open.Find(list->data.pos)->data;
 				list->data.CalculateF(destination);
-				if (list->data.g < current.g)
+				if (list->data.g < tmp.g)
 				{
-					current.parent = list->data.parent;
+					tmp.parent = list->data.parent;
 				}
 			}
 			else
@@ -253,56 +269,79 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			}
 
 		}
-		adjacentNodes.list.Clear();
+		adjcNodes.list.Clear();
 	}
 	return -1;
 }
 
 int PathFinding::CreatePathFlying(const iPoint& origin, const iPoint& destination)
 {
+	// L12b: TODO 1: if origin or destination are not walkable, return -1
+	/*if (IsWalkable(origin) == false || IsWalkable(destination) == false)
+		return -1;*/
+	// L12b: TODO 2: Create two lists: open, close
+	// Add the origin tile to open
+	// Iterate while we have tile in the open list
 	PathList open;
 	PathList closed;
 
+	//PathNode originNode = PathNode(0, origin.DistanceTo(destination), origin, nullptr);
 	PathNode originNode = PathNode(0, origin.DistanceManhattan(destination), origin, nullptr);
 	open.list.Add(originNode);
-	
+
+	/*for (int i = 0; i < open.list.Count(); ++i)
+	{*/
 	while (open.list.Count() != 0)
 	{
-		
+		// L12b: TODO 3: Move the lowest score cell from open list to the closed list
 		PathNode lowestScore = open.GetNodeLowestScore()->data;
 		open.list.Del(open.GetNodeLowestScore());
 		closed.list.Add(lowestScore);
 
-		if (closed.list.end->data.pos == destination)
+		// L12b: TODO 4: If we just added the destination, we are done!
+		// Backtrack to create the final path
+		// Use the Pathnode::parent and Flip() the path when you are finish
+		if (/*lowestScore.pos*/closed.list.end->data.pos == destination) // We have reached the end
 		{
 			PathNode backtrack = closed.list.end->data;
 			lastPath.PushBack(backtrack.pos);
-			while (backtrack.parent != nullptr)
+			do
 			{
 				if (backtrack.parent != NULL)
 					backtrack = closed.Find(backtrack.parent->pos)->data;
 				lastPath.PushBack(backtrack.pos);
-			}
+			} while (backtrack.parent != nullptr);
 			lastPath.Flip();
 			return 0;
 		}
 
-		PathList adjacentNodes;
-		closed.list.end->data.FindWalkableAdjacentsFlying(adjacentNodes);
 
-		for (ListItem<PathNode>* list = adjacentNodes.list.start; list != NULL; list = list->next)
+		// L12b: TODO 5: Fill a list of all adjancent nodes
+		PathList adjcNodes;
+		closed.list.end->data.FindWalkableAdjacentsFlying(adjcNodes);
+
+		// L12b: TODO 6: Iterate adjancent nodes:
+		// ignore nodes in the closed list
+		// If it is NOT found, calculate its F and add it to the open list
+		// If it is already in the open list, check if it is a better path (compare G)
+		// If it is a better path, Update the parent
+
+
+		for (ListItem<PathNode>* list = adjcNodes.list.start; list != NULL; list = list->next)
 		{
 			if (closed.Find(list->data.pos) != NULL)
 			{
 				continue;
 			}
-			else if (open.Find(list->data.pos) != NULL) 
+			else if (open.Find(list->data.pos) != NULL) //NOT FOUND
 			{
-				PathNode current = open.Find(list->data.pos)->data;
+				/*int F = list->data.CalculateF(destination);
+				open.list.Add(list->data);*/
+				PathNode tmp = open.Find(list->data.pos)->data;
 				list->data.CalculateF(destination);
-				if (list->data.g < current.g)
+				if (list->data.g < tmp.g)
 				{
-					current.parent = list->data.parent;
+					tmp.parent = list->data.parent;
 				}
 			}
 			else
@@ -312,7 +351,7 @@ int PathFinding::CreatePathFlying(const iPoint& origin, const iPoint& destinatio
 			}
 
 		}
-		adjacentNodes.list.Clear();
+		adjcNodes.list.Clear();
 	}
 	return -1;
 }

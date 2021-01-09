@@ -18,21 +18,17 @@ class Input;
 class Render;
 class Textures;
 class Audio;
-class Scene;
+class LevelScene;
 class DeathScene;
 class WinScreen;
-class ModuleFonts;
-class ModuleDebugInfo;
 class ModuleFadeToBlack;
 class TitleScreen;
-class ModulePlayer;
 class Map;
 class ModuleInitialScreen;
 class ModuleCollisions;
-class Entities;
-class ModuleHud;
-class ModuleParticles;
+class EntityManager;
 class PathFinding;
+class SceneManager;
 
 class App
 {
@@ -103,23 +99,19 @@ public:
 	Textures* tex;
 	Audio* audio;
 
-	Scene* scene;
+	LevelScene* scene;
 	TitleScreen* titleScreen;
 	ModuleInitialScreen* initialScreen;
 	DeathScene* deathScene;
 	WinScreen* winScreen;
-	ModuleHud* hud;
 	Map* map;
-	ModulePlayer* player;
 
 	ModuleCollisions* collisions;
-	ModuleParticles* particles;
-	ModuleFonts* fonts;
-
-	ModuleDebugInfo* debug;
 	ModuleFadeToBlack* fade;
-	Entities* entities;
+	EntityManager* entityman;
 	PathFinding* pathfinding;
+	SceneManager* sceneManager;
+
 	float cappedMs = -1;
 	bool vSync = false;
 
@@ -157,6 +149,9 @@ private:
 	float dt = 0.0f;
 
 	int newMaxFramerate = 0;
+
+public:
+	bool debugGui = false;
 };
 
 extern App* app;
