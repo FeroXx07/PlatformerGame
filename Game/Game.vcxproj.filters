@@ -37,53 +37,76 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Timers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ModuleInitialScreen.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\DeathScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleEntities.cpp" />
     <ClCompile Include="Source\TitleScreen.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\WinScreen.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp" />
-    <ClCompile Include="Source\ModulePlayer.cpp">
-      <Filter>Player &amp; HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModuleFonts.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModuleHud.cpp">
-      <Filter>Player &amp; HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ItemHealth.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ItemStar.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Entity.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModuleParticles.cpp" />
-    <ClCompile Include="Source\Particle.cpp">
-      <Filter>Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EnemyWalking.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pathfinding.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp" />
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyWalking.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hud.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bullet.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheckBox.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SettingsScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PauseMenu.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
     <ClCompile Include="Source\EnemyFlying.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ItemStar.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ItemHealth.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Font.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CreditsScene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +138,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
     <ClInclude Include="Source\Animation.h">
@@ -148,45 +170,16 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>Timers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ModuleInitialScreen.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DeathScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleEntities.h" />
     <ClInclude Include="Source\TitleScreen.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\WinScreen.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModulePlayer.h">
-      <Filter>Player &amp; HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleFonts.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleHud.h">
-      <Filter>Player &amp; HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ItemHealth.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ItemStar.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Entity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleParticles.h" />
-    <ClInclude Include="Source\Particle.h">
-      <Filter>Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EnemyWalking.h">
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\Pathfinding.h">
@@ -195,8 +188,58 @@
     <ClInclude Include="Source\PQueue.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EnemyFlying.h">
+    <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\Player.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hud.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bullet.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckBox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DeathScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SettingsScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PauseMenu.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemiesClasses.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Font.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CreditsScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,14 +264,11 @@
     <Filter Include="Entities">
       <UniqueIdentifier>{df943ad3-7a0d-4d88-9719-4455e04de3ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player &amp; HUD">
-      <UniqueIdentifier>{9ea56cda-2ac6-445e-9c37-badacf7bde2a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Particles">
-      <UniqueIdentifier>{2cdfb3d9-8e4c-4ad8-b123-1744b2d1afef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{3ff3d3ea-116b-46c8-8c33-0d1909ea0c5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{2cdfb3d9-8e4c-4ad8-b123-1744b2d1afef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

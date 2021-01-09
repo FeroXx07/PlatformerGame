@@ -1,34 +1,45 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include "Module.h"
-#include "List.h"
-#include "Point.h"
+#include "Entity.h"
+#include "Render.h"
+#include "Textures.h"
 
-#include "PugiXml\src\pugixml.hpp"
+#include "List.h"
+#include "PQueue.h"
+#include "Point.h"
+#include "DynArray.h"
+
+#include "SDL/include/SDL.h"
+#include "PugiXml/src/pugixml.hpp"
+
+#define COST_MAP_SIZE	100
 
 // L03: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 struct TileSet
 {
 	SString	name;
-	int firstgid;
+	int	firstgid;
 	int margin;
-	int spacing;
-	int tileWidth;
-	int tileHeight;
+	int	spacing;
+	int	tileWidth;
+	int	tileHeight;
 
-	SDL_Texture* itemsTexture;
-	int texWidth;
-	int texHeight;
-	int numTilesWidth;
-	int numTilesHeight;
-	int offsetX;
-	int offsetY;
+	SDL_Texture* texture;
+	int	texWidth;
+	int	texHeight;
+	int	numTilesWidth;
+	int	numTilesHeight;
+	int	offsetX;
+	int	offsetY;
 
-	// L04: TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
+	// L04: DONE 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
-	int GetTileRelativeId(int id)const;
+	int TileSet::GetTileRelativeId(int id)const
+	{
+		return (id - firstgid);
+	}
 };
 
 // L03: DONE 1: We create an enum for map type, just for convenience,
@@ -41,25 +52,30 @@ enum MapTypes
 	MAPTYPE_STAGGERED
 };
 
-
-
-
-// L06: TODO 5: Create a generic structure to hold properties
+// L06: DONE 5: Create a generic structure to hold properties
 struct Properties
 {
 	struct Property
 	{
-		//...
 		SString name;
-		bool value;
+		int value;
 	};
-	
+
 	~Properties()
 	{
-		//...
+		ListItem<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.Clear();
 	}
 
-	// L06: TODO 7: Method to ask for the value of a custom property
+	// L06: DONE 7: Method to ask for the value of a custom property
 	int GetProperty(const char* name, int default_value = 0) const;
 
 	List<Property*> list;
@@ -77,10 +93,7 @@ struct MapLayer
 	Properties properties;
 
 	MapLayer() : data(NULL)
-	{
-		width = 0;
-		height = 0;
-	}
+	{}
 
 	~MapLayer()
 	{
@@ -98,9 +111,9 @@ struct MapLayer
 struct MapData
 {
 	int width;
-	int height;
-	int tileWidth;
-	int tileHeight;
+	int	height;
+	int	tileWidth;
+	int	tileHeight;
 	SDL_Color backgroundColor;
 	MapTypes type;
 	List<TileSet*> tilesets;
@@ -109,11 +122,11 @@ struct MapData
 	List<MapLayer*> layers;
 };
 
-class Map : public Module
+class Map : public Entity
 {
 public:
 
-    Map();
+    Map(Textures* render);
 
     // Destructor
     virtual ~Map();
@@ -122,7 +135,9 @@ public:
     bool Awake(pugi::xml_node& conf);
 
     // Called each loop iteration
-    void Draw();
+    void Draw(Render* render);
+
+	void DrawLayer(Render* render, int num);
 
     // Called before quitting
     bool CleanUp();
@@ -136,38 +151,46 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
-	int LoadColliders();
+	SDL_Rect GetTilemapRec(int x, int y) const;
+	
+	int Map::LoadColliders();
 
-	bool CreateWalkabilityMap(int* width, int* height, uchar** buffer) const;
+	
+	// L12b: Create walkability map for pathfinding
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+
 private:
 
 	// L03: Methods to load all required map data
 	bool LoadMap();
-	bool LoadTilesetDetails(pugi::xml_node& tilesetNode, TileSet* set);
-	bool LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* set);
+	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
+	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool StoreId(pugi::xml_node& node, MapLayer* layer, int index);
-	void LogInfo();
-	
+
 	// L06: TODO 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	// L06: TODO 3: Pick the right Tileset based on a tile id
+	// L06: DONE 3: Pick the right Tileset based on a tile id
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 
     // L03: DONE 1: Add your struct for map info
 	MapData data;
-	MapTypes StrToMapType(SString s);
+
+	bool drawColliders = false;
+
 private:
+
+	Textures* tex;
 
     pugi::xml_document mapFile;
     SString folder;
     bool mapLoaded;
 
+	uint32 scale;
+	iPoint camOffset;
 public:
-	// Special lists for some access
 	List<Collider*>checkpointsList;
 };
 

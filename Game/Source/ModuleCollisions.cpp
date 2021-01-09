@@ -9,7 +9,6 @@
 #include "SDL/include/SDL.h"
 
 #include "SDL/include/SDL_Scancode.h"
-#include "ModulePlayer.h"
 
 ModuleCollisions::ModuleCollisions(bool b) : Module(b)
 {

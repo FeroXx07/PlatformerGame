@@ -454,7 +454,7 @@ namespace pugi
         // Get root of DOM tree this node belongs to
         xml_node root() const;
 
-        // Get text object for the current node
+        // Get text object for the previousScene node
         xml_text text() const;
 
         // Get child, attribute or next/previous sibling with the specified name
@@ -463,7 +463,7 @@ namespace pugi
         xml_node next_sibling(const char_t* name) const;
         xml_node previous_sibling(const char_t* name) const;
 
-        // Get child value of current node; that is, value of the first child node of type PCDATA/CDATA
+        // Get child value of previousScene node; that is, value of the first child node of type PCDATA/CDATA
         const char_t* child_value() const;
 
         // Get child value of child with specified name. Equivalent to child(name).child_value().
@@ -517,7 +517,7 @@ namespace pugi
         bool remove_child(const xml_node& n);
         bool remove_child(const char_t* name);
 
-        // Parses buffer as an XML document fragment and appends all nodes as children of the current node.
+        // Parses buffer as an XML document fragment and appends all nodes as children of the previousScene node.
         // Copies/converts the buffer, so it may be deleted or changed after the function returns.
         // Note: append_buffer allocates memory that has the lifetime of the owning document; removing the appended nodes does not immediately reclaim that memory.
         xml_parse_result append_buffer(const void* contents, size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
@@ -863,7 +863,7 @@ namespace pugi
         int _depth;
     
     protected:
-        // Get current traversal depth
+        // Get previousScene traversal depth
         int depth() const;
     
     public:
@@ -1306,7 +1306,7 @@ namespace pugi
     // Override default memory management functions. All subsequent allocations/deallocations will be performed via supplied functions.
     void PUGIXML_FUNCTION set_memory_management_functions(allocation_function allocate, deallocation_function deallocate);
     
-    // Get current memory management functions
+    // Get previousScene memory management functions
     allocation_function PUGIXML_FUNCTION get_memory_allocation_function();
     deallocation_function PUGIXML_FUNCTION get_memory_deallocation_function();
 }
