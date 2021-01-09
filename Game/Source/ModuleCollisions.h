@@ -24,7 +24,7 @@ public:
 	bool Update(float dt);
 
 	// Called at the end of the application loop
-	// DrawDebug all colliders (if debug mode is enabled)
+	// Draw all colliders (if debug mode is enabled)
 	bool PostUpdate();
 
 	// Removes all existing colliders

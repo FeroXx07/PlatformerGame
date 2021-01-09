@@ -4,17 +4,21 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
-#include "LevelScene.h"
+#include "Scene.h"
 #include "DeathScene.h"
 #include "ModuleFadeToBlack.h"
 #include "TitleScreen.h"
+#include "ModulePlayer.h"
+#include "ModuleHud.h"
 #include "Map.h"
 #include "ModuleInitialScreen.h"
 #include "ModuleCollisions.h"
 #include "WinScreen.h"
-#include "EntityManager.h"
+
+#include "ModuleEntities.h"
+#include "ModuleParticles.h"
+#include "ModuleFonts.h"
 #include "Pathfinding.h"
-#include "SceneManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -34,11 +38,19 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-
-	sceneManager = new SceneManager(input,render,tex);
+	scene = new Scene(false);
+	titleScreen = new TitleScreen(false);
+	deathScene = new DeathScene(false);
+	winScreen = new WinScreen(false);
+	hud = new ModuleHud(false);
+	player = new ModulePlayer(false);
+	map = new Map();
 	fade = new ModuleFadeToBlack();
+	initialScreen = new ModuleInitialScreen(true);
 	collisions = new ModuleCollisions(true);
-	entityman = new EntityManager(true);
+	entities = new Entities(false);
+	particles = new ModuleParticles(false);
+	fonts = new ModuleFonts();
 	pathfinding = new PathFinding();
 
 	// Ordered for awake / Start / Update
@@ -47,10 +59,22 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(fonts);
 	AddModule(pathfinding);
 
-	AddModule(entityman);
-	AddModule(sceneManager);
+	AddModule(deathScene);
+	AddModule(initialScreen);
+	AddModule(map);
+
+	AddModule(scene);
+	AddModule(titleScreen);
+	AddModule(winScreen);
+	AddModule(player);
+
+	AddModule(entities);
+	AddModule(particles);
+	AddModule(hud);
+
 	AddModule(collisions);
 	AddModule(fade);
 
@@ -435,7 +459,7 @@ bool App::LoadGame()
 	return ret;
 }
 
-// L02: TODO 7: Implement the xml save method for previousScene state
+// L02: TODO 7: Implement the xml save method for current state
 bool App::SaveGame() const
 {
 	bool ret = true;

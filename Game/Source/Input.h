@@ -65,7 +65,6 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 
-	void CloseApp();
 private:
 	bool windowEvents[WE_COUNT];
 	KeyState*	keyboard;

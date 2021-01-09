@@ -76,7 +76,7 @@ bool Audio::CleanUp()
 		Mix_FreeChunk(item->data);
 
 	fx.Clear();
-	
+
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
@@ -175,28 +175,4 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
-}
-
-bool Audio::ChangeMusicVolume(int volume)
-{
-	Mix_VolumeMusic(volume);
-	return true;
-}
-
-bool Audio::ChangeFxVolume(int volume)
-{
-	ListItem<Mix_Chunk*>* item;
-	for (item = fx.start; item != NULL; item = item->next)
-		Mix_VolumeChunk(item->data, volume);
-	return false;
-}
-
-int Audio::GetMusicVolume()
-{
-	return Mix_VolumeMusic(-1);
-}
-
-int Audio::GetFxVolume()
-{
-	return Mix_VolumeChunk(fx.start->data,-1);
 }

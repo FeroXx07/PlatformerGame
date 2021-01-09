@@ -1,20 +1,17 @@
 #include "DeathScene.h"
 
 #include "App.h"
-#include "Input.h"
 #include "Textures.h"
-#include "Audio.h"
-#include "Render.h"
-#include "Window.h"
-#include "TitleScreen.h"
 #include "ModuleFadeToBlack.h"
-#include "LevelScene.h"
-#include "ModuleCollisions.h"
-
-#include "Defs.h"
+#include "Input.h"
+#include "TitleScreen.h"
+#include "Window.h"
+#include "Render.h"
+#include "Audio.h"
+#include "ModulePlayer.h"
 #include "Log.h"
 
-DeathScene::DeathScene()
+DeathScene::DeathScene(bool b) : Module(b)
 {
 	name = "Death S";
 
@@ -23,9 +20,14 @@ DeathScene::DeathScene()
 
 DeathScene::~DeathScene() {}
 
-bool DeathScene::Load(Textures* tex)
+bool DeathScene::Start()
 {
 	bool ret = true;
+
+	startTime = SDL_GetTicks();
+	actualTime = 0;
+	endTime = 3000;
+
 	app->render->background = { 0,0,0,0 };
 	// Include logo
 	app->render->camera = { 0,0,1280,720 };
@@ -39,37 +41,46 @@ bool DeathScene::Load(Textures* tex)
 	}
 
 	app->render->camera = { 0,0,1280,720 };
+	app->player->cameraFollow = false;
 
 	return ret;
 }
 
-bool DeathScene::Update(Input* input, float dt)
+bool DeathScene::Update(float dt)
 {
 	bool ret = true;
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		TransitionToScene(SceneType::TITLE);
+		app->fade->FadeToBlack(this, (Module*)app->titleScreen);
 	}
 
 	return ret;
 }
 
-bool DeathScene::OnGuiMouseClickEvent(GuiControl* control)
-{
-	return false;
-}
-
-bool DeathScene::Draw(Render* render)
+bool DeathScene::PostUpdate()
 {
 	bool ret = true;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
+
+	actualTime = SDL_GetTicks() - startTime;
+
+	if (actualTime < endTime)
+	{
+
+	}
 	app->render->DrawTexture(logoTex, 0,0);
 	return ret;
 }
 
-bool DeathScene::Unload()
+bool DeathScene::CleanUp()
 {
 	bool ret = true;
+
+	startTime = 0;
+	endTime = 0;
+	actualTime = 0;
 
 	if (!app->tex->UnLoad(logoTex))
 	{

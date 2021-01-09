@@ -1,78 +1,47 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include "SString.h"
+#include "Module.h"
 
-class Input;
-class Render;
-class Textures;
+struct SDL_Texture;
 
-class GuiControl;
-
-enum class SceneType
-{
-    LOGO,
-    TITLE,
-    GAMEPLAY,
-    LOAD_GAMEPLAY,
-    SETTINGS,
-    WIN,
-    DEATH,
-    PAUSE,
-    CREDITS
-};
-
-class Scene
+class Scene : public Module
 {
 public:
 
-    Scene() : active(true), loaded(false), transitionRequired(false) {}
+	Scene();
 
-    virtual bool Load(Textures* tex)
-    {
-        return true;
-    }
+	Scene(bool b);
 
-    virtual bool Update(Input* input, float dt)
-    {
-        return true;
-    }
+	// Destructor
+	virtual ~Scene();
 
-    virtual bool Draw(Render* render)
-    {
-        return true;
-    }
+	// Called before render is available
+	bool Awake();
 
-    virtual bool Unload()
-    {
-        return true;
-    }
+	// Called before the first frame
+	bool Start();
 
-    void TransitionToScene(SceneType scene)
-    {
-        transitionRequired = true;
-        nextScene = scene;
-    }
+	// Called before all Updates
+	bool PreUpdate();
 
-    // Define multiple Gui Event methods
-    virtual bool OnGuiMouseClickEvent(GuiControl* control)
-    {
-        return true;
-    }
+	// Called each loop iteration
+	bool Update(float dt);
+
+	// Called before all Updates
+	bool PostUpdate();
+
+	// Called before quitting
+	bool CleanUp();
+
+	int resetCounter = 0;
+
+private:
+	SDL_Texture* img;
+	SDL_Texture* bg;
 
 public:
-
-    bool active = true;
-    SString name;         // Scene name identifier?
-
-    // Possible properties
-    bool loaded = false;
-    // TODO: Transition animation properties
-
-    bool transitionRequired;
-    SceneType nextScene;
-    SceneType currentScene;
-    SceneType previousScene;
+	
 };
 
 #endif // __SCENE_H__

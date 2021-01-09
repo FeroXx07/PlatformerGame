@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __WIN_SCREEN_H__
 #define __WIN_SCREEN_H__
 
@@ -5,33 +6,32 @@
 
 #include "Module.h"
 #include "Textures.h"
-#include "Scene.h"
 
 struct SDL_Rect;
 
-class WinScreen : public Scene
+class WinScreen : public Module
 {
 
 public:
 
-	WinScreen();
+	WinScreen(bool startEnabled);
 	~WinScreen();
 
-	bool Load(Textures* tex);
-
-	bool Update(Input* input, float dt);
-
-	bool Draw(Render* render);
-
-	bool OnGuiMouseClickEvent(GuiControl* control);
-
-	bool Unload();
+	bool Start();
+	bool Update(float dt);
+	bool PostUpdate();
+	bool CleanUp();
 
 private:
 
 	SDL_Texture* logoTex = nullptr;
 	SDL_Texture* tex = nullptr;
 	SDL_Rect logo;
+
+	Uint32 startTime = 0;
+	Uint32 endTime = 0;
+	Uint32 actualTime = 0;
+
 };
 
 

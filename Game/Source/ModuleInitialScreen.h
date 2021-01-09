@@ -7,25 +7,21 @@
 
 #include "Module.h"
 #include "Textures.h"
-#include "Scene.h"
 
 struct SDL_Rect;
 
-class ModuleInitialScreen : public Scene
+class ModuleInitialScreen : public Module
 {
 
 public:
 
-	ModuleInitialScreen();
+	ModuleInitialScreen(bool startEnabled);
 	~ModuleInitialScreen();
 
-	bool Load(Textures* tex);
-
-	bool Update(Input* input, float dt);
-
-	bool Draw(Render* render);
-
-	bool Unload();
+	bool Start();
+	bool Update(float dt);
+	bool PostUpdate();
+	bool CleanUp();
 
 private:
 
@@ -33,9 +29,10 @@ private:
 	SDL_Texture* tex = nullptr;
 	SDL_Rect logo;
 
-	int state;
-	float timeCounter;
-	float logoAlpha;
+	Uint32 startTime = 0;
+	Uint32 endTime = 0;
+	Uint32 actualTime = 0;
+
 };
 
 #endif

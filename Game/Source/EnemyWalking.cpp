@@ -1,49 +1,39 @@
-#include "EnemiesClasses.h"
+#include "EnemyWalking.h"
 
 #include "App.h"
 #include "ModuleCollisions.h"
 #include "Pathfinding.h"
+#include "ModulePlayer.h"
 #include "Map.h"
 #include "Render.h"
 #include "Input.h"
-#include "Player.h"
-#include "LevelScene.h"
-#include "Textures.h"
-#include "SceneManager.h"
 
 #include "Log.h"
 
 #define SPEED_X 60.0f;
 #define SPEED_Y 15.0f;
 
-EnemyWalking::EnemyWalking() : Enemy(EntityType::ENEMY_WALKING)
+EnemyWalking::EnemyWalking(int x, int y) : Entity(x, y)
 {
 	spawnDelay = 0;
 
-	anim.PushBack({ 158,106,32,44 });
+	anim.PushBack({ 158,106,32,44});
 	anim.PushBack({ 158,151,32,42 });
 	anim.PushBack({ 65,0,49,38 });
 	anim.PushBack({ 158,151,32,42 });
 	anim.loop = true;
 
-	deathAnim.PushBack({ 117,154,35,41 });
+	deathAnim.PushBack({ 117,154,35,41});
 	deathAnim.loop = false;
 
 	anim.speed = 0.10f;
 	currentAnim = &anim;
 	health = 300;
 
-	collider = app->collisions->AddCollider({ 0, 0, 32, 44 }, Collider::Type::ENEMY_HURTBOX, (Module*)app->entityman, Collider::Items::ITEM_NONE);
-	this->entityCollider = &collider;
+	collider = app->collisions->AddCollider({0, 0, 32, 44 }, Collider::Type::ENEMY_HURTBOX, (Module*) app->entities, Collider::Items::ITEM_NONE);
 }
 
-EnemyWalking::~EnemyWalking()
-{
-
-}
-
-
-EnemyWalking::DirectionState EnemyWalking::Gps(iPoint& p)
+Entity::DirectionState EnemyWalking::Gps(iPoint &p)
 {
 	if (this->position.y - 12 < p.y)
 		return DirectionState::DOWN;
@@ -69,9 +59,10 @@ void EnemyWalking::SetVelDirection(DirectionState dir)
 	}
 }
 
-bool EnemyWalking::Update(float dt)
+void EnemyWalking::Update(float dt)
 {
-	this->EnemyUpdate(dt);
+	Entity::Update(dt);
+
 	if (currentAnim == &anim)
 	{
 		SDL_Rect b = SDL_Rect({ 65, 0, 49, 38 });
@@ -98,20 +89,20 @@ bool EnemyWalking::Update(float dt)
 	}
 
 	// Manually get pathfinding
-	if ((app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN || hasPath == false) && isDead == false && app->sceneManager->playerScene != nullptr)
+	if ((app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN || hasPath == false) && isDead == false)
 	{
 		// Clear any old path from pathfinding class
 		app->pathfinding->lastPath.Clear();
 
 		// Conversion
-		iPoint dst = { (int)app->sceneManager->playerScene->position.x,(int)app->sceneManager->playerScene->position.y + 32 };
-		dst = app->sceneManager->mapScene->WorldToMap(dst.x, dst.y);
+		iPoint dst = { (int)app->player->playerPos.x,(int)app->player->playerPos.y + 32};
+		dst = app->map->WorldToMap(dst.x, dst.y);
 
 		// Conversion
-		iPoint origin = app->sceneManager->mapScene->WorldToMap(this->position.x, this->position.y);
+		iPoint origin = app->map->WorldToMap(this->position.x, this->position.y);
 		app->pathfinding->CreatePath(origin, dst);
 
-		// Clear previousScene path
+		// Clear current path
 		path.Clear();
 
 		// Add eachpath points to our own path dyn array
@@ -123,25 +114,25 @@ bool EnemyWalking::Update(float dt)
 		hasPath = true;
 	}
 
-	if (path.Count() > 0)
+	if (path.Count() > 0 )
 	{
-		iPoint nextPos;
+		iPoint nextPos; 
 		if (direction == STOP)
 		{
-			// Get directions if previousScene direction is stop
+			// Get directions if current direction is stop
 			if (path.Pop(nextPos))
 			{
-				direction = this->Gps(app->sceneManager->mapScene->MapToWorld(nextPos.x, nextPos.y));
+				direction = this->Gps(app->map->MapToWorld(nextPos.x,nextPos.y));
 			}
 		}
-
+		
 		// Move with those directions for some time
 		if (direction != STOP)
 		{
 			SetVelDirection(direction);
 			counter += 1.0f * dt;
 		}
-
+		
 		// After time ended reset directions to stop
 		if (counter >= 0.8f) // 1.0f too long
 		{
@@ -164,7 +155,7 @@ bool EnemyWalking::Update(float dt)
 	{
 		for (uint i = 0; i < path.Count(); ++i)
 		{
-			iPoint pos = app->sceneManager->mapScene->MapToWorld(path.At(i)->x, path.At(i)->y);
+			iPoint pos = app->map->MapToWorld(path.At(i)->x, path.At(i)->y);
 			app->render->DrawTexture(debugTexture, pos.x, pos.y);
 		}
 	}
@@ -176,13 +167,4 @@ bool EnemyWalking::Update(float dt)
 	}
 
 	collider->SetPos(position.x, position.y);
-
-	return true;
-}
-
-bool EnemyWalking::Draw()
-{
-	this->EnemyDraw();
-
-	return true;
 }

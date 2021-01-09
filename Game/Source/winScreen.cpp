@@ -1,19 +1,16 @@
 #include "WinScreen.h"
 #include "App.h"
-#include "Input.h"
 #include "Textures.h"
-#include "Audio.h"
-#include "Render.h"
-#include "Window.h"
-#include "TitleScreen.h"
 #include "ModuleFadeToBlack.h"
-#include "LevelScene.h"
-#include "ModuleCollisions.h"
-
-#include "Defs.h"
+#include "Input.h"
+#include "TitleScreen.h"
+#include "Render.h"
+#include "Audio.h"
+#include "Window.h"
+#include "ModulePlayer.h"
 #include "Log.h"
 
-WinScreen::WinScreen()
+WinScreen::WinScreen(bool b) : Module(b)
 {
 	name = "Initial S";
 
@@ -22,10 +19,16 @@ WinScreen::WinScreen()
 
 WinScreen::~WinScreen() {}
 
-bool WinScreen::Load(Textures* tex)
+bool WinScreen::Start()
 {
 	bool ret = true;
+
+	startTime = SDL_GetTicks();
+	actualTime = 0;
+	endTime = 3000;
+
 	// Include logo
+
 	app->audio->PlayMusic("Assets/Audio/music/win_soundtrack.ogg");
 
 	logoTex = app->tex->Load("Assets/Screens/win_screen.png");
@@ -36,35 +39,47 @@ bool WinScreen::Load(Textures* tex)
 	}
 
 	app->render->camera = { 0,0,1280,720 };
+	app->player->cameraFollow = false;
 	return ret;
 }
 
-bool WinScreen::Update(Input* input, float dt)
+bool WinScreen::Update(float dt)
 {
 	bool ret = true;
+
+
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		TransitionToScene(SceneType::TITLE);
+		app->fade->FadeToBlack(this, (Module*)app->titleScreen);
 	}
+
 	return ret;
 }
 
-bool WinScreen::Draw(Render* render)
+bool WinScreen::PostUpdate()
 {
 	bool ret = true;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
+
+	actualTime = SDL_GetTicks() - startTime;
+
+	if (actualTime < endTime)
+	{
+
+	}
 	app->render->DrawTexture(logoTex, 0, 0);
 	return ret;
 }
 
-bool WinScreen::OnGuiMouseClickEvent(GuiControl* control)
-{
-	return false;
-}
-
-bool WinScreen::Unload()
+bool WinScreen::CleanUp()
 {
 	bool ret = true;
+
+	startTime = 0;
+	endTime = 0;
+	actualTime = 0;
 
 	if (!app->tex->UnLoad(logoTex))
 	{

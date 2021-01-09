@@ -160,7 +160,7 @@ bool Render::DrawTexture(SDL_Texture* itemsTexture, int x, int y, const SDL_Rect
 bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;
-	float scale = app->win->GetScale();
+	uint scale = app->win->GetScale();
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -188,7 +188,7 @@ bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint
 bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera) const
 {
 	bool ret = true;
-	float scale = app->win->GetScale();
+	uint scale = app->win->GetScale();
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -212,7 +212,7 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera) const
 {
 	bool ret = true;
-	float scale = app->win->GetScale();
+	uint scale = app->win->GetScale();
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -234,101 +234,6 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
-	}
-
-	return ret;
-}
-
-
-bool Render::DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled) const
-{
-	bool ret = true;
-
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-
-
-	SDL_Rect rec(rect);
-
-	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
-
-	if (result != 0)
-	{
-		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
-		ret = false;
-	}
-
-	return ret;
-}
-
-bool Render::DrawLine(int x1, int y1, int x2, int y2, SDL_Color color) const
-{
-	bool ret = true;
-
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-
-	int result = -1;
-
-	result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
-
-	if (result != 0)
-	{
-		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
-		ret = false;
-	}
-
-	return ret;
-}
-
-bool Render::DrawCircle(int x, int y, int radius, SDL_Color color) const
-{
-	bool ret = true;
-
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-
-	int result = -1;
-	SDL_Point points[360];
-
-	float factor = (float)M_PI / 180.0f;
-
-	for (uint i = 0; i < 360; ++i)
-	{
-		points[i].x = (int)(x + radius * cos(i * factor));
-		points[i].y = (int)(y + radius * sin(i * factor));
-	}
-
-	result = SDL_RenderDrawPoints(renderer, points, 360);
-
-	if (result != 0)
-	{
-		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
-		ret = false;
-	}
-
-	return ret;
-}
-
-bool Render::DrawText(Font* font, const char* text, int x, int y, int size, int spacing, SDL_Color tint)
-{
-	bool ret = true;
-
-	int length = strlen(text);
-	int posX = x;
-
-	float scale = (float)size / font->GetCharRec(32).h;
-
-	SDL_SetTextureColorMod(font->GetTextureAtlas(), tint.r, tint.g, tint.b);
-
-	for (int i = 0; i < length; i++)
-	{
-		SDL_Rect recGlyph = font->GetCharRec(text[i]);
-		SDL_Rect recDest = { posX, y, (scale * recGlyph.w), size };
-
-		SDL_RenderCopyEx(renderer, font->GetTextureAtlas(), &recGlyph, &recDest, 0.0, { 0 }, SDL_RendererFlip::SDL_FLIP_NONE);
-
-		posX += ((float)recGlyph.w * scale + spacing);
 	}
 
 	return ret;

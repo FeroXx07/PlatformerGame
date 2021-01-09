@@ -5,46 +5,77 @@
 #include "Animation.h"
 #include "SString.h"
 #include "Timer.h"
-#include "Input.h"
 
 struct SDL_Texture;
 struct Collider;
-
-enum EntityType
-{
-	UNKNOWN,
-	PLAYER,
-	BULLET,
-	ENEMY_WALKING,
-	ENEMY_FLYING,
-	ITEM_HEALTH,
-	ITEM_STAR,
-	HUD,
-	MAP,
-};
+enum EntityType;
 
 class Entity
 {
 public:
-	Entity() {};
-	Entity(EntityType type_) : type(type_) {}
+
+	enum DirectionState { STOP, LEFT, RIGHT, UP, DOWN, };
+	// Constructor
+	// Saves the spawn position for later movement calculations
+	Entity(int x, int y);
+
+	// Destructor
 	virtual ~Entity();
 
-	EntityType type = EntityType::UNKNOWN;
-	fPoint position;
-	SDL_Texture* sprite = nullptr;
-	Collider** entityCollider = nullptr; 
+	// Returns the enemy's collider
+	const Collider* GetCollider() const;
 
-	virtual bool Update(float dt);
-	virtual bool Draw();
-	virtual bool HandleInput(float dt);
+	// Called from inhering enemies' Udpate
+	// Updates animation and collider position
+	virtual void Update(float dt);
 
+	// Called from ModuleEnemies' Update
+	virtual void Draw();
+
+	// Collision response
 	virtual void OnCollision(Collider* collider);
-	bool pendingToDelete = false;
-	bool isDead = false;
 
-	void SetToDelete();
+	// Sets flag for deletion and for the collider aswell
+	virtual void SetToDelete();
+
+	bool CheckRectEqual(SDL_Rect &a, SDL_Rect &b);
+
+public:
+	// The current position in the world
+	fPoint position;
+
+	// The enemy's itemsTexture
+	SDL_Texture* texture = nullptr;
+	SDL_Texture* debugTexture = nullptr;
+	// Sound fx when destroyed
+	int destroyedFx = 0;
+
+	// A flag for the enemy removal. Important! We do not delete objects instantly
+	bool pendingToDelete = false;
+
+	EntityType entityType;
+
+	SString name = SString("NONE");
+	int health = 0;
+
+	// The enemy's collider
+	Collider* collider = nullptr;
+
+	bool isDead = false;
+protected:
+	// A ptr to the current animation
+	Animation* currentAnim = nullptr;
+
+	// Original spawn position. Stored for movement calculations
+	fPoint spawnPos;
+	fPoint entitySpeed = { 0,0 };
+
+	DirectionState direction = STOP;
+	float counter = 0;
+	bool inCollision = false;
+
+	fPoint drawOffset = { 0,0 };
+	fPoint collOffset = { 0,0 };
 };
 
-
-#endif // __ENEMY_H_
+#endif // __ENEMY_H__

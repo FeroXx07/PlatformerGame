@@ -4,39 +4,97 @@
 #include "ModuleCollisions.h"
 #include "Audio.h"
 #include "Render.h"
-#include "Textures.h"
+#include "ModuleFonts.h"
 #include "Log.h"
+
+//#include "ModuleParticles.h"
+//include scene 
+#include "ModuleEntities.h"
+
+
+Entity::Entity(int x, int y) : position(x, y)
+{
+	spawnPos = position;
+}
 
 Entity::~Entity()
 {
-	entityCollider = nullptr;
+	if (collider != nullptr)
+		collider->pendingToDelete = true;
 }
 
-bool Entity::Update(float dt)
+const Collider* Entity::GetCollider() const
 {
-	return true;
+	return collider;
 }
 
-bool Entity::Draw()
+void Entity::Update(float dt)
 {
-	return true;
+	if (currentAnim != nullptr)
+		currentAnim->Update();
+
+	if (collider != nullptr)
+		collider->SetPos(position.x + collOffset.x, position.y);
 }
 
-bool Entity::HandleInput(float dt)
+void Entity::Draw()
 {
-	return true;
+	if (currentAnim != nullptr)
+	{
+		app->render->DrawTexture(texture, position.x + drawOffset.x, position.y, &(currentAnim->GetCurrentFrame()));
+	}
+
 }
 
 void Entity::OnCollision(Collider* collider)
 {
+	//Check collision type
+	if (this->collider->type == Collider::ITEM && collider->type == Collider::Type::PLAYER)
+	{
+		switch (this->collider->item)
+		{
+		case Collider::Items::HEALTH:
+			this->SetToDelete();
+			isDead = true;
+			break;
+		case Collider::Items::STAR:
+			this->SetToDelete();
+			isDead = true;
+			break;
+		default:
+			this->SetToDelete();
+			break;
+		}
+		this->SetToDelete();
+			
+	}
+
+	if (this->collider->type == Collider::Type::ENEMY_HURTBOX && collider->type == Collider::Type::BULLET )
+	{
+		if (collider->pendingToDelete == false)
+		{
+			LOG("DAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAGE");
+			if (this->entityType == ENEMY_WALKING || this->entityType == ENEMY_FLYING)
+			{
+				if (health > 300) health = 300;
+				this->health += -100;
+			}
+		}
+	}
 }
 
 void Entity::SetToDelete()
 {
 	pendingToDelete = true;
-	if (entityCollider != nullptr)
+	if (collider != nullptr)
+		collider->pendingToDelete = true;
+}
+
+bool Entity::CheckRectEqual(SDL_Rect& a, SDL_Rect& b)
+{
+	if (a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h)
 	{
-		Collider* rect = *entityCollider;
-		rect->pendingToDelete = true;
+		return true;
 	}
+	return false;
 }
