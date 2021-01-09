@@ -32,7 +32,7 @@ Hud::Hud() : Entity(EntityType::HUD)
 	itemsTexture = app->tex->Load("Assets/Common/spritesheet_items.png");
 	aimTexture = app->tex->Load("Assets/Common/cursor_sprite.png");
 
-	font = new Font("Assets/Fonts/pottaOneRegular.xml", app->tex);
+	font = new Font("Assets/Fonts/potta_one_regular.xml", app->tex);
 
 	SDL_ShowCursor(SDL_DISABLE);
 }

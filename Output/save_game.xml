@@ -20,9 +20,9 @@
 			<entities Num="5" Type="6" x="7168" y="480" dead="false" />
 			<entities Num="6" Type="6" x="5376" y="320" dead="false" />
 			<entities Num="7" Type="6" x="8160" y="352" dead="false" />
-			<entities Num="8" Type="3" x="4" y="162" dead="true" />
-			<entities Num="9" Type="3" x="4" y="161" dead="true" />
-			<entities Num="10" Type="4" x="480" y="468" dead="false" />
+			<entities Num="8" Type="3" x="1" y="166" dead="true" />
+			<entities Num="9" Type="3" x="0" y="167" dead="true" />
+			<entities Num="10" Type="4" x="1258" y="457" dead="false" />
 			<entities Num="11" Type="3" x="2400" y="340" dead="false" />
 			<entities Num="12" Type="3" x="2880" y="212" dead="false" />
 			<entities Num="13" Type="3" x="2880" y="468" dead="false" />
@@ -37,8 +37,8 @@
 			<entities Num="22" Type="3" x="7520" y="500" dead="false" />
 			<entities Num="23" Type="3" x="8000" y="468" dead="false" />
 			<entities Num="24" Type="3" x="8448" y="564" dead="false" />
-			<entities Num="25" Type="4" x="1920" y="384" dead="false" />
+			<entities Num="25" Type="4" x="1920" y="384" dead="true" />
 		</entitiesList>
-		<player x="947.421021" y="433" lives="3" health="3" stars="0" />
+		<player x="1736.99902" y="433" lives="3" health="3" stars="0" />
 	</entity>
 </game_state>
