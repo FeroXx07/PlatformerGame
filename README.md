@@ -1,8 +1,12 @@
 # Frost's adventures
 
+<img src='https://github.com/FeroXx07/PlatformerGame/assets/59049844/d7784bee-5b43-4a03-b00f-c13ff2e43df7' width='600'>
+
 ## Description
 
 A platformer game made for the subject of video game development of the grade of development and design of video games at the UPC in Barcelona.
+
+<img src='https://github.com/FeroXx07/PlatformerGame/assets/59049844/21f3cd0f-dff7-41b8-810f-50431ffe8d7b' width='600'>
 
 ## Key Features
 
